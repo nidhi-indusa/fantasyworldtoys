@@ -1,0 +1,46 @@
+<?php
+/**
+ * @var $block \CyberSource\SecureAcceptance\Block\Account\Manage\Card\ListCard
+ */
+
+echo $block->getChildHtml('info');
+$tokens = $block->getTokens();
+?>
+<div>
+    <a href="<?php echo $block->getUrl('cybersource/manage/addcard')?>" class="primary action create">
+        <span><?php echo __('Create new token')?></span>
+    </a>
+</div>
+<?php if($tokens->getSize() > 0):$counter=0?>
+    <table class="example-table-4 cybersource-cards">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><?php echo __('Card Type')?></th>
+                <th scope="col"><?php echo __('Cc Last 4')?></th>
+                <th scope="col"><?php echo __('Created At')?></th>
+                <th scope="col"><?php echo __('Updated At')?></th>
+                <th scope="col"><?php echo __('Action')?></th>
+                <th scope="col"><?php echo __('Action')?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($tokens as $token):$counter++?>
+                <tr>
+                    <td><?php echo $counter?></td>
+                    <td><?php echo $block->getCardName($token->getData('card_type'))?></td>
+                    <td><?php echo $token->getData('cc_last4')?></td>
+                    <td><?php echo $token->getData('created_date')?></td>
+                    <td><?php echo $token->getData('updated_date')?></td>
+                    <td><a href="<?php echo $block->getUrl('cybersource/manage/addcard', array('id' => $token->getId()))?>"><?php echo __('Update')?></a></td>
+                    <td><a href="<?php echo $block->getUrl('cybersource/manage/deletecreditcard', array('id' => $token->getId()))?>"><?php echo __('Delete')?></a></td>
+                </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else:?>
+
+<?php endif;?>

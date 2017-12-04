@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\MassCancel" type="CyberSource\Core\Controller\Adminhtml\Order\MassCancel" />
+    <preference for="Magento\Sales\Model\Order\Creditmemo" type="CyberSource\Core\Model\Order\Creditmemo" /> 
+
+    <!-- Configuration reader -->
+    <type name="CyberSource\SecureAcceptance\Model\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">CyberSource\SecureAcceptance\Model\Payment::CODE</argument>
+        </arguments>
+    </type>
+</config>

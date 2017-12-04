@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php
+$helper = $this->helper('Fantasyworld\Fwtheme\Helper\Data');
+$showNewsletter = $helper->getConfigValue('fwthemesettings/newsletter_settings/enable');
+$showFooterColumns = $helper->getConfigValue('fwthemesettings/footer_columns/enable_footer_columns');
+$footerNdColumn = $helper->getConfigValue('fwthemesettings/footer_columns/footer_nd_column');
+$footerRdColumn = $helper->getConfigValue('fwthemesettings/footer_columns/footer_rd_column');
+$address = $helper->getConfigValue('fwthemesettings/footer_contant/address');
+$email = $helper->getConfigValue('fwthemesettings/footer_contant/email');
+$phone = $helper->getConfigValue('fwthemesettings/footer_contant/phone');
+$enableFooterBottom = $helper->getConfigValue('fwthemesettings/footer_bottom/enable_footer_bottom');
+$copyrightText = $helper->getConfigValue('fwthemesettings/footer_bottom/copyright_text');
+$copyrightRightBlock = $helper->getConfigValue('fwthemesettings/footer_bottom/copyright_right_block');
+?>
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_v3')->toHtml(); ?>

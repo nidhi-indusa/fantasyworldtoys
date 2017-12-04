@@ -1,0 +1,49 @@
+<?php if($block->allowExtension()): ?>
+<script>
+    
+    require([
+        'jquery',
+        'hoverIntent',
+        'dcmegamenu'
+    ], function ($) {
+       
+       $('#mega-menu-1').dcMegaMenu({
+		rowItems: '1',
+		speed: 'fast',
+		effect: 'slide',
+                fullWidth: true
+	});
+          
+    });
+
+</script>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see \Magento\Theme\Block\Html\Topmenu
+ */
+?>
+<?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+
+<nav class="navigation" role="navigation">
+    <ul id="mega-menu-1">
+        <?php /* @escapeNotVerified */ echo $_menu; ?>
+    </ul>
+   <!--
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+        <?php /* @escapeNotVerified */ echo $_menu; ?>
+    </ul>
+  -->
+</nav>
+<?php else : ?>
+<?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+
+<nav class="navigation" role="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+        <?php /* @escapeNotVerified */ echo $_menu; ?>
+    </ul>
+</nav>
+<?php endif; ?>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <chcybersource>
+                <profile_id backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <access_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sop_profile_id backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sop_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sop_access_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sop_service_url>https://secureacceptance.cybersource.com</sop_service_url>
+                <sop_service_url_test>https://testsecureacceptance.cybersource.com</sop_service_url_test>
+                <active>1</active>
+                <model>CyberSource\SecureAcceptance\Model\Payment</model>
+                <payment_action>authorize_capture</payment_action>
+                <use_iframe>0</use_iframe>
+                <title>CyberSource</title>
+                <test_mode>1</test_mode>
+                <debug_mode>1</debug_mode>
+                <ignore_avs>0</ignore_avs>
+                <ignore_cvn>0</ignore_cvn>
+                <order_status>processing</order_status>
+                <order_dm_status>payment_review</order_dm_status>
+                <allowspecific>0</allowspecific>
+                <developer_id>default</developer_id>
+            </chcybersource>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="page.main.title" destination="content" before="-"/>
+
+<referenceContainer name="columns.top">
+    <container name="product_list_toolbar_container" htmlTag="div"/>
+	
+</referenceContainer>
+
+    <referenceBlock name="top.links">
+	<block class="Magento\Framework\View\Element\Template" name="custom33" template="Magento_Catalog::product/custom.phtml" before="authorization-link"></block>
+	    </referenceBlock>
+		<referenceContainer name="page.main.title" remove="true" />
+		<referenceBlock name="wishlist_sidebar" remove="true" />
+		<!-- <move element="product.list.toolbar" destination="content.top"  before="-"/> -->
+    </body>
+</page>

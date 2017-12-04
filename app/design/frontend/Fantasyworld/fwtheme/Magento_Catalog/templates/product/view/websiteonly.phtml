@@ -1,0 +1,32 @@
+<?php
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+$_code = $block->getAtCode();
+$_className = $block->getCssClass();
+$_attributeLabel = $block->getAtLabel();
+$_attributeType = $block->getAtType();
+$_attributeAddAttribute = $block->getAddAttribute();
+if ($_attributeLabel && $_attributeLabel == 'default') {
+$_attributeLabel = $_product->getResource()->getAttribute($_code)->getFrontendLabel();
+}
+$_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()->getValue($_product);
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance(); //instance of\Magento\Framework\App\ObjectManager
+$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+$currentStore = $storeManager->getStore();
+$mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+?>
+<?php if ($_attributeValue): ?>
+<div>
+<?php 
+if ($_attributeValue == __('Yes')){
+?>
+    <img src="<?php echo $mediaUrl;?>/wysiwyg/web-only.png" class="web-only">
+<?php	
+}else{
+?>
+    <img src="<?php echo $mediaUrl;?>/wysiwyg/web-only-blank.png" class="web-only">
+<?php	
+}
+?>
+</div>
+<?php endif; ?>

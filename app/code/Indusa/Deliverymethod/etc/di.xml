@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Indusa Deliverymethod
+*
+* @category     Indusa_Deliverymethod
+* @package      Indusa_Deliverymethod
+* @author      Indusa_Deliverymethod Team
+* @copyright    Copyright (c) 2017 Indusa Deliverymethod (http://www.indusa.com/)
+* @license      http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="checkout-summary-product-attribute" type="Indusa\Deliverymethod\Plugin\Checkout\Model\DefaultConfigProvider" sortOrder="2" />
+    </type>
+   
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="indusa_save_delivery_date_in_quote" type="Indusa\Deliverymethod\Plugin\Checkout\Model\ShippingInformationManagement" sortOrder="3"/>
+    </type>    
+    
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="indusa_quote_to_order_item" type="Indusa\Deliverymethod\Model\Plugin\Quote\QuoteToOrderItem"  sortOrder="4" />
+    </type>
+    
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create">
+        <plugin name="indusa_order_create_deliverymethod" type="Indusa\Deliverymethod\Model\Plugin\Admin\Order\Create\DataPlugin"  sortOrder="5" />
+    </type>
+    
+    <preference for="Magento\Checkout\Block\Onepage\Success" type="Indusa\Deliverymethod\Block\Success"/>
+   
+    <preference for="Magento\OfflineShipping\Model\Carrier\Flatrate" type="Indusa\Deliverymethod\Model\Carrier\Flatrate" />
+    
+    <preference for="Magento\Checkout\Model\PaymentInformationManagement" type="Indusa\Deliverymethod\Model\PaymentInformationManagement" />
+    
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="delivery_date" xsi:type="string">sales_order.delivery_date</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="delivery_from" xsi:type="string">sales_order.delivery_from</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+</config>

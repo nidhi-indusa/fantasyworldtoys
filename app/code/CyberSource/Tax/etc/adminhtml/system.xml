@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config:etc/system_file.xsd">
+    <system>
+        <section id="tax">
+            <group id="cybersourcetax" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>CyberSource Tax Service</label>
+                <field id="tax_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tax Calculation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cybersource_nexus_regions" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Nexus regions</label>
+                    <source_model>CyberSource\Tax\Model\Source\AllRegion</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="tax_countries" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Customer countries to calculate Tax for</label>
+                    <source_model>CyberSource\Core\Model\Source\Country</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="ship_from_city" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Ship From City</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="ship_from_postcode" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Ship From Postcode</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="ship_from_country" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Ship From Country</label>
+                    <source_model>CyberSource\Tax\Model\Source\TaxCountry</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="ship_from_region" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Ship From Region</label>
+                    <source_model>CyberSource\Tax\Model\Source\AllRegion</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="acceptance_city" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Acceptance City</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="acceptance_postcode" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Acceptance Postcode</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="acceptance_country" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Acceptance Country</label>
+                    <source_model>CyberSource\Tax\Model\Source\TaxCountry</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="acceptance_region" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Acceptance Region</label>
+                    <source_model>CyberSource\Tax\Model\Source\AllRegion</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="origin_city" translate="label" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Origin City</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="origin_postcode" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Origin Postcode</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="origin_country" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Origin Country</label>
+                    <source_model>CyberSource\Tax\Model\Source\TaxCountry</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="origin_region" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Origin Region</label>
+                    <source_model>CyberSource\Tax\Model\Source\AllRegion</source_model>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+                <field id="merchant_vat" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Merchant VAT</label>
+                    <depends><field id="tax_enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

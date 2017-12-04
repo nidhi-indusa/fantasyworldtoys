@@ -1,0 +1,24 @@
+{
+  "name": "cybersource/module-address",
+  "description": "CyberSource Address",
+  "require": {
+    "php": "~5.6.5|7.0.2|7.0.4|~7.0.6",
+    "magento/framework": "100.1.*",
+    "magento/module-directory": "100.1.*",
+    "cybersource/module-core": "2.0.4",
+    "cybersource/module-secure-acceptance": "2.0.4"
+  },
+  "type": "magento2-module",
+  "version": "2.0.4",
+  "license": [
+    "proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "CyberSource\\Address\\": ""
+    }
+  }
+}

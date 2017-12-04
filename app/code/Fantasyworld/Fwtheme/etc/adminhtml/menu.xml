@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Fantasyworld_Fwtheme::fwtheme" title="FW Theme" module="Fantasyworld_Fwtheme" sortOrder="65" resource="Fantasyworld_Fwtheme::fwtheme"/>
+        <add id="Fantasyworld_Fwtheme::fwthemesettings" title="Configuration" module="Fantasyworld_Fwtheme" sortOrder="20" parent="Fantasyworld_Fwtheme::fwtheme" action="adminhtml/system_config/edit/section/fwthemesettings" resource="Fantasyworld_Fwtheme::fwtheme"/>
+    </menu>
+</config>

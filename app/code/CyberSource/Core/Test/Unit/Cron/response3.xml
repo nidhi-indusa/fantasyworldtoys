@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Report SYSTEM "https://ebctest.cybersource.com/ebctest/reports/dtd/cdr.dtd">
+
+<?xml-stylesheet type="text/xsl" href="https://ebctest.cybersource.com/ebctest/reports/xsl/ConversionDetailReport.xsl"?>
+<Report xmlns="https://ebctest.cybersource.com/ebctest/reports/dtd/cdr.dtd" MerchantID="chtest" Name="Conversion Detail Report" ReportStartDate="2017-04-11 17:04:14GMT" ReportEndDate="2017-04-12 16:04:14GMT" Version="1.1">
+  <Conversion MerchantReferenceNumber="522" ConversionDate="2017-04-12 16:00:57" RequestID="4920128092456096403529">
+    <OriginalDecision>REVIEW</OriginalDecision>
+    <NewDecision>ACCEPT</NewDecision>
+    <Reviewer>collinsharper</Reviewer>
+    <ReviewerComments />
+    <Notes>
+      <Note Date="2017-04-12 16:00:56" AddedBy="collinsharper" Comment="The card settlement succeeded" />
+    </Notes>
+    <Queue>Example</Queue>
+    <Profile>Example</Profile>
+  </Conversion>
+  <Conversion MerchantReferenceNumber="523" ConversionDate="2017-04-12 16:03:54" RequestID="4920130131886100503528">
+    <OriginalDecision>REVIEW</OriginalDecision>
+    <NewDecision>ACCEPT</NewDecision>
+    <Reviewer>collinsharper</Reviewer>
+    <ReviewerComments />
+    <Notes>
+      <Note Date="2017-04-12 16:03:54" AddedBy="collinsharper" Comment="Took ownership." />
+    </Notes>
+    <Queue>Example</Queue>
+    <Profile>Example</Profile>
+  </Conversion>
+</Report>

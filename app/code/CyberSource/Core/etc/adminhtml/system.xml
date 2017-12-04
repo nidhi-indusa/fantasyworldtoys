@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="cybersource_section" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>CyberSource</label>
+                <comment><![CDATA[The CyberSource Payment Management Platform enables merchants to accept and manage payments, mitigate fraud, and secure their payment data.]]></comment>
+                <attribute type="expanded">1</attribute>
+                <fieldset_css>complex</fieldset_css>
+                <!--<frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>-->
+                <frontend_model>CyberSource\Core\Block\Adminhtml\Config\Fieldset</frontend_model>
+                <group id="cybersource_general" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>General</label>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/active</config_path>
+                    </field>
+                    <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Title</label>
+                        <config_path>payment/chcybersource/title</config_path>
+                    </field>
+                    <field id="dm_fail_sender" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>DM fail email sender</label>
+                        <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                        <config_path>payment/chcybersource/dm_fail_sender</config_path>
+                    </field>
+                    <field id="dm_fail_template" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>DM fail email template</label>
+                        <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                        <config_path>payment/chcybersource/dm_fail_template</config_path>
+                    </field>
+                    <field id="secureacceptance_type" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Secure Acceptance Type</label>
+                        <comment>Use SOP in order to enable Multi-shipping feature.</comment>
+                        <source_model>CyberSource\Core\Model\Source\SecureAceptance\Type</source_model>
+                        <config_path>payment/chcybersource/secureacceptance_type</config_path>
+                    </field>
+                    <field id="cctypes" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Credit Card Types</label>
+                        <comment>for SOP only</comment>
+                        <source_model>CyberSource\Core\Model\Source\Cctype</source_model>
+                        <config_path>payment/chcybersource/cctypes</config_path>
+                    </field>
+                    <field id="payment_action" translate="label" type="select" sortOrder="61" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Payment Action for SecureAcceptance</label>
+                        <comment>both SOP and WEB/Mobile</comment>
+                        <source_model>CyberSource\SecureAcceptance\Model\Source\PaymentAction</source_model>
+                        <config_path>payment/chcybersource/payment_action</config_path>
+                    </field>
+                    <field id="report_server_url" translate="label" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Report Server URL</label>
+                        <config_path>payment/chcybersource/report_server_url</config_path>
+                    </field>
+                    <field id="service_url" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Service URL</label>
+                        <config_path>payment/chcybersource/service_url</config_path>
+                    </field>
+                    <field id="service_url_test" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Service URL for tests</label>
+                        <config_path>payment/chcybersource/service_url_test</config_path>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Payment from Applicable Countries</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/chcybersource/allowspecific</config_path>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Payment from Specific Countries</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/chcybersource/specificcountry</config_path>
+                    </field>
+                    <field id="enable_dm_cron" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable DM CRON</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/enable_dm_cron</config_path>
+                    </field>
+                    <field id="test_mode" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Test Mode</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/test_mode</config_path>
+                    </field>
+                    <field id="debug_mode" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Debug Mode</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/debug_mode</config_path>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Sort Order</label>
+                        <config_path>payment/chcybersource/sort_order</config_path>
+                    </field>
+                    <field id="developer_id" translate="label" type="text" sortOrder="155" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Developer ID</label>
+                        <config_path>payment/chcybersource/developer_id</config_path>
+                    </field>
+                </group>
+                <group id="cybersource_address" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shipping Address Verification Service</label>
+                    <field id="address_check_enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Address verification</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/address_check_enabled</config_path>
+                    </field>
+                    <field id="address_force_normal" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Address force normalization</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/address_force_normal</config_path>
+                    </field>
+                </group>
+                <group id="cybersource_fingerprint" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Device Fingerprint</label>
+                    <field id="fingerprint_enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Active</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/fingerprint_enabled</config_path>
+                    </field>
+                    <field id="fingerprint_org_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Org ID</label>
+                        <config_path>payment/chcybersource/org_id</config_path>
+                    </field>
+                </group>
+                <group id="cybersourceapi" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SOAP WebService</label>
+                    <field id="auth_indicator" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Auth Indicator</label>
+                        <comment><![CDATA[Flag that specifies the purpose of the authorization.]]></comment>
+                        <source_model>CyberSource\Core\Model\Source\AuthIndicator</source_model>
+                        <config_path>payment/chcybersource/auth_indicator</config_path>
+                    </field>
+                    <field id="merchant_id" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Merchant ID</label>
+                        <config_path>payment/chcybersource/merchant_id</config_path>
+                    </field>
+                    <field id="report_username" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Report Username</label>
+                        <config_path>payment/chcybersource/report_username</config_path>
+                    </field>
+                    <field id="report_password" translate="label" type="obscure" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Report Password</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/report_password</config_path>
+                    </field>
+                    <field id="report_url" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Report URL</label>
+                        <config_path>payment/chcybersource/report_url</config_path>
+                    </field>
+                    <field id="transaction_key" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Transaction Key</label>
+                        <config_path>payment/chcybersource/transaction_key</config_path>
+                    </field>
+                    <field id="use_test_wsdl" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Use Test WSDL</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/use_test_wsdl</config_path>
+                    </field>
+                    <field id="path_to_wsdl" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                        <label>Path to WSDL</label>
+                        <config_path>payment/chcybersource/path_to_wsdl</config_path>
+                    </field>
+                    <field id="path_to_test_wsdl" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                        <label>Path to test WSDL</label>
+                        <config_path>payment/chcybersource/path_to_test_wsdl</config_path>
+                    </field>
+                    <field id="enable_cvv" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Use CVV on Token Purchases?</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/enable_cvv</config_path>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

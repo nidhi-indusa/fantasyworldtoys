@@ -1,0 +1,62 @@
+<?php
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+$_code = $block->getAtCode();
+$_className = $block->getCssClass();
+$_attributeLabel = $block->getAtLabel();
+$_attributeType = $block->getAtType();
+$_attributeAddAttribute = $block->getAddAttribute();
+if ($_attributeLabel && $_attributeLabel == 'default') {
+$_attributeLabel = $_product->getResource()->getAttribute($_code)->getFrontendLabel();
+}
+$_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()->getValue($_product);
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance(); //instance of\Magento\Framework\App\ObjectManager
+$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+$currentStore = $storeManager->getStore();
+$mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+?>
+<?php if ($_attributeValue): ?>
+<div>
+<?php 
+if ($_attributeValue == __('Yes')){
+?>
+     <!--div class="website-only"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php //echo __('Available for Home Delivery Only');?></div-->
+	 <!--img src="<?php //echo $mediaUrl;?>/wysiwyg/hd.png" class="delivery-option-image"-->
+	 <div class="website-only">
+		<div class="hd-cc-block">
+			<span class="fa-stack">
+				<i class="fa fa-circle fa-stack-2x"></i>
+				<i class="fa fa-home fa-stack-1x fa-inverse"></i>
+			</span>
+			<?php echo __('Home Delivery');?>
+		</div>	
+	</div>
+	 
+<?php	
+}else{
+?>
+     <!--div class="click-and-collect"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php //echo __('Available for Home Delivery & Click and Collect');?></div-->
+	 <!--img src="<?php //echo $mediaUrl;?>/wysiwyg/hd-cc.png" class="delivery-option-image"-->
+	 <div class="website-only">
+		<div class="hd-cc-block">
+			<span class="fa-stack">
+				<i class="fa fa-circle fa-stack-2x"></i>
+				<i class="fa fa-home fa-stack-1x fa-inverse"></i>
+			</span>
+			<?php echo __('Home Delivery');?>
+		</div>	
+		<div class="hd-cc-block cc-block">
+			<span class="fa-stack">
+				<i class="fa fa-circle fa-stack-2x"></i>
+				<i class="fa fa-mouse-pointer fa-stack-1x fa-inverse" style="left: 2px;"></i>
+			</span>
+			<?php echo __('Click and Collect');?>
+		</div>
+	 </div>
+	 
+	 
+<?php	
+}
+?>
+</div>
+<?php endif; ?>

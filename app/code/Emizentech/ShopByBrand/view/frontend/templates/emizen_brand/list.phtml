@@ -1,0 +1,100 @@
+<?php 
+	$brands = $this->getBrands();
+	$featured = $this->getFeaturedBrands();
+	$media = $this->getImageMediaPath();
+	
+?>
+<style>
+	.brand-char {
+    min-width: 300px;
+    float: left;
+    min-height: 130px;
+	}
+</style>
+<h1>Brands</h1>
+
+<h3>Featured Brands</h3>
+<div class="featured-brands">
+	<?php foreach($featured as $_fbrand):?>
+	
+	<span>
+		<?php if($_fbrand->getUrlKey()):?>
+		<a href="<?php echo $this->getUrl('brand').$_fbrand->getUrlKey()?>">
+			<?php else:?>
+			<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_fbrand->getId()));?>">
+				<?php endif;?>
+				<?php if($_fbrand->getLogo()):?>
+				<img class="f-barnd-img" src="<?php echo $media.$_fbrand->getLogo() ?>" title="<?php echo $_fbrand->getName();?>" alt="<?php echo $_fbrand->getName();?>" style="height:100px"/>
+				<?php else:?>
+				<span class="brand-title">
+					<?php echo $_fbrand->getName();?>
+				</span>
+				<?php endif;?>
+			</a>
+		</span>
+		<?php endforeach;?>
+	</div>
+	<br />
+	<h3>ALL Brands</h3>
+	
+	
+	<!-- demo -->	
+	
+	
+	<div>	
+		<ul class="nav nav-tabs" role="tablist">
+		
+		
+		
+				
+				<li role="presentation" class="active"><a href="#tab-numbers" aria-controls="home" role="tab" data-toggle="tab">#</a></li>
+				
+			<?php foreach (range('A', 'Z') as $char) :?>
+			<?php if(isset($brands[$char])):?>		
+				<li role="presentation"><a href="#tab-<?php echo $char;?>" aria-controls="home" role="tab" data-toggle="tab"><?php echo $char;?></a></li>
+			<?php endif;?>
+			<?php endforeach;?>
+			
+		</ul>
+		<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active"id="tab-numbers">
+		<?php foreach (range('0', '9') as $char) :?>
+				<?php if(isset($brands[$char])):?>
+					
+					<?php foreach($brands[$char] as $_brand):?>		
+								<?php if($_brand->getUrlKey()):?>
+								<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+								<?php else:?>
+								<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
+								<?php endif;?>							
+								
+					
+					<?php endforeach;?>
+					
+				<?php endif;?>
+			<?php endforeach;?>
+		</div>
+			<?php foreach (range('A', 'Z') as $char) :?>
+				<?php if(isset($brands[$char])):?>
+				<div role="tabpanel" class="tab-pane" id="tab-<?php echo $char;?>">	
+					<?php foreach($brands[$char] as $_brand):?>		
+								<?php if($_brand->getUrlKey()):?>
+								<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+								<?php else:?>
+								<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
+								<?php endif;?>							
+								
+					
+					<?php endforeach;?>
+					</div>	
+				<?php endif;?>
+			<?php endforeach;?>
+				
+		</div>
+		
+		
+		<!-- demo -->
+		
+		
+		
+		

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="dm"> <!-- Doesn't need to be unique -->
+        <job name="cron_dm" instance="CyberSource\Core\Cron\Dm" method="execute">
+            <schedule>0 */2 * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="cybersource_section" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="cybersource_bank_transfer" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bank Transfer</label>
+                    <group id="cybersource_bank_transfer_ideal" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>iDeal</label>
+                        <field id="bank_transfer_ideal_active" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Enabled</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/cybersource_bank_transfer/ideal_active</config_path>
+                        </field>
+                        <field id="bank_transfer_ideal_title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Title</label>
+                            <config_path>payment/cybersource_bank_transfer/ideal_title</config_path>
+                            <validate>required-entry</validate>
+                        </field>
+                        <field id="ideal_merchant_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Merchant ID</label>
+                            <config_path>payment/cybersource_bank_transfer/ideal_merchant_id</config_path>
+                        </field>
+                        <field id="ideal_transaction_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Transaction Key</label>
+                            <!--<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>-->
+                            <config_path>payment/cybersource_bank_transfer/ideal_transaction_key</config_path>
+                        </field>
+                        <field id="bank_transfer_ideal_currency" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Allowed Currencies</label>
+                            <source_model>CyberSource\BankTransfer\Model\Source\Currency</source_model>
+                            <config_path>payment/cybersource_bank_transfer/ideal_currency</config_path>
+                        </field>
+                        <field id="sort_order" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Sort Order</label>
+                            <config_path>payment/cybersource_bank_transfer_ideal/sort_order</config_path>
+                        </field>
+                    </group>
+                    <group id="cybersource_bank_transfer_sofort" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Sofort</label>
+                        <field id="bank_transfer_sofort_active" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Enabled</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/cybersource_bank_transfer/sofort_active</config_path>
+                        </field>
+                        <field id="bank_transfer_sofort_title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Title</label>
+                            <config_path>payment/cybersource_bank_transfer/sofort_title</config_path>
+                            <validate>required-entry</validate>
+                        </field>
+                        <field id="sofort_merchant_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Merchant ID</label>
+                            <config_path>payment/cybersource_bank_transfer/sofort_merchant_id</config_path>
+                        </field>
+                        <field id="sofort_transaction_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Transaction Key</label>
+                            <!--<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>-->
+                            <config_path>payment/cybersource_bank_transfer/sofort_transaction_key</config_path>
+                        </field>
+                        <field id="bank_transfer_sofort_currency" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Allowed Currencies</label>
+                            <source_model>CyberSource\BankTransfer\Model\Source\Currency</source_model>
+                            <config_path>payment/cybersource_bank_transfer/sofort_currency</config_path>
+                        </field>
+                        <field id="sort_order" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Sort Order</label>
+                            <config_path>payment/cybersource_bank_transfer_sofort/sort_order</config_path>
+                        </field>
+                    </group>
+                    <group id="cybersource_bank_transfer_bancontact" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Bancontact</label>
+                        <field id="bank_transfer_bancontact_active" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Enabled</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/cybersource_bank_transfer/bancontact_active</config_path>
+                        </field>
+                        <field id="bank_transfer_bancontact_title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Title</label>
+                            <config_path>payment/cybersource_bank_transfer/bancontact_title</config_path>
+                            <validate>required-entry</validate>
+                        </field>
+                        <field id="bancontact_merchant_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Merchant ID</label>
+                            <config_path>payment/cybersource_bank_transfer/bancontact_merchant_id</config_path>
+                        </field>
+                        <field id="bancontact_transaction_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Transaction Key</label>
+                            <!--<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>-->
+                            <config_path>payment/cybersource_bank_transfer/bancontact_transaction_key</config_path>
+                        </field>
+                        <field id="bank_transfer_bancontact_currency" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Allowed Currencies</label>
+                            <source_model>CyberSource\BankTransfer\Model\Source\Currency</source_model>
+                            <config_path>payment/cybersource_bank_transfer/bancontact_currency</config_path>
+                        </field>
+                        <field id="sort_order" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="1">
+                            <label>Sort Order</label>
+                            <config_path>payment/cybersource_bank_transfer_bancontact/sort_order</config_path>
+                        </field> 
+                    </group>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

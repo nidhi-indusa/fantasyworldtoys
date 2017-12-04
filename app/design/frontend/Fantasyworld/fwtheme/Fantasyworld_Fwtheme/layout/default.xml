@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+	
+        <css src="Fantasyworld_Fwtheme::css/owl.carousel.css"/>
+        <css src="Fantasyworld_Fwtheme::css/owl.theme.css"/>
+        <css src="Fantasyworld_Fwtheme::css/owl.transitions.css"/>
+        <css src="Fantasyworld_Fwtheme::css/fancybox/jquery.fancybox.css"/>
+        <css src="Fantasyworld_Fwtheme::css/font-awesome.min.css"/>
+        <css src="css/bootstrap.min.css"/>
+        <css src="css/style-fw.css"/>
+		
+		
+		<script src="js/jquery.min.js" />        
+        <script src="js/bootstrap.min.js" />
+        <script src="js/2bad0ab612.js" />
+		<script src="js/jquery.colorbox.js" />  
+		<script src="js/custom.js" />
+		
+    </head>
+    <body>
+     
+         <referenceContainer name="sidebar.additional">
+             <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        </referenceContainer>
+        	 
+	<!-- <referenceContainer name="header-wrapper">
+            <block class="Magento\Framework\View\Element\Template" name="customblock" before="top.search" template="Fantasyworld_Fwtheme::custom_text.phtml" before="authorization-link" />
+        </referenceContainer> -->
+          
+    <referenceBlock name="top.links">
+   
+<!--        <block class="Magento\Framework\View\Element\Html\Link\Current" name="my-link1" before="custom_link">
+                    <arguments>
+                         <argument name="priority" xsi:type="string">1</argument>
+                        <argument name="label" xsi:type="string" translate="true">Gift Finder</argument>
+                        <argument name="path" xsi:type="string">about-us</argument>
+                    </arguments>
+        </block>      -->
+<!--         <block class="Magento\Framework\View\Element\Template" name="startphoto" template="Fantasyworld_Fwtheme::html/custom_text.phtml">
+             <arguments>
+             <argument name="priority" xsi:type="string">2</argument>    
+            <argument name="label" xsi:type="string">+965 2471 4811</argument>
+			 <argument name="path" xsi:type="string">contact-me</argument>
+		 </arguments> 
+         </block> -->
+         
+         <block class="Magento\Framework\View\Element\Template" name="custom_layer" template="Fantasyworld_Fwtheme::html/custom_layer.phtml" before="-"></block>	
+          
+          <block class="Magento\Framework\View\Element\Template" name="custom_link" template="Fantasyworld_Fwtheme::html/custom_text.phtml" before="authorization-link"></block>
+          <block class="Magento\Customer\Block\Account\Link" name="my-account-link" cacheable="false" >
+            <arguments>
+                <argument name="priority" xsi:type="string">3</argument>    
+                <argument name="label" xsi:type="string" translate="true">My Account</argument>
+            </arguments>
+        </block>
+<!--        <block class="Magento\Customer\Block\Account\RegisterLink" name="register-link">
+            <arguments>
+                <argument name="label" xsi:type="string" translate="true">Create an Account</argument>
+            </arguments>
+        </block>-->
+        <block class="Magento\Customer\Block\Account\AuthorizationLink" name="authorization-link" template="account/link/authorization.phtml"/>
+    </referenceBlock>
+
+		
+		
+        <referenceContainer name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="custom.css" template="Fantasyworld_Fwtheme::customcss.phtml" before="-"/>
+        </referenceContainer>
+		
+        <move element="logo" destination="header.panel" before="-" />
+		<!--<move element="navigation.sections" destination="header.panel" before="-" />-->
+                <move element="store_switcher" destination="header.panel" after="top.links"/>
+		<move element="catalog.topnav" destination="header.panel" after="store_switcher"/>
+		<!-- <move element="my-account-link" destination="header.panel" before="top.search"/> -->
+        <move element="top.search" destination="header.panel" before="-" />
+        <move element="minicart" destination="header.panel" before="-"   />
+		<referenceBlock name="catalog.compare.link" remove="true"/>
+		
+		
+		<!--<referenceBlock name="my-account-link" remove="true" />-->
+
+		
+	
+	 
+        <referenceContainer name="footer-container">
+            <block class="Magento\Framework\View\Element\Template" as="Bizkick footer" name="blzkick.footer" template="Fantasyworld_Fwtheme::html/footer.phtml">
+                <block class="Magento\Framework\View\Element\Html\Links" name="footer_links">
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">footer links</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Theme\Block\Html\Footer" name="copyright" template="html/copyright.phtml"/>
+            </block>
+            <referenceBlock name="report.bugs" remove="true"/>
+            <referenceBlock name="footer" remove="true"/>
+        </referenceContainer>
+        <referenceContainer name="page.wrapper">
+            <block class="Magento\Framework\View\Element\Template" as="Bizkick Above" name="blzkick.above" template="Fantasyworld_Fwtheme::fwthemeabove.phtml" before="main.content" />
+            <block class="Magento\Framework\View\Element\Template" as="Bizkick Below" name="blzkick.below" template="Fantasyworld_Fwtheme::fwthemebelow.phtml" after="main.content" />
+        </referenceContainer>
+<!--        <referenceBlock name="wish-list-link" remove="true"/>-->
+        <referenceBlock name="register-link" remove="true"/>
+
+    </body>
+</page>

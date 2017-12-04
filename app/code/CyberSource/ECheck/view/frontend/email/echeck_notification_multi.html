@@ -1,0 +1,34 @@
+<!--@subject{{trans "your %store_name order has status defined for different purposes" store_name=$store.getFrontendName()}}@-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">Hello</p>
+            <p>
+                {{trans
+                    "we have recieved a status update for the echeck used for order <strong>#%increment_id</strong>.  The status <strong>%event_type</strong> was returned but magento is currently configured to both accept and reject the order for htis status change.  Please correct the settings and manually address order #%increment_id.  The system has left the payment for this order as 'pending'."
+
+                    increment_id=$data.order.increment_id
+                    event_type=$data.event_type
+                |raw}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend comment}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var comment|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

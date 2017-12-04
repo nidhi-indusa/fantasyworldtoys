@@ -1,0 +1,30 @@
+{
+    "name": "cybersource/module-core",
+    "description": "CyberSource core module for payment solution",
+    "type": "magento2-module",
+    "version": "2.0.4",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": "~5.6.5|7.0.2|7.0.4|~7.0.6",
+        "magento/framework": "100.1.*",
+        "magento/module-config": "100.1.*",
+        "magento/module-payment": "100.1.*",
+        "magento/module-sales": "100.1.*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "CyberSource\\Core\\": ""
+        }
+    },
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+<div id="ax_store_id">
+    <strong><?php echo __('AX Store ID') ?></strong>
+    <span class="price"><?=$block->getAxStoreId() ?></span>
+</div>
+
+<script type="text/javascript">
+    require(
+        ['jquery'],
+        function($) {
+            alert("1111 jquery");
+            var element = $('#ax_store_id).detach();
+            $('.box-order-shipping-method').append(element);
+        }
+    );
+</script>

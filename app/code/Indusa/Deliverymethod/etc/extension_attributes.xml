@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
+        <attribute code="ax_store_id" type="string"/>
+        <attribute code="location_id" type="string"/>
+        <attribute code="delivery_from" type="string"/>
+        <attribute code="transfer_order_quantity" type="string"/>
+        <attribute code="deliverymethod" type="string"/>
+        <attribute code="newdeliverymethod" type="string"/>
+         <attribute code="delivery_date" type="string"/>
+        <attribute code="delivery_comment" type="string"/>
+        <attribute code="delivery_error" type="string"/>
+    </extension_attributes>
+</config>

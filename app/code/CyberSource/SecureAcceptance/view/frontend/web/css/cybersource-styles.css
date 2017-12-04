@@ -1,0 +1,122 @@
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+    .cybersource-cards {
+        margin: 10px 0;
+    }
+
+    /* Force table to not be like tables anymore */
+    .cybersource-cards, .cybersource-cards thead, .cybersource-cards tbody, .cybersource-cards th, .cybersource-cards td, .cybersource-cards tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .cybersource-cards thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .cybersource-cards tr {
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    .cybersource-cards td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .cybersource-cards td:last-child {
+        border-bottom: 0;
+    }
+
+    .cybersource-cards td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    /*
+    Label the data
+    */
+    .cybersource-cards td:nth-of-type(1):before { content: "#"; }
+    .cybersource-cards td:nth-of-type(2):before { content: "Card Type"; }
+    .cybersource-cards td:nth-of-type(3):before { content: "CC Last 4"; }
+    .cybersource-cards td:nth-of-type(4):before { content: "Created At"; }
+    .cybersource-cards td:nth-of-type(5):before { content: "Updated At"; }
+    .cybersource-cards td:nth-of-type(6):before { content: "Action"; }
+    .cybersource-cards td:nth-of-type(7):before { content: "Action"; }
+
+    #cybersource-modal-content,
+    #sky-sale-modal-content { width: 100% !important; }
+    #cybersource-close-iframe {
+        margin-right: 0!important;
+    }
+}
+
+#sky-sale-modal-content iframe{
+    padding: 15px 0 0;
+}
+
+#cybersource-close-iframe {
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    position: relative;
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+    width: 40px;
+    height: 2px;
+    background: #ccc;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    float: right;
+    margin-right: -20px;
+    color: transparent;
+}
+#cybersource-close-iframe:before, #cybersource-close-iframe:after{
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: inherit;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    top: 0;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+#cybersource-frame {
+    padding: 15px 0 0;
+}
+
+.checkout-payment-method #checkout-payment-method-load hr { display: none; }
+.checkout-payment-method .step-title {  border-bottom: 0!important; padding-bottom: 0!important; }
+.checkout-payment-method .payment-method:first-child .payment-method-title {  border-top: 1px solid #ccc !important;  margin-bottom: 0; padding-bottom: 0; }
+.checkout-payment-method .payment-method .actions-toolbar { padding: 20px 0; }

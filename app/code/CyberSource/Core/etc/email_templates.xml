@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="payment_us_cybersource_section_cybersource_general_dm_fail_template" label="Cybersource DM fail email" file="dm_fail.html" type="html" module="CyberSource_Core" area="frontend"/>
+                 
+</config>

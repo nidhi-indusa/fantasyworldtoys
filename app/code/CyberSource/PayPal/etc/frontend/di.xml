@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="cybersource_paypal_config_provider" xsi:type="object">CyberSource\PayPal\Model\ExpressConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Payment\Model\CcGenericConfigProvider">
+        <arguments>
+            <argument name="methodCodes" xsi:type="array">
+                <item name="cybersourcepaypal" xsi:type="const">CyberSource\PayPal\Model\Ui\ConfigProvider::PAYPAL_CODE</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="CyberSource\PayPal\Block\Express\InContext\Minicart\Button">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">CyberSource_PayPal::express/in-context/shortcut/button.phtml</item>
+                <item name="alias" xsi:type="string">paypal.express-in-context.mini-cart</item>
+                <item name="button_id" xsi:type="string">paypal-express-in-context-mini-cart</item>
+                <item name="link_data_action" xsi:type="string">paypal-in-context-checkout</item>
+            </argument>
+            <argument name="payment" xsi:type="object">CyberSource\PayPal\Model\Payment</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Quote\Model\QuoteRepository\SaveHandler">
+        <plugin name="paypal-cartitem" type="CyberSource\PayPal\Model\Express\QuotePlugin"/>
+    </type>
+</config>

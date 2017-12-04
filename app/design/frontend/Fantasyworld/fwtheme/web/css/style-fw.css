@@ -1,0 +1,127 @@
+footer.footer{
+    background-image:url("../images/bg-footer.png");
+    background-size:cover;
+    color: #fff;
+}
+
+footer.footer .footer-info{
+    padding: 60px 130px 15px;
+}
+
+footer.footer a {
+    color:#fff;
+}
+
+footer.footer a:hover,
+footer.footer a:focus{
+    color:#8f8f8d;
+}
+
+footer.footer h3{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+
+}
+
+footer.footer img.footer-logo{
+    width: 145px;
+    margin-bottom: 50px;
+}
+
+footer.footer .copy-text{
+    color:#fff;    
+    padding: 20px;
+    background-color: rgba(0,0,0,0.10);
+}
+
+footer.footer .foot-links{
+    margin-top:60px;
+}
+
+footer.footer .footer-info ul.contacts-detail li a i{
+    width: 15px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+footer.footer .footer-info ul.contacts-detail li a:hover,
+footer.footer .footer-info ul.contacts-detail li a:focus{
+    color:#fff;
+}
+
+footer.footer a{
+    transition:all 0.25s ease-in-out;
+}
+
+
+    footer.footer .footer-info ul.contacts-detail li{
+        margin-bottom:25px;
+    }
+
+     footer.footer ul.links li{
+         margin-bottom:10px;
+     }
+
+     footer.footer ul li a{
+         text-decoration:none;
+     }
+
+     footer.footer .list-inline,
+     footer.footer .list-unstyled{
+         margin-bottom:0;
+         padding:0;
+     }
+
+     .social-icons{
+         font-size:30px;
+         margin-top:50px;
+     }
+
+     .social-icons i{
+         transition:all 0.25s ease-in-out;
+     }
+
+     .social-icons li:nth-child(1):hover i{
+         color:#125688;
+     }
+
+     .social-icons li:nth-child(2):hover i{
+         color:#3b5998;
+     }
+
+     .social-icons li:nth-child(3):hover i{
+         color:#bb0000;
+     }
+
+     .social-icons li:nth-child(4):hover i{
+         color:#007bb5;
+     }
+
+
+
+     /*Header starts*/
+
+    
+
+     /*Header starts*/
+
+
+     /*media starts*/
+
+     @media (min-width: 768px), print{
+
+        .page-header {
+            border: 0;
+            margin-bottom: 0;
+        }
+
+         .page-header .panel wrapper .header.panel{
+            max-width:none;
+         }
+
+     }
+
+     /*media starts*/

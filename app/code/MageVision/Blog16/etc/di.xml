@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * MageVision Blog16
+ *
+ * @category     MageVision
+ * @package      MageVision_Blog16
+ * @author       MageVision Team
+ * @copyright    Copyright (c) 2017 MageVision (https://www.magevision.com)
+ * @license      http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    
+     <preference for="Magento\OfflineShipping\Model\Carrier\Flatrate" type="MageVision\Blog16\Model\Carrier\Flatrate" />
+    
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="checkout-summary-product-attribute" type="MageVision\Blog16\Plugin\Checkout\Model\DefaultConfigProvider" sortOrder="2" />
+    </type>
+    
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="magevision_save_delivery_date_in_quote" type="MageVision\Blog16\Plugin\Checkout\Model\ShippingInformationManagement" sortOrder="3"/>
+    </type>    
+    
+    
+   
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="magevision_quote_to_order_item" type="MageVision\Blog16\Model\Plugin\Quote\QuoteToOrderItem"  sortOrder="4" />
+    </type>
+    
+    
+    <preference for="Magento\Checkout\Model\PaymentInformationManagement" type="MageVision\Blog16\Model\PaymentInformationManagement" />
+    
+    
+    
+</config>

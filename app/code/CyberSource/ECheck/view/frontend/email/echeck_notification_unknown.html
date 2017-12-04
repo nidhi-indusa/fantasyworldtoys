@@ -1,0 +1,33 @@
+<!--@subject{{trans "your %store_name order has unknown status" store_name=$store.getFrontendName()}}@-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">Hello</p>
+            <p>
+                {{trans
+                    "the payment for order id #%increment_id was paid for by echeck and we have received a payment status update that is not configured in magento.  The system has left the payment as 'pending'.  Please address this issue manually by checking to see if the echeck was accepted or rejected with your bank."
+
+                    increment_id=$data.order.increment_id
+                |raw}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend comment}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var comment|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="weltpixel_custom_footer" translate="label" type="text" sortOrder="135" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Custom Footer</label>
+            <tab>weltpixel</tab>
+            <resource>WeltPixel_CustomFooter::CustomFooterSettings</resource>
+            <group id="prefooter" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>PreFooter Settings</label>
+                <field id="enable" translate="label comment tooltip" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Make sure the static blocks are enabled and assigned to the proper store views.</comment>
+                    <tooltip>Displays prefooter section before the footer. In Content -> Blocks, the block with identifier name "weltpixel_pre-footer" can be edited.</tooltip>
+                </field>
+            </group>
+            <group id="footer" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Footer Settings</label>
+                <field id="enable" translate="label comment tooltip" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Make sure the static blocks are enabled and assigned to the proper store views.</comment>
+                </field>
+                <field id="version" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Footer Version</label>
+                    <source_model>WeltPixel\CustomFooter\Model\Config\Source\FooterVersion</source_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment>Choose footer version.</comment>
+                    <tooltip>Edit footer in Content -> Blocks. Find the block with identifier name "weltpixel_footer_v[x]", where x is the footer version.</tooltip>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

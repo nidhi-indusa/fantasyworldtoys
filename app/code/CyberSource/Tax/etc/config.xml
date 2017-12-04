@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <tax>
+            <cybersourcetax>
+                <tax_enabled>1</tax_enabled>
+                <tax_countries>US,CA,AI,AG,AR,AW,BS,BM,BO,BR,VG,CL,CO,CR,DO,EC,SV,GF,GD,GT,GY,HN,JM,MX,NI,PA,PE,KN,LC,TT,TC,UY,VE,AX,AL,DZ,AD,AT,AZ,BH,BY,BE,BG,TD,KM,CI,HR,CY,CZ,DK,EG,EE,FI,FR,GE,DE,GH,GI,GR,GG,GW,HU,IS,IR,IQ,IE,IL,IT,JE,JO,KZ,KW,KG,LV,LB,LI,LT,LU,MK,MV,MT,MD,ME,MA,NL,NG,NO,OM,PL,PT,QA,RO,RU,RW,SA,SN,RS,SK,SI,ZA,ES,SE,CH,SY,TN,TR,TM,UA,AE,GB,UZ,YE,ZM,ZW,AU,BN,CN,PF,GU,HK,ID,JP,MO,MY,MH,NR,NZ,MP,PK,PH,SG,KR,LK,TW,TH,VN,WF</tax_countries>
+            </cybersourcetax>
+        </tax>
+    </default>
+</config>

@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="ecommerce_webservices" sortOrder="999" translate="label">
+			<label>Integration Webservices </label>
+		</tab>
+		<section id="ecommerce_webservice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>Magento Webservice Credential</label>
+			<tab>ecommerce_webservices</tab>
+			<resource>Indusa_Webservices::config_indusa_webservices</resource>
+			<group id="webservice_credential" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>Magento Webservice Credential</label>
+				<field id="username" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Username</label>					
+				</field>
+				<field id="password" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Password</label>					
+				</field>
+			</group>
+		</section>
+        <section id="ack_webservice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>AX Webservice Credential</label>
+			<tab>ecommerce_webservices</tab>
+			<resource>Indusa_Webservices::config_indusa_webservices</resource>
+			<group id="ack_credential" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>AX Webservice Credential</label>
+                    <field id="ack_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>AX Acknowledgement API URL</label>					
+				</field>
+				<field id="order_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>AX Order API URL</label>					
+				</field>
+				
+				<field id="username" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Username</label>					
+				</field>
+				<field id="password" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Password</label>					
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

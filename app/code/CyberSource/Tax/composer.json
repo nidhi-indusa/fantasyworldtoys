@@ -1,0 +1,20 @@
+{
+    "name": "cybersource/module-tax",
+    "description": "CyberSource Tax Module for Magento 2",
+    "type": "magento2-module",
+    "version": "2.0.4",
+    "license": [
+        "proprietary"
+    ],
+    "require": {
+        "php": "~5.6.5|7.0.2|7.0.4|~7.0.6",
+        "magento/framework": "100.1.*",
+        "cybersource/module-core": "2.0.4"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "CyberSource\\Tax\\": ""
+        }
+    }
+}

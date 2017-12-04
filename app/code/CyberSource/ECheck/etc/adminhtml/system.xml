@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="cybersource_section" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="cybersourceecheck" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>E-Check</label>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/cybersourceecheck/active</config_path>
+                    </field>
+                    <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Title</label>
+                        <config_path>payment/cybersourceecheck/title</config_path>
+                    </field>
+                    <field id="is_test" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Use test environment?</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/cybersourceecheck/is_test</config_path>
+                    </field>
+                    <field id="accept_event_type" translate="label" type="multiselect" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Accept Event Type</label>
+                        <source_model>CyberSource\ECheck\Model\Adminhtml\Source\EventType</source_model>
+                        <config_path>payment/cybersourceecheck/accept_event_type</config_path>
+                    </field>
+                    <field id="pending_event_type" translate="label" type="multiselect" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Pending Event Type</label>
+                        <source_model>CyberSource\ECheck\Model\Adminhtml\Source\EventType</source_model>
+                        <config_path>payment/cybersourceecheck/pending_event_type</config_path>
+                    </field>
+                    <field id="reject_event_type" translate="label" type="multiselect" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Reject Event Type</label>
+                        <source_model>CyberSource\ECheck\Model\Adminhtml\Source\EventType</source_model>
+                        <config_path>payment/cybersourceecheck/reject_event_type</config_path>
+                    </field>
+                    <field id="test_event_type" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Test Event Type</label>
+                        <source_model>CyberSource\ECheck\Model\Adminhtml\Source\EventType</source_model>
+                        <config_path>payment/cybersourceecheck/test_event_type</config_path>
+                    </field>
+                    <field id="test_service_url" translate="label" type="text" sortOrder="48" showInDefault="1" showInWebsite="1">
+                        <label>Test Service URL</label>
+                        <config_path>payment/cybersourceecheck/test_service_url</config_path>
+                    </field>
+                    <field id="service_url" translate="label" type="text" sortOrder="49" showInDefault="1" showInWebsite="1">
+                        <label>Service URL</label>
+                        <config_path>payment/cybersourceecheck/service_url</config_path>
+                    </field>
+                    <field id="merchant_username" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1">
+                        <label>Merchant Username</label>
+                        <config_path>payment/cybersourceecheck/merchant_username</config_path>
+                    </field>
+                    <field id="merchant_password" translate="label" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1">
+                        <label>Merchant password</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/cybersourceecheck/merchant_password</config_path>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="130" showInDefault="9"
+                           showInWebsite="1" showInStore="0">
+                        <label>Payment From Applicable Countries</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="140" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
+                        <label>Payment From Specific Countries</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    </field>
+                    <field id="report_check_period" translate="label" type="text" sortOrder="145" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Report check period, days</label>
+                        <config_path>payment/cybersourceecheck/report_check_period</config_path>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Sort Order</label>
+                        <config_path>payment/cybersourceecheck/sort_order</config_path>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

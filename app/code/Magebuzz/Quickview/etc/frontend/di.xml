@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @copyright Copyright (c) 2016 www.magebuzz.com
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Result\Page">
+        <plugin name="magebuzz-quickview-resultpage"
+                type="Magebuzz\Quickview\Plugin\ResultPage" sortOrder="1"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\View">
+        <plugin name="magebuzz-quickview-block-product-view"
+                type="Magebuzz\Quickview\Plugin\BlockProductView" sortOrder="1"/>
+    </type>
+     <type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="magebuzz-quickview-block-product-list"
+                type="Magebuzz\Quickview\Plugin\BlockProductList"
+                sortOrder="10"/>
+    </type>
+</config>

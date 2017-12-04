@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="cybersource_section" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="cybersourcepaypal" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>PayPal Express Checkout</label>
+                    <comment>Add PayPal as an additional payment method to your checkout page.</comment>
+                    <field id="active" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/cybersourcepaypal/active</config_path>
+                    </field>
+                    <field id="title" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Title</label>
+                        <config_path>payment/cybersourcepaypal/title</config_path>
+                    </field>
+                    <field id="merchant_id" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>MerchantID</label>
+                        <config_path>payment/cybersourcepaypal/paypal_merchant_id</config_path>
+                    </field>
+                    <field id="test_mode" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Test Mode</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/cybersourcepaypal/paypal_test_mode</config_path>
+                    </field>
+                    <field id="payment_action" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Payment Action</label>
+                        <source_model>CyberSource\PayPal\Model\Source\PaymentAction</source_model>
+                        <config_path>payment/cybersourcepaypal/paypal_payment_action</config_path>
+                    </field>
+                    <field id="order_status" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>New order status</label>
+                        <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+                        <config_path>payment/cybersourcepaypal/order_status</config_path>
+                    </field>
+                    <field id="redirection_type" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>PayPal Redirection Type</label>
+                        <comment>
+                            <![CDATA[<b>Traditional Express Checkout</b>: Customer will be redirect to PayPal Payment Page.<br>
+                            <b>In-Context Express Checkout</b>: A PayPal popup will appear to customer complete payment.]]>
+                        </comment>
+                        <source_model>CyberSource\PayPal\Model\Source\RedirectionType</source_model>
+                        <config_path>payment/cybersourcepaypal/paypal_redirection_type</config_path>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Payment from Applicable Countries</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/cybersourcepaypal/allowspecific</config_path>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Payment from Specific Countries</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/cybersourcepaypal/specificcountry</config_path>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Sort Order</label>
+                        <config_path>payment/cybersourcepaypal/sort_order</config_path>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

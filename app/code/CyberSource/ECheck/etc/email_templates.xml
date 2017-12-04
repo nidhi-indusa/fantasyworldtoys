@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="cybersource_echeck_unknown" label="Cybersource Echeck notification" file="echeck_notification_unknown.html" type="html" module="CyberSource_ECheck" area="frontend"/>
+    <template id="cybersource_echeck_multi" label="Cybersource Echeck multi notification" file="echeck_notification_multi.html" type="html" module="CyberSource_ECheck" area="frontend"/>
+</config>

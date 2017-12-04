@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Indusa_Webservices::parent" title="Webservices" module="Indusa_Webservices" sortOrder="100" resource="Indusa_Webservices::parent"/>
+		<add id="Indusa_Webservices::requestqueue" title="Indusa Webservices" module="Indusa_Webservices" sortOrder="20" parent="Indusa_Webservices::parent" action="webservices/requestqueue" resource="Indusa_Webservices::requestqueue"/>
+    </menu>
+</config>

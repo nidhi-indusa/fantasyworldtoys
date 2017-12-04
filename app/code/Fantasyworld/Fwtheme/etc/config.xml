@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <fwthemesettings>
+            <navigation_settings>
+                <enable>1</enable>
+            </navigation_settings>
+            <newsletter_settings>
+                <enable>1</enable>
+                <title>Sign Up For Newsletter</title>
+                <title>Sign Up For Newsletter</title>
+                <newsletter_static>footer-socials</newsletter_static>
+            </newsletter_settings>
+            <footer_columns>
+                <enable_footer_columns>1</enable_footer_columns>
+                <footer_nd_column>footer_myaccount</footer_nd_column>
+                <footer_rd_column>footer_payment_shipping</footer_rd_column>
+            </footer_columns>
+            <footer_contant>
+                <address>123, demo street, city, state country </address>
+                <email>info@fantasyworld.com</email>
+                <phone>+1 123 456 7890</phone>
+            </footer_contant>
+            <footer_bottom>
+                <enable_footer_bottom>1</enable_footer_bottom>
+                <copyright_text>Copyright 2016 Fantasyworld. All rights reserved.</copyright_text>
+                <copyright_right_block>payment-icons</copyright_right_block>
+            </footer_bottom>
+            <customcss>
+                <custom_css></custom_css>
+            </customcss>
+        </fwthemesettings>
+    </default>
+</config>

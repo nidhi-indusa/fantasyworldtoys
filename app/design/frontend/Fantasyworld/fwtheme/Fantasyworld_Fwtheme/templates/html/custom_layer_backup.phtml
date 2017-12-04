@@ -1,0 +1,65 @@
+<li class="gift-finder-wrapper">
+   <a href="javascript:void(0)" class="gift-finder-btn"><i class="fa fa-gift"></i> <?php echo __('Gift Finder')?> <i class="fa fa-sort-desc pull-right"></i></a>
+   <div class="gift-finder-dropdown">
+      <?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_v3')->toHtml();?>
+      <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('layer_nav_block')->toHtml();?>
+	  <form>
+	<div class="form-group">
+		<label for="">Age Group</label>
+		<select class="form-control">
+			<option>1-3</option>
+			<option>3-8</option>
+			<option>8-10</option>
+			<option>10-13</option>
+		</select>
+	</div>
+	
+	<div class="form-group">
+		<div>
+			<label for="">Gender</label>
+		</div>
+		<label class="radio-inline">
+		  <input type="radio" name="boysGift" id="boysGift" value="boysGift"> Boys
+		</label>
+		<label class="radio-inline">
+		  <input type="radio" name="boysGift" id="boysGift" value="boysGift"> Girls
+		</label>
+		<label class="radio-inline">
+		  <input type="radio" name="boysGift" id="boysGift" value="boysGift" selected> Both
+		</label>
+	</div>
+	
+	<div class="form-group">
+		<label for="">Price</label>
+	</div>
+	
+  <!--<button type="submit" class="btn btn-default btn-red pull-right">Find Gift</button>-->
+</form>
+	  
+   </div>
+</li>
+
+<script>// <![CDATA[
+        require([
+            'jquery'
+        ], function ($) {
+			
+            $(document).ready(function() {				
+				//Toggle gift finder
+				$(".gift-finder-btn").click(function(){
+					$(".gift-finder-wrapper").find(".gift-finder-dropdown").toggle();
+				});
+			   
+				//Hide gift finder outside click
+				//$(document).mouseup(function(e){
+					//var container = $(".gift-finder-dropdown");
+					////if the target of the click isn't the container nor a descendant of the container
+					//if (!container.is(e.target) && container.has(e.target).length === 0){
+					//	container.hide();
+					//}
+				//});			   
+			});
+		  
+        });
+        // ]]>
+</script>

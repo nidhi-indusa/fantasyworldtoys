@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <cybersourcepaypal>
+                <active>1</active>
+                <model>CyberSource\PayPal\Model\Payment</model>
+                <title>CyberSource PayPal</title>
+                <paypal_payment_action>authorize_capture</paypal_payment_action>
+                <paypal_redirection_type>traditional</paypal_redirection_type>
+                <paypal_test_mode>1</paypal_test_mode>
+                <paypal_order_status>processing</paypal_order_status>
+                <paypal_allowspecific>0</paypal_allowspecific>
+            </cybersourcepaypal>
+        </payment>
+    </default>
+</config>

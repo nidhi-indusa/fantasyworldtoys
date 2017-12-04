@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="cybersource_section" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="cybersource_sop" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                	<label>Secure Acceptance Silent Order Post (SOP)</label>
+                    <field id="sop_profile_id" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Profile Id</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/sop_profile_id</config_path>
+                    </field>
+                    <field id="sop_secret_key" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Secret Key</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/sop_secret_key</config_path>
+                    </field>
+                    <field id="sop_access_key" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Access Key</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/sop_access_key</config_path>
+                    </field>
+                    <field id="sop_service_url" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Service URL</label>
+                        <config_path>payment/chcybersource/sop_service_url</config_path>
+                    </field>
+                    <field id="sop_service_url_test" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Service URL for tests</label>
+                        <config_path>payment/chcybersource/sop_service_url_test</config_path>
+                    </field>
+                </group>
+                <group id="cybersource" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secure Acceptance Web/Mobile</label>
+                    <field id="secret_key" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Secret Key</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/secret_key</config_path>
+                    </field>
+                    <field id="profile_id" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Profile Id</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/profile_id</config_path>
+                    </field>
+                    <field id="access_key" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Access Key</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/chcybersource/access_key</config_path>
+                    </field>
+                    <field id="use_iframe" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Use Iframe</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/use_iframe</config_path>
+                    </field>
+                    <field id="ignore_avs" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Ignore AVS</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/ignore_avs</config_path>
+                    </field>
+                    <field id="ignore_cvn" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="1">
+                        <label>Ignore CVN</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/chcybersource/ignore_cvn</config_path>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

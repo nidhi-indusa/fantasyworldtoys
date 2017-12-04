@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+       <move element="page.main.title" destination="product.info.main" before="-"/>
+        <move element="product.info.review" destination="product.info.main" after="page.main.title"/>
+        <move element="product.price.final" destination="product.info.main" after="product.info.review"/>
+         <move element="product.info.extrahint" destination="product.info.main" after="product.info.addto"/>
+<!--        <move element="product.info.sku" destination="product.info.main" after="product.info.review"/>-->
+        
+        
+        <move element="product.info" destination="product.info.main" after="product.price.final"/>
+        
+        <move element="product.info.sku" destination="custom-content" after="product.info.addto"/>
+        <move element="product.info.stock.sku" destination="custom-content" after="product.info.addto"/>
+        
+        <referenceContainer name="main.content"> 
+        
+            <block class="Fantasyworld\Customcategory\Block\Product\View\Categories"
+                   name="product.view.categories"
+                   template="Fantasyworld_Customcategory::product/view/categories.phtml"
+                   before="-">
+            </block>
+        </referenceContainer> 
+        <referenceBlock name="product.info.details">
+          <referenceBlock name="product.info.description">
+            <arguments>
+               <argument name="title" translate="true" xsi:type="string">Description</argument>
+                <argument name="priority" xsi:type="string">1</argument>
+            </arguments>
+            </referenceBlock>   
+            <block class="Magento\Catalog\Block\Product\View\Description" name="product.specifications" as="specifications" template="product/view/specifications.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Specifications</argument>
+                    <argument name="priority" xsi:type="string">2</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\View\Description" name="product.addinformation" as="addinformation" template="product/view/addinformation.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Additonal Information</argument>
+                    <argument name="priority" xsi:type="string">3</argument>
+                </arguments>
+            </block>
+         <referenceBlock name="reviews.tab">
+            <arguments>
+                 <argument name="title" translate="true" xsi:type="string">Review</argument>    
+                <argument name="priority" xsi:type="string">4</argument>
+            </arguments>
+        </referenceBlock>
+    </referenceBlock>
+        <referenceContainer name="product.info.main">
+            
+             <container name="custom-content" as="custom-content" label="Page Custom Content" htmlTag="div" htmlClass="custom-content">
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.websiteonly" as="product.info.websiteonly" template="product/view/websiteonly.phtml" after="product.info.stock.sku">
+                        <arguments>
+                            <argument name="at_call" xsi:type="string">getWebsiteOnly</argument>
+                            <argument name="at_code" xsi:type="string">website_only</argument>
+                            <argument name="css_class" xsi:type="string">website_only</argument>
+                            <argument name="at_label" xsi:type="string">WebsiteOnly</argument>
+                            <argument name="add_attribute" xsi:type="string">itemprop="website_only"</argument>
+                        </arguments>
+                </block>
+            </container> 
+            
+            
+             <container name="website-content" as="website-content" label="Page Website Content" htmlTag="div" htmlClass="website-content">
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.ishomedelivery" as="product.info.ishomedelivery" template="product/view/ishomedelivery.phtml" after="product.info.addto">
+                        <arguments>
+                            <argument name="at_call" xsi:type="string">getIsHomedelivery</argument>
+                            <argument name="at_code" xsi:type="string">is_homedelivery</argument>
+                            <argument name="css_class" xsi:type="string">is_homedelivery</argument>
+                            <argument name="at_label" xsi:type="string">is_homedelivery</argument>
+                            <argument name="add_attribute" xsi:type="string">itemprop="is_homedelivery"</argument>
+                        </arguments>
+                </block>
+            </container> 
+            
+            
+            
+<!--            <container name="custom-content" as="custom-content" label="Page Custom Content" htmlTag="div" htmlClass="custom-content">
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.webenabled" template="product/view/webenabled.phtml" after="product.info.stock.sku">
+                        <arguments>
+                            <argument name="at_call" xsi:type="string">getWebEnabled</argument>
+                            <argument name="at_code" xsi:type="string">web_enabled</argument>
+                            <argument name="css_class" xsi:type="string">web_enabled</argument>
+                            <argument name="at_label" xsi:type="string">Web Enabled</argument>
+                            <argument name="add_attribute" xsi:type="string">itemprop="web_enabled"</argument>
+                        </arguments>
+                </block>
+            </container>-->
+        
+            <container name="my.custom.video" htmlTag="div" htmlClass="my-custom-video" >
+                   <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.video" template="product/view/video.phtml" after="product.info.extrahint">
+                       <arguments>
+                           <argument name="at_call" xsi:type="string">getVideo</argument>
+                           <argument name="at_code" xsi:type="string">video</argument>
+                           <argument name="css_class" xsi:type="string">video</argument>
+                           <argument name="at_label" xsi:type="string">video</argument>
+                           <argument name="add_attribute" xsi:type="string">itemprop="video"</argument>
+                       </arguments>
+                   </block>
+            </container>
+        
+        
+      
+        
+    </referenceContainer>
+      
+      
+      <move element="catalog.product.related" destination="content.bottom" before="-"/>        
+      <move element="my.custom.video" destination="content.aside" />
+      
+      <move element="website-content" destination="product.info.extrahint" before="product.info.social" />
+      <move element="socialshare" destination="product.info.social" after="-" />
+	  
+      
+      
+     
+    </body>
+</page>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+ /* echo $block->getIdPath();echo  "<br>"; */
+ 
+  $idPath1 = explode('/', $block->getIdPath());
+ /* echo $idPath1[1]; */
+ $product = $objectManager->create('Magento\Catalog\Model\Product')->load($idPath1[1]);
+$imagewidth=200;
+$imageheight=200;
+$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+$image_url = $imageHelper->init($product, 'product_page_image_small')->setImageFile($product->getFile())->resize($imagewidth, $imageheight)->getUrl();
+$abstractProductBlock = $block->getLayout()->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+// @codingStandardsIgnoreFile
+?>
+<div class="widget block block-product-link">
+<h4 class="category-title"><?php /* @escapeNotVerified */ echo __('Hot Seller');?></h4>
+	<div class="product-img-main">
+		<a <?php /* @escapeNotVerified */ echo $block->getLinkAttributes() ?>>
+			<img src="<?php echo $image_url;?>" class="product-image-photo">
+		</a>
+		</div>
+		<a class="product-item-link" <?php /* @escapeNotVerified */ echo $block->getLinkAttributes() ?>>
+			<span><?php echo $block->escapeHtml($block->getLabel()) ?></span>	
+			<?php echo $abstractProductBlock->getProductPrice($product); ?>
+		</a>	
+	
+</div>

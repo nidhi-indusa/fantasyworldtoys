@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="CyberSource_Address" setup_version="1.0.0" active="true">
+        <sequence>
+            <module name="CyberSource_Core" />
+            <module name="CyberSource_SecureAcceptance" />
+        </sequence>
+    </module>
+</config>

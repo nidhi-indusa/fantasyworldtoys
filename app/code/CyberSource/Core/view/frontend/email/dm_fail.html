@@ -1,0 +1,41 @@
+<!--@subject{{trans "your %store_name order has been cancelled" store_name=$store.getFrontendName()}}@-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "%name," name=$data.order.getCustomerName()}}</p>
+            <p>
+                {{trans
+                    "Your order #%increment_id has been cancelled by our fraud detection system. <strong>%order_status</strong>."
+
+                    increment_id=$data.order.increment_id
+                    order_status=$data.order.getStatusLabel()
+                |raw}}
+            </p>
+            
+            <p>
+                {{trans 'We appologize for any inconvience and urge you to contact us by email: <a href="mailto:%store_email">%store_email</a>' store_email=$store_email |raw}}{{depend store_phone}} {{trans 'or call us at <a href="tel:%store_phone">%store_phone</a>' store_phone=$store_phone |raw}}{{/depend}} if you believe this was cancelled in error.
+                {{depend store_hours}}
+                    {{trans 'Our hours are <span class="no-link">%store_hours</span>.' store_hours=$store_hours |raw}}
+                {{/depend}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend comment}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var comment|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @copyright Copyright (c) 2016 www.magebuzz.com
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magebuzz_Quickview::quickview" title="Quick View" module="Magebuzz_Quickview" action="adminhtml/system_config/edit/section/magebuzz_quickview/" sortOrder="60" resource="Magebuzz_Quickview::quickview"/>
+    </menu>
+</config>

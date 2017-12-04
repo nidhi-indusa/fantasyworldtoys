@@ -1,0 +1,65 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php
+    $_helper    = $this->helper('Magento\Catalog\Helper\Output');
+    $_category  = $block->getCurrentCategory();
+    $_imgHtml   = '';
+    if ($_imgUrl = $_category->getImageUrl()) {
+        $_imgHtml = '<div class="category-image"><img src="' . $_imgUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="' . $block->escapeHtml($_category->getName()) . '" class="image" /></div>';
+        $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+        /* @escapeNotVerified */ echo $_imgHtml;
+    }
+?>
+  <section class="info-icon-sec">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="fw-search-product">
+              <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('search_listbar')->toHtml();?>
+<!--            <form action="/search" class="fw-search-product_form">
+              <input name="type" value="product" type="hidden">
+              <input name="q" placeholder="Search within:" required="" type="search">
+              <button class="btn-search">
+                <i class="fa fa-search"></i>
+              </button>
+            </form>-->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class=" fw-policy f-gray clearfix">
+            <span class="col-sm-3 fw-policy_item text-center">
+                <span class="fw-policy_icon shipping_icon"></span>
+                <span><?php /* @escapeNotVerified */ echo __('Fast Shipping') ?></span>             
+            </span>
+            <span class="col-sm-3 fw-policy_item text-center">
+                <span class="fw-policy_icon payment_icon"></span>
+                <span><?php /* @escapeNotVerified */ echo __('Easy Payment') ?></span>             
+            </span>
+            <span class="col-sm-3 fw-policy_item text-center">
+                <span class="fw-policy_icon pay-collect_icon"></span>
+                <span><?php /* @escapeNotVerified */ echo __('Pay and Collect') ?></span>            
+            </span>
+            <span class="col-sm-3 fw-policy_item text-center">
+                <span class="fw-policy_icon gaurantee_icon"></span>
+                <span><?php /* @escapeNotVerified */ echo __('100% Guarantee') ?></span>             
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+

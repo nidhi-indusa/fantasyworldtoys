@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2016 CollinsHarper. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <chcybersource>
+                <active>1</active>
+                <dm_fail_sender>general</dm_fail_sender>
+                <secureacceptance_type>web</secureacceptance_type>
+                <service_url>https://secureacceptance.cybersource.com</service_url>
+                <service_url_test>https://testsecureacceptance.cybersource.com</service_url_test>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <address_check_enabled>1</address_check_enabled>
+                <address_force_normal>0</address_force_normal>
+                <sort_order>10</sort_order>
+                <fingerprint_enabled>1</fingerprint_enabled>
+                <payment_processor>aibms</payment_processor>
+                <pending_order_status>pending_payment</pending_order_status>
+                <path_to_wsdl>https://ics2wsa.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.137.wsdl</path_to_wsdl>
+                <path_to_test_wsdl>https://ics2wstesta.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.137.wsdl</path_to_test_wsdl>
+                <enable_dm_cron>1</enable_dm_cron>
+            </chcybersource>
+        </payment>
+    </default>
+</config>

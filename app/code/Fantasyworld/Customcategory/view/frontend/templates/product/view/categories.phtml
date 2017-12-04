@@ -1,0 +1,15 @@
+<?php
+    /** @var \Magento\Catalog\Model\Category $categories */
+    $categories = $this->getCategories();
+?>
+<?php if ($categories->getSize() > 0): ?>
+<div class="category-name-banner" id="product.view.categories">
+    <?php  foreach($categories as $category): ?>
+    <?php endforeach; ?>
+    <?php
+    $_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $object_manager = $_objectManager->create('Magento\Catalog\Model\Category')->load($category->getId());
+    ?>
+   <a class="category-<?php echo $object_manager->getUrlKey() ?>" href="<?php echo $category->getUrl() ?>"><?php echo $category->getName() ?></a>
+</div>
+<?php endif; ?>

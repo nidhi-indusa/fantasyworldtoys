@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Configuration reader -->
+    <type name="CyberSource\PayPal\Model\Config">
+        <arguments>
+            <argument name="pathPattern" xsi:type="const">Magento\Payment\Gateway\Config\Config::DEFAULT_PATH_PATTERN</argument>
+            <argument name="methodCode" xsi:type="const">CyberSource\PayPal\Model\Ui\ConfigProvider::PAYPAL_CODE</argument>
+        </arguments>
+    </type>
+
+    <preference for="CyberSource\PayPal\Helper\Shortcut\ValidatorInterface" type="CyberSource\PayPal\Helper\Shortcut\Validator"/>
+    <preference for="Magento\Paypal\Helper\Shortcut\Validator" type="CyberSource\PayPal\Helper\Shortcut\Validator"/>
+    <type name="CyberSource\PayPal\Block\Express\Shortcut">
+        <arguments>
+            <argument name="paymentMethodCode" xsi:type="const">CyberSource\PayPal\Model\Config::CODE</argument>
+            <argument name="startAction" xsi:type="string">cybersourcepaypal/express/start/button/1</argument>
+            <argument name="checkoutType" xsi:type="string">Magento\Paypal\Model\Express\Checkout</argument>
+            <argument name="alias" xsi:type="string">product.info.addtocart.paypal</argument>
+            <argument name="shortcutTemplate" xsi:type="string">express/shortcut.phtml</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,26 @@
+<?php
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+$_code = $block->getAtCode();
+$_className = $block->getCssClass();
+$_attributeLabel = $block->getAtLabel();
+$_attributeType = $block->getAtType();
+$_attributeAddAttribute = $block->getAddAttribute();
+if ($_attributeLabel && $_attributeLabel == 'default') {
+$_attributeLabel = $_product->getResource()->getAttribute($_code)->getFrontendLabel();
+}
+$_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()->getValue($_product);
+?>
+<?php if ($_attributeValue): ?>
+<?php 
+if ($_attributeValue == 'Yes'){
+?>
+    <div class="website-only"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo __(' Available for Home Delivery Only');?></div>
+<?php	
+}else{
+?>
+    <div class="click-and-collect"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <?php echo __(' Available for Home Delivery & Click and Collect');?></div>
+<?php	
+}
+?>
+<?php endif; ?>

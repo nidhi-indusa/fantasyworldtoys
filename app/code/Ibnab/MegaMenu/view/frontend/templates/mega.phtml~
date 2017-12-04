@@ -1,0 +1,16 @@
+<script>
+    
+    require([
+        'jquery',
+        'dcmegamenu',
+        'hoverIntent'
+    ], function ($) {
+       
+         	$('#mega-menu-7').dcMegaMenu({
+		rowItems: '3',
+		speed: 'fast',
+		effect: 'slide'
+	});
+          
+    });
+</script>

@@ -1,0 +1,307 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Multishipping checkout billing information
+ *
+ * @var $block \CyberSource\SecureAcceptance\Block\Checkout\Billing
+ */
+
+    $vaults = $block->getVaults();
+    $address = $this->getAddress();
+?>
+<form action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>" method="post" id="multishipping-billing-form" class="form multicheckout billing">
+    <div class="block block-billing">
+        <div class="block-content">
+            <div class="box box-billing-address">
+                <strong class="box-title">
+                    <span><?php /* @escapeNotVerified */ echo __('Billing Address') ?></span>
+                    <a href="<?php /* @escapeNotVerified */ echo $block->getSelectAddressUrl() ?>" class="action"><span><?php /* @escapeNotVerified */ echo __('Change') ?></span></a>
+                </strong>
+                <div class="box-content">
+                    <?php $_address = $block->getAddress() ?>
+                    <address><?php /* @escapeNotVerified */ echo $_address->format('html') ?></address>
+                </div>
+            </div>
+            <div class="box box-billing-method">
+                <fieldset class="fieldset">
+                    <legend class="legend box-title"><span><?php /* @escapeNotVerified */ echo __('Payment Method') ?></span></legend><br>
+                    <div class="box-content">
+                        <?php echo $block->getChildHtml('payment_methods_before') ?>
+                        <?php /* Payment methods forms list */ ?>
+                        <dl class="items methods-payment" id="payment-methods">
+                            <?php
+                            $_methods       = $block->getMethods();
+                            $_methodsCount  = count($_methods);
+                            ?>
+                            <?php foreach ($_methods as $_method): $_code = $_method->getCode() ?>
+                                <dt class="item-title">
+                                    <?php if ($_methodsCount > 1): ?>
+                                        <input type="radio" id="p_method_<?php /* @escapeNotVerified */ echo $_code ?>" value="<?php /* @escapeNotVerified */ echo $_code ?>" name="payment[method]" title="<?php echo $block->escapeHtml($_method->getTitle()) ?>" <?php if ($block->getSelectedMethodCode() == $_code): ?> checked="checked"<?php endif; ?> class="radio"/>
+                                    <?php else : ?>
+                                        <input type="radio" id="p_method_<?php /* @escapeNotVerified */ echo $_code ?>" value="<?php /* @escapeNotVerified */ echo $_code ?>" name="payment[method]" checked="checked" class="radio solo method"/>
+                                    <?php endif; ?>
+                                    <label for="p_method_<?php /* @escapeNotVerified */ echo $_code ?>"><?php echo $block->escapeHtml($_method->getTitle()) ?></label>
+                                </dt>
+                                <?php if ($_code === \CyberSource\SecureAcceptance\Model\Payment::CODE): ?>
+                                    <select name="payment[method]" id="chcybersource_tokens" style="display:none">
+                                        <?php foreach ($vaults as $vault): ?>
+                                            <option value="<?php /* @escapeNotVerified */ echo $_code . "_vault_" . $vault['id'] ?>"><?php echo $block->escapeHtml($vault['title']) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <br />
+                                    <div class="box-content">
+                                        <a id="create-token" class="action continue" href="#"><span>Create new token</span></a>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($html = $block->getChildHtml('payment.method.' . $_code)) : ?>
+                                    <dd class="item-content">
+                                        <?php /* @escapeNotVerified */ echo $html; ?>
+                                    </dd>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </dl>
+                        <?php echo $block->getChildHtml('payment_methods_after') ?>
+                        <?php echo $block->getChildHtml('checkout_billing_items') ?>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button id="payment-continue" type="submit" class="action primary continue"><span><?php /* @escapeNotVerified */ echo __('Go to Review Your Order') ?></span></button>
+        </div>
+        <div class="secondary">
+            <a href="<?php /* @escapeNotVerified */ echo $block->getBackUrl() ?>" class="action back"><span><?php /* @escapeNotVerified */ echo __('Back to Shipping Information') ?></span></a>
+        </div>
+    </div>
+</form>
+
+<script>
+require(
+    [
+        'jquery',
+        'Magento_Ui/js/modal/modal',
+        'mage/mage'
+    ],
+    function(
+        $,
+        modal
+    ) {
+
+    if ($('input[value="chcybersource"]').is(":checked")) {
+        $('#chcybersource_tokens').show();
+    }
+
+    $('input[type="radio"]').bind('change',function(){
+        var showOrHide = ($(this).val() === "chcybersource") ? true : false;
+        $('#chcybersource_tokens').toggle(showOrHide);
+    });
+
+    var addtocartForm = $('#multishipping-billing-form');
+    addtocartForm.mage('payment', {
+        checkoutPrice: <?php echo (float)$block->getQuoteBaseGrandTotal(); ?>
+    });
+    addtocartForm.mage('validation', {
+        errorPlacement: function(error, element) {
+            if (element.attr('data-validate') && element.attr('data-validate').indexOf('validate-cc-ukss') >= 0) {
+                 element.parents('form').find('[data-validation-msg="validate-cc-ukss"]').html(error);
+            } else {
+                 element.after(error);
+            }
+        }
+    });
+});
+</script>
+
+<?php if ($block->isSilentPost()): ?>
+    <div id="silent-form-placeholder"></div>
+    <!-- Modal -->
+    <div id="tokenModal" class="modal fade" style="display:none;" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="form-create-token">
+                        <div class="field cc_type required">
+                            <label class="label" for="cc_type"><span><?php /* @escapeNotVerified */ echo __('Card Type') ?></span></label>
+                            <div class="control">
+                                <select name="cc_type" id="cc_type">
+                                    <?php foreach ($this->getCcTypes() as $ccType): ?>
+                                        <option value="<?php echo $ccType['code']; ?>"><?php echo __($ccType['name']); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field cc_number required">
+                            <label class="label" for="cc_number"><span><?php /* @escapeNotVerified */ echo __('Card Number') ?></span></label>
+                            <div class="control">
+                                <input type="text" name="cc_number" id="cc_number" data-validate="{'required-entry':true, 'validate-cc-number':true, 'validate-number':true}"/>
+                            </div>
+                        </div>
+                        <div class="field cc_type required">
+                            <label class="label" for="cc_exp_month"><span><?php /* @escapeNotVerified */ echo __('Card Expiry Month') ?></span></label>
+                            <div class="control">
+                                <select name="cc_type" id="cc_exp_month">
+                                    <?php for ($i = 0; $i < 12; $i++): ?>
+                                        <option value="<?php echo ($i < 9) ? '0' . ($i + 1) : ($i + 1); ?>"><?php echo ($i < 9) ? '0' . ($i + 1) : ($i + 1); ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                            <label class="label" for="cc_exp_year"><span><?php /* @escapeNotVerified */ echo __('Card Expiry Year') ?></span></label>
+                            <div class="control">
+                                <select name="cc_exp_year" id="cc_exp_year">
+                                    <?php for ($i = 0; $i < 10; $i++): ?>
+                                        <option value="<?php echo (date('Y') + $i); ?>"><?php echo (date('Y') + $i); ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field cvv required">
+                            <label class="label" for="cvv"><span><?php /* @escapeNotVerified */ echo __('CVV') ?></span></label>
+                            <div class="control">
+                                <input type="text" name="cvv" id="cvv" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        require(
+            [
+                'jquery',
+                'Magento_Ui/js/modal/modal'
+            ],
+            function (
+                jQuery,
+                modal,
+            ) {
+                'use strict';
+                var options = {
+                    type: 'popup',
+                    responsive: true,
+                    innerScroll: true,
+                    title: 'Create new token',
+                    buttons: [{
+                        text: jQuery.mage.__('Close'),
+                        class: '',
+                        click: function () {
+                            this.closeModal();
+                        }
+                    },{
+                        text: jQuery.mage.__('Continue'),
+                        class: 'action primary',
+                        click: function () {
+                            var me = this;
+                            var url = "<?php echo $block->getSignedUrl(); ?>";
+                            jQuery.post(url,
+                                {
+                                    firstname: "<?php echo $address->getData('firstname'); ?>",
+                                    lastname: "<?php echo $address->getData('lastname'); ?>",
+                                    street_1: "<?php echo str_replace("\n", '', $address->getData('street')); ?>",
+                                    city: "<?php echo $address->getData('city'); ?>",
+                                    telephone: "<?php echo $address->getData('telephone'); ?>",
+                                    region_id: "<?php echo $address->getData('region_id'); ?>",
+                                    zip: "<?php echo $address->getData('postcode'); ?>",
+                                    country: "<?php echo $address->getData('country_id'); ?>",
+                                    token: '',
+                                    reference_number: '',
+                                    multishipping: 1
+                                },
+                                function (data) {
+                                    me.closeModal();
+                                    var silentForm = jQuery('<form></form>')
+                                        .attr('id', 'silent-form')
+                                        .attr('action', data.action_url)
+                                        .attr('method', 'POST');
+                                    for (var field in data.form_data) {
+                                        silentForm.append('<input type="hidden" name="' + field + '" value="' + data.form_data[field] + '" /><br />');
+                                    }
+                                    silentForm.append('<input type="hidden" name="card_type" value="' + jQuery('#cc_type').val() + '" /><br />');
+                                    silentForm.append('<input type="hidden" name="card_number" value="' + jQuery('#cc_number').val() + '" /><br />');
+                                    silentForm.append('<input type="hidden" name="card_expiry_date" value="' + jQuery('#cc_exp_month').val() + '-' + jQuery('#cc_exp_year').val() + '" /><br />');
+                                    silentForm.append('<input type="hidden" name="card_cvn" value="' + jQuery('#cvv').val() + '" /><br />');
+                                    jQuery('#silent-form-placeholder').append(silentForm);
+                                    jQuery('#silent-form').submit();
+                                }, 'json'
+                            );
+                        }
+                    }]
+                };
+                modal(options, jQuery('#tokenModal'));
+                jQuery('#create-token').click(function (e) {
+                    jQuery('#tokenModal').modal('openModal');
+                });
+            }
+        );
+
+    </script>
+    <script type="text/x-magento-init">
+    {
+        "#form-create-token": {
+            "validation": {}
+        }
+    }
+</script>
+<?php else: // web/mobile ?>
+    <script type="text/javascript">
+        require(
+            [
+                'jquery',
+                'jquery/validate',
+                'mage/validation',
+                'mage/url',
+                'mage/mage'
+            ], function(
+                $
+            ) {
+                $("#create-token").click(function() {
+                    var myHeight = (document.documentElement.clientHeight / 2) - 325;
+                    var modalWidth = ($(window).width() < 500) ? $(window).width() : 500;
+                    var formData = 'firstname=<?php echo $address->getData('firstname'); ?>';
+                    formData += '&lastname=<?php echo $address->getData('lastname'); ?>';
+                    formData += '&street[0]=<?php echo str_replace("\n", '', $address->getData('street')); ?>';
+                    formData += '&city=<?php echo str_replace("\n", '', $address->getData('city')); ?>';
+                    formData += '&company=<?php echo str_replace("\n", '', $address->getData('company')); ?>';
+                    formData += '&postcode=<?php echo str_replace("\n", '', $address->getData('postcode')); ?>';
+                    formData += '&country_id=<?php echo str_replace("\n", '', $address->getData('country_id')); ?>';
+                    formData += '&region_id=<?php echo str_replace("\n", '', $address->getData('region_id')); ?>';
+                    formData += '&telephone=<?php echo str_replace("\n", '', $address->getData('telephone')); ?>';
+                    formData += '&multishipping=1';
+                    var loading = '<div class="loading-mask"></div>' +
+                        '<div id="sky-sale-modal-content" style="width: ' + modalWidth + 'px;padding: 0;position: fixed;z-index: 9999;margin: 0 auto;left: 0;right: 0;top: '+myHeight+'px;">' +
+                        '<div id="sky-sale-modal-child" style="background-color: #fff;">'+
+                        '<div style="width:100%;text-align:right;">' +
+                        '<a href="" id="cybersource-close-iframe"></a>' +
+                        '</div>' +
+                        '<iframe style="width: 100%; height: 650px; border: #ccc 1px solid;" src="'+'<?php echo $this->getSubmitUrl(); ?>'+'?price=100&'+formData+'"></iframe>' +
+                        '</div>' +
+                        '</div>';
+                    if(document.getElementById('sky-sale-view-detail-processing-modal')) {
+                        $('sky-sale-view-detail-processing-modal').remove();
+                    }
+                    if(!document.getElementById('sky-sale-view-detail-processing-modal')) {
+                        var overlay = $(document.createElement('div'));
+                        $(overlay).attr('id', 'sky-sale-view-detail-processing-modal');
+                        overlay.append(loading);
+                        $('body').append(overlay);
+                    }
+                    $('#cybersource-close-iframe').click(function() {
+                        $('#sky-sale-view-detail-processing-modal').remove();
+                        return false;
+                    });
+                });
+            });
+    </script>
+<?php endif ?>

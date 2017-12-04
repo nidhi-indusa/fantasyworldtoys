@@ -1,0 +1,53 @@
+<?php
+	
+// Adding transaction in debug.log	
+\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug("Failure.phtml Called");
+
+\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug(print_r(['Get Data' => $_GET], true)); 
+
+if(array_key_exists('OrderID', $_GET)):
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$orderIncrementId = $_GET['OrderID'];
+	$order = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($orderIncrementId);
+	$amount = round( $order->getGrandTotal(), 3 );
+	?>
+	<div class="checkout-success knet-failure" style="text-align:center;">
+		<h2 class="sub-title" style="text-align:center;"><?php echo __('An error occurred in the process of payment') ?></h2>
+		<div class="payment-error-cont">
+		<p class="payment-id"><?php echo __('Your order # is: <span>%1</span>.', $_GET['OrderID']) ?></p>
+		<?php
+		if(array_key_exists('PaymentID', $_GET))
+		{
+			\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug(print_r(['Get Variables' => $_GET], true));
+			
+			$paymentID = (!empty($_GET['PaymentID'])) ? $_GET['PaymentID'] : '';
+			$presult = (!empty($_GET['Result'])) ? $_GET['Result'] : '';
+			$postdate = (!empty($_GET['PostDate'])) ? $_GET['PostDate'] : '';
+			$tranid = (!empty($_GET['TranID'])) ? $_GET['TranID'] : '';
+			$auth = (!empty($_GET['Auth'])) ? $_GET['Auth'] : '';
+			$ref = (!empty($_GET['Ref'])) ? $_GET['Ref'] : '';
+			$trackid = (!empty($_GET['TrackID'])) ? $_GET['TrackID'] : '';
+			$udf1 = (!empty($_GET['UDF1'])) ? $_GET['UDF1'] : '';
+			
+			$message = '<strong>KNET Payment Details:</strong><br/>';
+			$message .= 'PaymentID: ' . $paymentID . "<br/>";
+			$message .= 'Result: ' . $presult . "<br/>";			
+			$message .= 'TranID: ' . $tranid . "<br/>";
+			$message .= 'TrackID: ' . $trackid . "<br/>";
+			$message .= 'Time: ' . date('H:i:s') . "<br/>";
+			
+			echo $message;
+		
+
+		} 
+		?>
+		</div>
+        <br>
+		<div class="actions-toolbar" style="text-align:center; margin:0 auto; width:220px;">
+			<div class="primary" style="text-align:center;">
+				<a style="text-align:center;" class="action primary continue" href="<?php /* @escapeNotVerified */ echo $block->getUrl() ?>"><span style="text-align:center;"><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></span></a>
+			</div>
+		</div>
+	</div>
+<?php endif; ?>
+
