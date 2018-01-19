@@ -12,7 +12,11 @@ class Success extends Main
 		$orderIncrementId = $session->getLastRealOrderId();
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 		$order = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($orderIncrementId);
-		$orderPayment = $objectManager->create('Magento\Sales\Model\Order\Payment')->load($order->getId());
+		
+		//getting payment data
+		$paymentCollection = $objectManager->create('Magento\Sales\Model\Order\Payment')->getCollection()->addFieldToSelect('entity_id')->addFieldToFilter("parent_id",$order->getEntityId())->getFirstItem();
+		$orderPayment = $objectManager->create('Magento\Sales\Model\Order\Payment')->load($paymentCollection->getEntityId());
+		
 		$amount = round( $order->getGrandTotal(), 3 );
         
 		$paymentID = isset($_GET['PaymentID']) ? $_GET['PaymentID'] : '';
@@ -40,9 +44,15 @@ class Success extends Main
 			$orderPayment->setAdditionalData($orderPaymentTransactionData);
 			$orderPayment->save();
 				
+			//Set total_due 0
+			
+			
 			$order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
 			$order->addStatusToHistory($order->getStatus(),$message);
-			$objectManager->create('Magento\Sales\Model\OrderNotifier')->notify($order);						
+			$objectManager->create('Magento\Sales\Model\OrderNotifier')->notify($order);		
+			$amount = 0.0000;
+			$order->setTotalDue($amount);
+			$order->setBaseTotalDue($amount);
 			$order->save();
 			
 			$this->_view->loadLayout();     		

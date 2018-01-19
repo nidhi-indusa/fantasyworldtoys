@@ -10,7 +10,7 @@
 
         <update id="Indusa_Extensions::indusaextensions"
              title="Store Locator" translate="title" 
-             module="Indusa_GoogleMapsStoreLocator" sortOrder="0"           
+             module="Indusa_GoogleMapsStoreLocator" sortOrder="999"           
              resource="Indusa_Extensions::indusaextensions"/>
 
         <add id="Indusa_GoogleMapsStoreLocator::manage_gmaps"

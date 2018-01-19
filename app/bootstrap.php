@@ -57,4 +57,4 @@ if (!empty($_SERVER['MAGE_PROFILER'])
     );
 }
 
-date_default_timezone_set('UTC');
+//date_default_timezone_set('Asia/Kuwait');

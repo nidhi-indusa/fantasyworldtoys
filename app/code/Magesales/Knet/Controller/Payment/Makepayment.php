@@ -3,6 +3,8 @@ namespace Magesales\Knet\Controller\Payment;
 use Magesales\Knet\Controller\Main;
 use Magento\Framework\Controller\ResultFactory;
 
+use Indusa\Webservices\Model\Service;
+
 class Makepayment extends Main
 {
     public function execute()
@@ -55,7 +57,19 @@ class Makepayment extends Main
 			if($order)
 			{
 				$knetUrl = $payment->paymentPage . '?PaymentID=' . $payment->paymentId;
-				$order->setState(\Magento\Sales\Model\Order::STATE_NEW, true, $message );
+				
+                                
+                                //Code added start
+                                
+                                if($order->getLocationId()  == ""){
+                                    $order->setAxStoreId(Service::WAREHOUSE_ID);
+                                    $order->setLocationId(Service::WAREHOUSE_ID);
+                                    $order->setDeliveryFrom("Warehouse");
+                                    $order->setDeliveryMethod("homedelivery");
+                                }
+                                //Code added end
+                                
+                                $order->setState(\Magento\Sales\Model\Order::STATE_NEW, true, $message );
 				$order->save();
 				
 				header('Location: ' . $knetUrl);

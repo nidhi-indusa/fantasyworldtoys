@@ -93,6 +93,7 @@
                         </arguments>
                 </block>
             </container>-->
+            
         
             <container name="my.custom.video" htmlTag="div" htmlClass="my-custom-video" >
                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.video" template="product/view/video.phtml" after="product.info.extrahint">

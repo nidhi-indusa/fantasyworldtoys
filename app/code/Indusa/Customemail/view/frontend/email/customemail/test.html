@@ -1,0 +1,240 @@
+<!--@subject {{trans "New %store_name order confirmation" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var order.getEmailCustomerNote()":"Email Order Note",
+"var order.increment_id":"Order Id",
+"var billing.name":"Billing Name,
+"var shipping.name":"Shipping Name,
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.getShippingDescription()":"Shipping Description",
+"var shipping_msg":"Shipping message"
+} @-->
+<style>
+	td.address-details {
+    padding: 10px;
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+td.address-details h3{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.email-items thead tr th {
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    padding: 5px 0;
+}
+
+.email-items tbody tr td,
+.email-items tfoot tr th,
+.email-items tfoot tr td{
+    padding: 5px 0;
+}
+
+.email-items tbody tr:last-child td{
+	border-bottom:1px solid #333;
+}
+
+.email-items tfoot.order-totals tr.grand_total th,
+.email-items tfoot.order-totals tr.grand_total td{
+	border-bottom:1px solid #333;
+}
+
+td.method-info p{
+	font-weight:700;
+}
+
+tr.email-intro td{
+	padding-bottom:20px;
+}
+
+p.closing {
+    padding-top: 40px;
+    text-align: center;
+}
+
+p.greeting {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+td.header a{
+				padding: 20px;
+			}
+
+.email-items > thead > tr > th,
+.email-items > tbody > tr > th,
+.email-items > tfoot > tr > th,
+.email-items > thead > tr > td,
+.email-items > tbody > tr > td,
+.email-items > tfoot > tr > td {
+padding: 9px;
+border-bottom: 1px solid #8f8f8d;
+}
+.email-items > thead > tr > th:first-child,
+.email-items > tbody > tr > th:first-child,
+.email-items > tfoot > tr > th:first-child,
+.email-items > thead > tr > td:first-child,
+.email-items > tbody > tr > td:first-child,
+.email-items > tfoot > tr > td:first-child{
+border-left: 1px solid #8f8f8d;
+}
+.email-items > thead > tr > th:last-child,
+.email-items > tbody > tr > th:last-child,
+.email-items > tfoot > tr > th:last-child,
+.email-items > thead > tr > td:last-child,
+.email-items > tbody > tr > td:last-child,
+.email-items > tfoot > tr > td:last-child{
+border-right: 1px solid #8f8f8d;
+}
+.email-items > thead > tr > th{
+border-top: 1px solid #8f8f8d;
+}
+.email-items{
+border-collapse: collapse;
+}
+.email-items > tfoot > tr > th {
+text-align:right;
+border-right: 1px solid #8f8f8d;
+}
+</style>
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "New Customer," }}{{var customer_name}}</p>
+            <p>{{customVar code=addtiona_data}}
+                {{trans "New Customer order from store ." }} {{var store_name}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-summary">
+        <td>
+            <h1>{{trans 'New Customer order #'}} {{var increment_id }}</h1>
+            <p>{{trans 'Placed on ' }} {{var created_at }}</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend getEmailCustomerNote()}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var getEmailCustomerNote|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            <table class="order-details">
+                <tr>
+                    <td class="address-details">
+                        <h3>{{trans "Billing Info"}}</h3>
+<!--                        <p>{{var formattedBillingAddress|raw}}</p>
+                        <p>{{var billing.name}}</p>
+
+                        <p>{{var billing.city}}, {{var billing.region}}, {{var billing.postcode}}</p>
+                        <p>{{var billingcntry}}</p>
+                        <p>T: {{var billing.telephone}}</p>-->
+
+                         <p>{{var billing.name}}</p>
+                        <p>{{var billingAddressstreet}}</p>
+                       
+
+                        <p>{{var billingAddresscity}}, {{var billingAddressregion}}, {{var billingAddresspostcode}}</p>
+                        <p>{{var billingAddresscountryId}}</p>
+                        <p>T: {{var billingAddresstelephone}}</p>
+                    </td>
+
+                    <td class="address-details">
+                        <h3>{{trans "Shipping Info"}}</h3>
+                        <p>{{var formattedShippingAddress|raw}}</p>
+                        <p>{{var shipping.name}}</p>
+                        <p>{{var shippingAddressstreet}}</p>
+                       
+
+                        <p>{{var shippingAddresscity}}, {{var shippingAddressregion}}, {{var shippingAddresspostcode}}</p>
+                        <p>{{var shippingAddresscountryId}}</p>
+                        <p>T: {{var shippingAddresstelephone}}</p>
+                    </td>
+
+                </tr>
+                <tr>
+<!--                   {{depend getIsClickandcollect}}-->
+                     <td class="method-info">
+                        <h3>{{trans "Delivery Method "}}</h3>
+                        <p>{{var getDeliveryMethod}}</p>
+                     </td>    
+                    <td class="method-info">    
+                          <h3>{{trans "Store Name "}} </h3>
+                         <p>{{var StoreName}}</p>
+                    </td>
+<!--                    <td class="method-info">    
+                         <h3>{{trans "Transfer Order Qty  "}}</h3>
+                         <p>{{var getTransferOrderQuantity}}</p>
+                    </td>-->
+                    <!--                     {{/depend}}	-->
+                     
+<!--                     {{depend getIsHomedelivery}}-->
+                    <td class="method-info">
+                        <h3>{{trans "Delivery Method "}}</h3>
+                        <p>{{var getDeliveryMethod}}</p>
+                    </td>
+                    <td class="method-info">
+                        <h3>{{trans "Delivery Date "}}</h3>
+                        <p>{{var getDeliveryDate}}</p>
+                    </td>
+<!--                     {{/depend}}	-->
+                </tr>
+                <tr>
+                    <td class="method-info">
+                        <h3>{{trans "Payment Method"}}</h3>	
+                        {{var payment_html|raw}} 
+                    </td>
+
+                    {{depend IsNotVirtual}} 
+                    <td class="method-info">
+                        <h3>{{trans "Shipping Method"}}</h3>
+                        <p>{{var shipping_html}}</p>
+
+                    </td>
+                    {{/depend}}
+                </tr>
+                <tr>
+                    {{depend getIsKnet}}
+                    <td class="method-info" colspan="2">
+                        
+                        <h3>Knet Payment Detail:</h3>	            
+                        <b>Payment Id: </b> {{var PaymentID}}<br> <b>Trans Id: </b> {{var TransID}} <br>  <b>Result: </b> {{var Result}} <br>  <b>Ref Id: </b> {{var RefID}} <br>  <b>Track Id: </b> {{var TrackID}}
+                       <br>
+                    </td>
+                     {{/depend}}
+                      {{depend getIsCyber}}
+                     <td class="method-info" colspan="2">
+                       
+                        <h3>CyberSource Payment Details :</h3>	 
+                        <b>Card Type: </b> {{var card_type}} <br> 
+                        <b>Cc number: </b> {{var cc_number}} <br> 
+                        <b>Card Expiry: </b> {{var TransID}} <br> 
+                        <br>
+                    </td>
+                    {{/depend}}
+                </tr>
+            </table>
+            
+
+            
+</table>
+<!--{{layout area="frontend" handle="email_product_list" items=$items}}-->
+
+{{layout handle="sales_email_order_items_custom" order=$order area="frontend"}}
+
+
+</td>
+</tr>
+
+</table>
+
+{{template config_path="design/email/footer_template"}}						

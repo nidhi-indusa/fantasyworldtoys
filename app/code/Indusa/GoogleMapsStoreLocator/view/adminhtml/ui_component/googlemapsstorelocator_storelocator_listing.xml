@@ -242,7 +242,23 @@
                     <item name="sortOrder" xsi:type="number">1</item>
                 </item>
             </argument>
-        </column>        
+        </column>  
+          <column name="email_store_supervisor">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                            <item name="validate-email" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Email Store Supervisor</item>
+                    <item name="sortOrder" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </column>      
         <!-- <column name="identifier">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

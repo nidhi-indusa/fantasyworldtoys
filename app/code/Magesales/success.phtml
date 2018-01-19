@@ -1,0 +1,56 @@
+<?php
+	
+	// Adding transaction in debug.log	
+	\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug("Success.phtml Called");
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	
+	$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+	
+	$orderDatamodel = $objectManager->get('Magento\Sales\Model\Order')->getCollection()->addFieldToFilter("customer_id",$customerSession->getCustomer()->getId())->getLastItem();
+	$orderIncrementId   =   $orderDatamodel->getIncrementId();
+	$order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($orderIncrementId);
+	$amount = round( $order->getGrandTotal(), 3 );
+	
+	\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug(print_r(['Order Success Id' => $orderIncrementId], true));	
+?>
+<div class="checkout-success">
+	<div class="checkout-success-outer">
+		<?php if ($order->getDeliveryMethod() == 'homedelivery') :?>
+		<h2> <strong><?php echo __('Your order has been received.') ?> <?php echo __('Thank you for your purchase!') ?><?php /* @escapeNotVerified */ echo __('Your order fulfilled by ') ?> <?php echo date('m-d-Y', strtotime($order->getDeliveryDate()));?></strong></h2>
+		<?php  else :?>    
+		<h2 class="sub-title"><?php echo __('Your order has been received.') ?> <?php echo __('Thank you for your purchase!') ?></h2>
+		<?php endif;?>  
+		<p><?php echo __('Your order # is: <span>%1</span>.', $orderIncrementId) ?></p>
+		<p><?php /* @escapeNotVerified */ echo __('We\'ll email you an order confirmation with details and tracking info.') ?></p>
+		<?php
+			if(array_key_exists('PaymentID', $_GET))
+			{
+				\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug(print_r(['Get Variables' => $_GET], true));
+				$paymentID = $_GET['PaymentID'];
+				$presult = $_GET['Result'];
+				$postdate = $_GET['PostDate'];
+				$tranid = $_GET['TranID'];
+				$auth = $_GET['Auth'];
+				$ref = $_GET['Ref'];
+				$trackid = $_GET['TrackID'];
+				
+				$message = '<strong>KNET Payment Details:</strong><br/><br/>'; 
+				$message .= 'PaymentID: ' . $paymentID . "<br/>";
+				$message .= 'Amount: ' . $amount . "<br/>";
+				$message .= 'Result: ' . $presult . "<br/>";
+				$message .= 'PostDate: ' . $postdate . "<br/>";
+				$message .= 'TranID: ' . $tranid . "<br/>";
+				$message .= 'Auth: ' . $auth . "<br/>";
+				$message .= 'Ref: ' . $ref . "<br/>";
+				$message .= 'TrackID: ' . $trackid . "<br/>";
+				$message .= 'Time: ' . date('H:i:s') . "<br/>";
+				echo $message;
+			}
+		?>
+	</div>
+	<div class="actions-toolbar">
+		<div class="primary">
+			<a style="text-align:center;" class="action primary continue" href="<?php /* @escapeNotVerified */ echo $block->getUrl() ?>"><span style="text-align:center;"><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></span></a>
+		</div>
+	</div>
+</div>

@@ -33,8 +33,8 @@ define(
             'uiRegistry',
             'mage/translate',
             'Magento_Checkout/js/model/shipping-rate-service'
-            
-            
+
+
         ],
         function (
                 $,
@@ -66,8 +66,8 @@ define(
 
             var popUp = null;
 
-           
-            
+
+
             var quoteItemData = window.checkoutConfig.quoteItemData;
             var show_hide_custom_blockConfig = window.checkoutConfig.show_hide_custom_block;
             var storeItemDataConfig = window.checkoutConfig.storeItemData;
@@ -110,57 +110,60 @@ define(
                 selectedStore: ko.observable(),
                 error_message: ko.observable(false),
                 delivery_error_message: ko.observable(''),
-                goalId : ko.observable(),
+                goalId: ko.observable(),
                 radioclick: function (data, event) {
                     if (event.target.defaultValue == "homedelivery") {
                         //alert("clicked homedelivery...");
                         $(".message_error").css("display", "none");
-                       
+
                         $("button[data-role='opc-continue']").show();
                         $("button[data-role='opc-continue2']").hide();
 
-                        $(".table-checkout-shipping-method").removeClass("hidden");
+                        $(".table-checkout-shipping-method").addClass("hidden");
                         $(".storeswitcher").css("display", "none");
                         $(".table-checkout-shipping-method input").removeAttr("checked");
                         //$("#s_method_freeshipping_freeshipping").attr('checked', 'checked');
                         $("#s_method_flatrate").attr('checked', 'checked');
                         
-                        $("input[name='delivery_from'").val("Warehouse");
-                        $("input[name='newdeliverymethod'").val("homedelivery");
-                        $("input[name='location_id'").val("0");
-                        $("input[name='ax_store_id'").val("0");
-                        
-                        $(".indusa_delivery_date").show();   
-                        $("input[name='delivery_date'").val("");
-                        $("#delivery_date").show();
-                        $("#delivery_comment").show();
-                        
                         
                        
                         
+                        $("input[name=delivery_from]").val("Warehouse");
+                        $("input[name=newdeliverymethod]").val("homedelivery");
+                        $("input[name=location_id]").val("0");
+                        $("input[name=ax_store_id]").val("0");
+
+                        $(".indusa_delivery_date").show();
+                        $("input[name=delivery_date]").val("");
+                        $("#delivery_date").show();
+                        $("#delivery_comment").show();
+
+
+
+
                         var clickcollectmethod = 0;
                     } else if (event.target.defaultValue == "clickandcollect") {
 
                         // alert("clicked collect...");
                         $(".message_error").css("display", "none");
-                        
+
                         $("button[data-role='opc-continue']").hide();
-                        $("button[data-role='opc-continue2']").show(); 
+                        $("button[data-role='opc-continue2']").show();
 
 
                         //$(".googlestorelocator").removeClass("hidden");
                         $(".storeswitcher").css("display", "block");
-                        $(".table-checkout-shipping-method").removeClass("hidden");
+                        $(".table-checkout-shipping-method").addClass("hidden");
                         $(".table-checkout-shipping-method input").removeAttr("checked");
                         //$("#s_method_freeshipping_freeshipping").attr('checked', 'checked');
                         $("#s_method_flatrate").attr('checked', 'checked');
-                        
+
                         $(".indusa_delivery_date").hide();
                         $("#delivery_date").hide();
                         $("#delivery_comment").hide();
-                        
+
                         var clickcollectmethod = 1;
-                        
+
                     }
                     return true;
                 },
@@ -168,182 +171,210 @@ define(
                     var jsonObject = JSON.stringify(window.checkoutConfig.quoteItemData);
                     var JSONObject = JSON.parse(jsonObject);
                     var is_homedelivery = false;
-                    
-                   
-                    
+                    jQuery(window).load(function () {
+                    if($('*').hasClass('checkout-index-index')){
+                        if($('select[name="city"]').has('option').length == 0)
+                        { 
+                           
+                              $('select[name="city"]').append('<option value=""  >Please Select City.</option>');
+
+                        } 
+                    }
+                    });
+
                     //Issue facing when bodyonload shipping method not selected start
-                    $(".table-checkout-shipping-method").removeClass("hidden");
+                    $(".table-checkout-shipping-method").addClass("hidden");
                     $(".storeswitcher").css("display", "none");
                     $(".table-checkout-shipping-method input").removeAttr("checked");
                     //$("#s_method_freeshipping_freeshipping").attr('checked', 'checked');
                     $("#s_method_flatrate").attr('checked', 'checked');
                     //Issue facing when bodyonload shipping method not selected end
-                     
+
                     $(".message_error").css("display", "none");
-                    
+
 
                     for (var prop in JSONObject) {
-                        
+
                         if (JSONObject[prop]['is_homedelivery'] == $.mage.__("Yes"))
                         {
                             is_homedelivery = true;
                         }
 
                     }
-                    
+
 
                     return is_homedelivery;
                 },
-                initialize: function () {
-                     this._super();
-            var disabled = window.checkoutConfig.shipping.deliverydatemethod.disabled;
-            var noday = window.checkoutConfig.shipping.deliverydatemethod.noday;
-           // var hourMin = parseInt(window.checkoutConfig.shipping.deliverydatemethod.hourMin);
-            //var hourMax = parseInt(window.checkoutConfig.shipping.deliverydatemethod.hourMax);
-            var format = window.checkoutConfig.shipping.deliverydatemethod.format;
-            
-            var maxOrders = window.checkoutConfig.shipping.deliverydatemethod.maxOrders;
-            
-            var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
-            
-            if(!format) {
-                format = 'mm-dd-yy';
-            }
-            var disabledDay = disabled.split(",").map(function(item) {
-                return parseInt(item, 10);
-            });
+	        initialize: function () {
+                    this._super();
+                    var disabled = window.checkoutConfig.shipping.deliverydatemethod.disabled;
+                    var noday = window.checkoutConfig.shipping.deliverydatemethod.noday;
 
-            ko.bindingHandlers.datepicker = {
-                init: function (element, valueAccessor, allBindingsAccessor) {
-                    var $el = $(element);
-                    //initialize datepicker      
-                    
-					
-					
-                    if(noday) {
-                      
-                        var options = {
-                            minDate: 0,
-                            dateFormat:format,
-                           // hourMin: hourMin,
-                          //  hourMax: hourMax,
-                            maxOrders: maxOrders,
-			     /* fix buggy IE focus functionality */
-                            fixFocusIE: false,    
-                            onSelect: function(date) {
-                                  this.fixFocusIE = true;
-                                        $(this).change().focus();
-                            },
-                            
-                            beforeShow: function(date) {
-                                  var result = true;
-                                  if (navigator.appName == 'Microsoft Internet Explorer') {
-                                    result = !this.fixFocusIE;
-                                  }
-                                  this.fixFocusIE = false;
-                                  return result;
-                            },				
-			    //clear button starts
-			     showButtonPanel: true,
-			     closeText: 'Clear', // Text to show for "close" button
-                            onClose: function (date) {
-                                    $('.ui-datepicker-close').live('click', function() {
-                                           $('[name="delivery_date"]').val('')
-                                      });
-                                      this.fixFocusIE = true;
-                                        this.focus();
+                    var format = window.checkoutConfig.shipping.deliverydatemethod.format;
+
+                    var maxOrders = window.checkoutConfig.shipping.deliverydatemethod.maxOrders;
+
+                    var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
+
+                   
+                    format = 'dd-mm-yy';
+                  
+                    var disabledDay = disabled.split(",").map(function (item) {
+                        return parseInt(item, 10);
+                    });
+
+                    ko.bindingHandlers.datepicker = {
+                        init: function (element, valueAccessor, allBindingsAccessor) {
+                            var $el = $(element);
+                            //initialize datepicker      
+
+
+
+                            if (noday) {
+
+                                var options = {
+                                    minDate: 0,
+                                    dateFormat: format,
+                                    maxOrders: maxOrders,
+                                    /* fix buggy IE focus functionality */
+
+                                    //clear button starts
+                                    showButtonPanel: true,
+                                    closeText: 'Clear', // Text to show for "close" button
+                                    onClose: function (date) {
+                                        $('.ui-datepicker-close').live('click', function () {
+                                            $('[name="delivery_date"]').val('')
+                                        });
+                                    }
+                                    //clear button ends
+
+
+                                };
+
+                                //working
+                                $('.ui-datepicker-current').live('click', function () {
+                                    $('#ui-datepicker-div').hide();
+                                    $("#delivery_date").blur();
+                                    $("#delivery_date").datepicker("hide");
+
+                                });
+
+
+                                $.datepicker._gotoToday = function () {
+                                    $("#delivery_date").datepicker('setDate', new Date()).datepicker('hide').blur();
+                                };
+
+                                //added by suresh k for closing bug IE
+                                $.datepicker._gotoToday = function (id) {
+                                    var target = $(id);
+                                    var inst = this._getInst(target[0]);
+                                    if (this._get(inst, "gotoCurrent") && inst.currentDay) {
+                                        inst.selectedDay = inst.currentDay;
+                                        inst.drawMonth = inst.selectedMonth = inst.currentMonth;
+                                        inst.drawYear = inst.selectedYear = inst.currentYear;
+                                    } else {
+                                        var date = new Date();
+                                        inst.selectedDay = date.getDate();
+                                        inst.drawMonth = inst.selectedMonth = date.getMonth();
+                                        inst.drawYear = inst.selectedYear = date.getFullYear();
+                                        // the below two lines are new
+                                        this._setDateDatepicker(target, date);
+                                        this._selectDate(id, this._getDateDatepicker(target));
+                                    }
+                                    this._notifyChange(inst);
+                                    this._adjustDate(target);
+                                };
+
+
+                            } else {
+
+                                var options = {
+                                    minDate: 0,
+                                    dateFormat: format,
+                                    //hourMin: hourMin,
+                                    // hourMax: hourMax,
+                                    maxOrders: maxOrders,
+                                    beforeShowDay: function (date) {
+                                        var day = date.getDay();
+                                        if (disabledDay.indexOf(day) > -1) {
+                                            return [false];
+                                        } else {
+                                            return [true];
+                                        }
+                                    },
+                                    //clear button starts
+                                    showButtonPanel: true,
+                                    closeText: 'Clear', // Text to show for "close" button
+                                    onClose: function (date) {
+                                        $('.ui-datepicker-close').live('click', function () {
+                                            $('[name="delivery_date"]').val('')
+                                        });
+                                    }
+                                    //clear button ends
+
+
+                                };
+
+                                //working
+                                $('.ui-datepicker-current').live('click', function () {
+                                    $('#ui-datepicker-div').hide();
+                                    $("#delivery_date").blur();
+                                    $("#delivery_date").datepicker("hide");
+
+                                });
+
+
+                                $.datepicker._gotoToday = function () {
+                                    $("#delivery_date").datepicker('setDate', new Date()).datepicker('hide').blur();
+                                    // this.fixFocusIE = true;
+                                    //$(this).change().focus();
+                                };
+
+                                //added by suresh k for closing bug IE
+                                $.datepicker._gotoToday = function (id) {
+                                    var target = $(id);
+                                    var inst = this._getInst(target[0]);
+                                    if (this._get(inst, "gotoCurrent") && inst.currentDay) {
+                                        inst.selectedDay = inst.currentDay;
+                                        inst.drawMonth = inst.selectedMonth = inst.currentMonth;
+                                        inst.drawYear = inst.selectedYear = inst.currentYear;
+                                    } else {
+                                        var date = new Date();
+                                        inst.selectedDay = date.getDate();
+                                        inst.drawMonth = inst.selectedMonth = date.getMonth();
+                                        inst.drawYear = inst.selectedYear = date.getFullYear();
+                                        // the below two lines are new
+                                        this._setDateDatepicker(target, date);
+                                        this._selectDate(id, this._getDateDatepicker(target));
+                                    }
+                                    this._notifyChange(inst);
+                                    this._adjustDate(target);
+                                };
                             }
-                            //clear button ends
-                          
 
-                        };
-                        
-                        $.datepicker._gotoToday = function() { 
-                            $("#delivery_date").datepicker('setDate', new Date()).datepicker('hide').blur();
-                            this.fixFocusIE = true;
-                             $(this).change().focus();
-                        }; 
-                        
-                        
-                    } else {
-                      
-                        var options = {
-                            minDate: 0,
-                            dateFormat:format,
-                            //hourMin: hourMin,
-                           // hourMax: hourMax,
-                            maxOrders: maxOrders,
-                            
-                            beforeShowDay: function(date) {
-                                var day = date.getDay();
-                                if(disabledDay.indexOf(day) > -1) {
-                                    return [false];
+
+                            $el.datepicker(options);
+
+                            var writable = valueAccessor();
+                            if (!ko.isObservable(writable)) {
+                                var propWriters = allBindingsAccessor()._ko_property_writers;
+                                if (propWriters && propWriters.datepicker) {
+                                    writable = propWriters.datepicker;
                                 } else {
-                                    return [true];
+                                    return;
                                 }
-                            },
-                            
-                            /* fix buggy IE focus functionality */
-                            fixFocusIE: false,    
-                            onSelect: function(date) {
-                                  this.fixFocusIE = true;
-                                        $(this).change().focus();
-                            },
-                            
-                            beforeShow: function(date) {
-                                  var result = true;
-                                  if (navigator.appName == 'Microsoft Internet Explorer') {
-                                    result = !this.fixFocusIE;
-                                  }
-                                  this.fixFocusIE = false;
-                                  return result;
-                            },
-							
-                            //clear button starts
-			    showButtonPanel: true,
-			    closeText: 'Clear', // Text to show for "close" button
-			    onClose: function (date) {
-						$('.ui-datepicker-close').live('click', function() {
-                                                       $('[name="delivery_date"]').val('')
-						  });
-                                                   this.fixFocusIE = true;
-                                                    this.focus();
-			    }
-			    //clear button ends
-							
-							
-                        };
-                        
-                         $.datepicker._gotoToday = function() { 
-                            $("#delivery_date").datepicker('setDate', new Date()).datepicker('hide').blur(); 
-                             this.fixFocusIE = true;
-                             $(this).change().focus();
-                        }; 
-                    }
-                 
-
-                    $el.datepicker(options);
-
-                    var writable = valueAccessor();
-                    if (!ko.isObservable(writable)) {
-                        var propWriters = allBindingsAccessor()._ko_property_writers;
-                        if (propWriters && propWriters.datepicker) {
-                            writable = propWriters.datepicker;
-                        } else {
-                            return;
+                            }
+                            writable($(element).datepicker("getDate"));
+                        },
+                        update: function (element, valueAccessor) {
+                            var widget = $(element).data("DatePicker");
+                            //when the view model is updated, update the widget
+                            if (widget) {
+                                var date = ko.utils.unwrapObservable(valueAccessor());
+                                widget.date(date);
+                            }
                         }
-                    }
-                    writable($(element).datepicker("getDate"));
-                },
-                update: function (element, valueAccessor) {
-                    var widget = $(element).data("DatePicker");
-                    //when the view model is updated, update the widget
-                    if (widget) {
-                        var date = ko.utils.unwrapObservable(valueAccessor());
-                        widget.date(date);
-                    }
-                }
-            };
+                    };
 
 
 
@@ -495,24 +526,24 @@ define(
                     if (this.validateShippingInformation()) {
                         setShippingInformationAction().done(
                                 function () {
-                                    
-                                    
-                                    
+
+
+
                                     stepNavigator.next();
                                 }
                         );
                     }
                 },
-                 checkmaxorder: function () {
-                        var disabled = window.checkoutConfig.shipping.deliverydatemethod.disabled;
-                        var noday = window.checkoutConfig.shipping.deliverydatemethod.noday;
-                        var hourMin = parseInt(window.checkoutConfig.shipping.deliverydatemethod.hourMin);
-                        var hourMax = parseInt(window.checkoutConfig.shipping.deliverydatemethod.hourMax);
-                        var format = window.checkoutConfig.shipping.deliverydatemethod.format;
-                        var maxOrders = window.checkoutConfig.shipping.deliverydatemethod.maxOrders;
-                        var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
-                     return true;
-                 },
+                checkmaxorder: function () {
+                    var disabled = window.checkoutConfig.shipping.deliverydatemethod.disabled;
+                    var noday = window.checkoutConfig.shipping.deliverydatemethod.noday;
+                    var hourMin = parseInt(window.checkoutConfig.shipping.deliverydatemethod.hourMin);
+                    var hourMax = parseInt(window.checkoutConfig.shipping.deliverydatemethod.hourMax);
+                    var format = window.checkoutConfig.shipping.deliverydatemethod.format;
+                    var maxOrders = window.checkoutConfig.shipping.deliverydatemethod.maxOrders;
+                    var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
+                    return true;
+                },
                 /**
                  * @return {Boolean}
                  */
@@ -521,36 +552,30 @@ define(
                             addressData,
                             loginFormSelector = 'form[data-role=email-with-possible-login]',
                             emailValidationResult = customer.isLoggedIn();
-                    
+
                     var format = window.checkoutConfig.shipping.deliverydatemethod.format;
-                    
-                    if(format != 'mm-dd-yy'){
+                  
+
+                   /* if (format != 'dd-mm-yy') {
                         this.errorValidationMessage('Delivery Method format is invalid.');
                         return false;
-                    }
-                     
-                     //If(HOMEDELIVERY)
+                    }*/
+
+                    //If(HOMEDELIVERY)
                     //IF(DELIVERYDATE !=NULL)
-                    if($("input[name='deliverymethod'").val() == 'homedelivery'){
-                        if($("input[name='delivery_date'").val() != ''){
-                               var Delivereddateval = $("input[name='delivery_date'").val(); 
-                                var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
-                               
-                                
-                              
-//                                if(show_hide_canBeDelivered == 0)
-//                                {
-//                                     this.errorValidationMessage('Your order cannot be shipped on date  '+ Delivereddateval +' bbbbbbbbbb !');
-//                                    return false;
-//                                }
-                           
+                    
+                    if ($("input[name=deliverymethod]").val() == 'homedelivery') {
+                        if ($("input[name=delivery_date]").val() != '') {
+                            var Delivereddateval = $("input[name=delivery_date]").val();
+                            var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
+
                         }
-                        
+
                     }
-                    
-                    
-                 
-                    
+
+
+
+
                     if (!quote.shippingMethod()) {
                         this.errorValidationMessage('Please specify a shipping method.');
 
@@ -610,9 +635,9 @@ define(
 
                         return false;
                     }
-                    
-                   
-                    
+
+
+
 
                     return true;
                 }

@@ -24,6 +24,7 @@ class Sidebar extends \Magento\Framework\View\Element\Template
 		$collection = $this->_brandFactory->create()->getCollection();
 		$collection->addFieldToFilter('is_active' , \Emizentech\ShopByBrand\Model\Status::STATUS_ENABLED);
 		$collection->setOrder('name' , 'ASC');
+		$collection->setPageSize(10);
 		$charBarndArray = array();
 		foreach($collection as $brand)
 		{	

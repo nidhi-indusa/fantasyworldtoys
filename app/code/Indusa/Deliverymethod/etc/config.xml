@@ -3,7 +3,7 @@
     <default>
         <indusa_deliverydatemethod>
             <general>
-                <format>yy-mm-dd</format>
+                <format>dd-mm-yyyy</format>
                 <disabled>-1</disabled>
                 <hourMin>8</hourMin>
                 <hourMax>22</hourMax>

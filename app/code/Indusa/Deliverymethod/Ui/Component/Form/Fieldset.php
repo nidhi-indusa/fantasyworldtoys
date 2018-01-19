@@ -43,7 +43,7 @@ class Fieldset extends BaseFieldset {
         $productid = $this->request->getParam('id');
         $product = $objectManager->get('Magento\Catalog\Model\Product')->load($productid);
         $inventoryStoreFactory = $objectManager->create('Indusa\Webservices\Model\InventoryStoreFactory');
-        $resultFactory = $inventoryStoreFactory->create()->getCollection()->addFieldToFilter('product_sku', $product->getSku());
+        $resultFactory = $inventoryStoreFactory->create()->getCollection()->addFieldToFilter('product_sku', $product->getSku())->setOrder('id', 'DESC');
 
 
 

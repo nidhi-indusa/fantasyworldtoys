@@ -11,23 +11,24 @@
  *
  * @var $block \Magento\CatalogWidget\Block\Product\ProductsList
  */
+ $productCollection = $block->getProductCollection()->setOrder("name","ASC");
 ?>
 <div>
-    <?php if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())): ?>
+    <?php if ($exist = ($productCollection && $productCollection->getSize())): ?>
         <?php
         $type = 'widget-product-grid';
         $mode = 'grid';
         $image = 'new_products_content_widget_grid';
         $title = $block->getTitle() ? __($block->getTitle()) : '';
 
-        if ($title == "Hot Sellers") {
+        if ($title == __("Hot Sellers")) {
             $desc = __('Find the perfect toy always in demand');
-        } else if ($title == "Featured Collection") {
+        } else if ($title == __("Featured Collection")) {
             $desc = __('Find out our outstanding featured collection');
         } else {
             $desc = __('Latest of the trend we have to offer');
         }
-        $items = $block->getProductCollection()->getItems();
+        $items = $productCollection->getItems();
         $showWishlist = true;
         $showCompare = false;
         $showCart = true;
@@ -55,8 +56,11 @@
         <?php foreach ($items as $_item): ?>
 
                                     <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="product-slider product-item">' : '</li><li class="product-slider product-item">' ?>
-                                    <div class="product-item-info">
-                                        <div class="product-img-main">
+<?php if ($_item->getIsSalable()): ?>
+					 <div class="product-item-info available-pro" data-container="product-grid">
+									<?php else: ?>
+					 <div class="product-item-info unavailable-pro" data-container="product-grid">			 
+				<?php endif; ?>                                        <div class="product-img-main">
                                             <a href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" class="product-item-photo">
                                     <?php echo $block->getImage($_item, $image)->toHtml(); ?>
                                             </a>
@@ -198,7 +202,11 @@
         <?php foreach ($items as $_item): ?>
 
                                     <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="product-slider product-item">' : '</li><li class="product-slider product-item">' ?>
-                                    <div class="product-item-info">
+                                   <?php if ($_item->getIsSalable()): ?>
+					 <div class="product-item-info available-pro" data-container="product-grid">
+									<?php else: ?>
+					 <div class="product-item-info unavailable-pro" data-container="product-grid">			 
+				<?php endif; ?>
                                         <div class="product-img-main">
                                             <a href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" class="product-item-photo">
                                     <?php echo $block->getImage($_item, $image)->toHtml(); ?>

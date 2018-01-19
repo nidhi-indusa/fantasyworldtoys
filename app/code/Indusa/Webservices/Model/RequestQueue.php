@@ -31,6 +31,7 @@ class RequestQueue extends \Magento\Framework\Model\AbstractModel
             return true;
 		}
 		catch (\Exception $e) {
+		echo $e->getMessage();
             return false;
         }
     }

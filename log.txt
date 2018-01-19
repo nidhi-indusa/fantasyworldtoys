@@ -1,0 +1,18 @@
+Magento CLI version 2.1.5
+
+Usage:
+ command [options] [arguments]
+
+Options:
+ --help (-h)           Display this help message
+ --quiet (-q)          Do not output any message
+ --verbose (-v|vv|vvv) Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+ --version (-V)        Display this application version
+ --ansi                Force ANSI output
+ --no-ansi             Disable ANSI output
+ --no-interaction (-n) Do not ask any interactive question
+
+Available commands:
+ help   Displays help for a command
+ list   Lists commands
+We're sorry, an error occurred. Try clearing the cache and code generation directories. By default, they are: var/cache, var/di, var/generation, and var/page_cache.

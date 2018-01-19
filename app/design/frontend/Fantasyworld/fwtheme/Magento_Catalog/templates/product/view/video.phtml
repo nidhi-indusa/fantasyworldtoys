@@ -10,6 +10,11 @@ if ($_attributeLabel && $_attributeLabel == 'default') {
 $_attributeLabel = $_product->getResource()->getAttribute($_code)->getFrontendLabel();
 }
 $_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()->getValue($_product);
+
+ $url = $_product->getVideo();
+    preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
+	if(isset($matches[1])) $id = $matches[1];
+
 ?>
 
 <?php if ($_attributeValue): ?>
@@ -20,7 +25,7 @@ $_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()-
 <?php //echo "video:".$_product->getVideo();?>
 
 <div class="yt-video-container" id="ytVideo">
-	<iframe src="<?php echo $_product->getVideo();?>" frameborder="0" allowfullscreen class="yt-video"></iframe>
+	<iframe src="https://www.youtube.com/embed/<?php echo $id ?>"frameborder="0" allowfullscreen class="yt-video"></iframe>
 </div>
 
 

@@ -1,0 +1,29 @@
+<?php 
+//multi shipping addresses page
+$results = $block->getJframeworksResult();
+
+if(is_array($results)){
+foreach($results as $result){
+if($result!=""){
+	$obj = json_decode($result);
+	if($obj->error){
+?>
+<script>
+var html = '<div class="message-error error message" data-ui-id="message-error"><div>There appears to be a problem with the address. Please click Change to check the corrections or you can continue with the current address.</div></div>';
+
+require(['jquery'],function($){ 
+    $(document).ready(function(){
+		$('#shipping_method_form div.box-shipping-address .box-title a').each(function(index) {
+			var hrefv =  $(this).attr('href');
+			regx = /id\/<?php echo $obj->address_id?>/;
+			regx2 = /id=<?php echo $obj->address_id?>/;
+			var oldhtml = '';
+			if(regx.test(hrefv)||regx2.test(hrefv)){
+				oldhtml = $(this).parent().html();
+				$(this).parent().html(html+oldhtml);
+			}
+		});
+	});
+});
+</script>
+<?php } } }}?>

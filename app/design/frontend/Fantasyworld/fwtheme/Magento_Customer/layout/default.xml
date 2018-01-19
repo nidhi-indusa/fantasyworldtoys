@@ -51,5 +51,10 @@
 		<referenceBlock name="wishlist_sidebar" remove="true" />
 		<referenceBlock name="sale.reorder.sidebar" remove="true"/>
 		<referenceBlock name="register-link" remove="true"/>
+		<referenceBlock name='customer-account-navigation-downloadable-products-link' remove='true'/>
+		<referenceBlock name="customer-account-navigation-billing-agreements-link" remove="true"/>
+		<referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true"/>
+		<referenceBlock name="customer-account-navigation-newsletter-subscriptions-link" remove="true"/>
+
 	</body>
 </page>

@@ -22,6 +22,7 @@ $type = 'widget-new-grid';
                     <?php
 	$iterator = 1; ?>
     <?php
+	if(count($productCollection) > 0) :
 	foreach($productCollection as $_product): ?>
     
     
@@ -109,7 +110,13 @@ $type = 'widget-new-grid';
      			<?php
 		echo ($iterator == count($productCollection) + 1) ? '</li>' : '' ?>
                     <?php
-	endforeach ?>
+	endforeach;
+	else:
+	?>
+	<div class="message info empty"><div>We can't find products matching the selection.</div></div>
+	<?php
+	endif;
+	?>
 </div>
  <div class="toolbar-bottom">
          <div class="toolbar bottom">

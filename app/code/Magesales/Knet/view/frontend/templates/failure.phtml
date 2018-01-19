@@ -11,8 +11,9 @@ if(array_key_exists('OrderID', $_GET)):
 	$order = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($orderIncrementId);
 	$amount = round( $order->getGrandTotal(), 3 );
 	?>
-	<div class="checkout-success knet-failure" style="text-align:center;">
-		<h2 class="sub-title" style="text-align:center;"><?php echo __('An error occurred in the process of payment') ?></h2>
+	<div class="checkout-success knet-failure">
+	<div class="checkout-failure-outer">
+		<h2 class="sub-title"><?php echo __('An error occurred in the process of payment') ?></h2>
 		<div class="payment-error-cont">
 		<p class="payment-id"><?php echo __('Your order # is: <span>%1</span>.', $_GET['OrderID']) ?></p>
 		<?php
@@ -31,6 +32,7 @@ if(array_key_exists('OrderID', $_GET)):
 			
 			$message = '<strong>KNET Payment Details:</strong><br/>';
 			$message .= 'PaymentID: ' . $paymentID . "<br/>";
+			$message .= 'Amount: KWD ' . $amount . "<br/>";
 			$message .= 'Result: ' . $presult . "<br/>";			
 			$message .= 'TranID: ' . $tranid . "<br/>";
 			$message .= 'TrackID: ' . $trackid . "<br/>";
@@ -42,9 +44,9 @@ if(array_key_exists('OrderID', $_GET)):
 		} 
 		?>
 		</div>
-        <br>
-		<div class="actions-toolbar" style="text-align:center; margin:0 auto; width:220px;">
-			<div class="primary" style="text-align:center;">
+		</div>
+		<div class="actions-toolbar">
+			<div class="primary">
 				<a style="text-align:center;" class="action primary continue" href="<?php /* @escapeNotVerified */ echo $block->getUrl() ?>"><span style="text-align:center;"><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></span></a>
 			</div>
 		</div>

@@ -5,7 +5,7 @@
 			<label>Integration Webservices </label>
 		</tab>
 		<section id="ecommerce_webservice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-			<label>Magento Webservice Credential</label>
+			<label>Magento Webservice Credentials</label>
 			<tab>ecommerce_webservices</tab>
 			<resource>Indusa_Webservices::config_indusa_webservices</resource>
 			<group id="webservice_credential" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
@@ -19,11 +19,11 @@
 			</group>
 		</section>
         <section id="ack_webservice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-			<label>AX Webservice Credential</label>
+			<label>AX Webservice Credentials</label>
 			<tab>ecommerce_webservices</tab>
 			<resource>Indusa_Webservices::config_indusa_webservices</resource>
 			<group id="ack_credential" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-				<label>AX Webservice Credential</label>
+				<label>AX Webservice Credentials</label>
                     <field id="ack_url" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
 					<label>AX Acknowledgement API URL</label>					
 				</field>

@@ -1,0 +1,86 @@
+body {
+    font-family: "Hind",sans-serif !important;
+}
+
+.page-layout-admin-login {
+    background-color: #0f8f84 !important;
+}
+
+.page-layout-admin-login .page-wrapper {
+    box-shadow: none !important;
+}
+
+img.logo-img{
+    width: 70%;
+    display: block;
+    margin: 0 auto;
+}
+
+.login-header {
+    margin-bottom: 2rem !important;
+}
+
+.page-layout-admin-login .admin__legend {
+    color: #333 !important;
+    font-size: 1.6rem !important;
+    text-align: center;
+    margin-top: 0px !important;
+}
+
+.action-primary{
+    background-color: #675dc6 !important;
+    border-color: #675dc6 !important;
+    box-shadow: 0 0 0 1px #007bdb !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.action-primary:hover, .action-primary:active, .action-primary:focus {
+    background-color: #8278b7 !important;
+    border-color: #8278b7 !important;
+    box-shadow: 0 0 0 1px #007bdb !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.dashboard-totals-item:first-child .price {
+    color: #675dc6 !important;
+}
+
+.dashboard-item-primary:first-child .dashboard-sales-value {
+    color: #675dc6 !important;
+}
+
+.page-footer a {
+  color: #675dc6 !important;
+}
+
+.page-footer a:hover {
+  color: #8278b7 !important;
+}
+
+.tabs-horiz .ui-state-active .ui-tabs-anchor {
+  border-top: 0.4rem solid #675dc6 !important;
+}
+
+.abs-action-primary, button.primary, .page-actions > button.action-primary, .page-actions .page-actions-buttons > button.action-primary, .page-actions > button.primary, .page-actions .page-actions-buttons > button.primary, .block-footer .action-add.primary, .page-actions > .block-footer .action-add.action-primary, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary, .page-actions > .block-footer .action-add.primary, .page-actions .page-actions-buttons > .block-footer .action-add.primary {
+    background-color: #675dc6 !important;
+    border-color: #675dc6 !important;
+}
+
+.abs-action-primary:hover, .abs-action-primary:active, .abs-action-primary:focus, button.primary:hover, button.primary:active, button.primary:focus, .page-actions > button.action-primary:hover, .page-actions > button.action-primary:active, .page-actions > button.action-primary:focus, .page-actions .page-actions-buttons > button.action-primary:hover, .page-actions .page-actions-buttons > button.action-primary:active, .page-actions .page-actions-buttons > button.action-primary:focus, .page-actions > button.primary:hover, .page-actions > button.primary:active, .page-actions > button.primary:focus, .page-actions .page-actions-buttons > button.primary:hover, .page-actions .page-actions-buttons > button.primary:active, .page-actions .page-actions-buttons > button.primary:focus, .block-footer .action-add.primary:hover, .block-footer .action-add.primary:active, .block-footer .action-add.primary:focus, .page-actions > .block-footer .action-add.action-primary:hover, .page-actions > .block-footer .action-add.action-primary:active, .page-actions > .block-footer .action-add.action-primary:focus, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:hover, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:active, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:focus, .page-actions > .block-footer .action-add.primary:hover, .page-actions > .block-footer .action-add.primary:active, .page-actions > .block-footer .action-add.primary:focus, .page-actions .page-actions-buttons > .block-footer .action-add.primary:hover, .page-actions .page-actions-buttons > .block-footer .action-add.primary:active, .page-actions .page-actions-buttons > .block-footer .action-add.primary:focus {
+    background-color: #8278b7 !important;
+    border-color: #8278b7 !important;
+}
+
+.login-footer {
+    color: #eee !important;
+}
+
+/*.menu-wrapper:before {
+    background-color: #0f8f84 !important;
+}
+
+.admin__menu .level-0 > a {
+    color: #eee !important;
+}*/

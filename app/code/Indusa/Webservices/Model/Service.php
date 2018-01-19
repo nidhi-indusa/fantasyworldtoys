@@ -19,22 +19,30 @@
 		
 		const ORDER_STATUS_UPDATES = 'orderStatusUpdates';
 		
+		const RESERVED_INVENOTRY_UPDATES = 'reservedInventoryUpdates';
+		
 		const DEFAULT_CATEGORY = 'Default Category';
 		
 		const SEND_ACKNOWLEDGEMENT_TO_MAGENTO = 'sendAcknowledgementToMagento';
+		
+		const SEND_ACKNOWLEDGEMENT_TO_AX = 'sendAcknowledgementToAx';
+		
+		const PRODUCT_STATUS_UPDATES = 'productStatusUpdates';
+		
+		const RESERVED_INVENTORY_UPDATES = 'reservedInventoryUpdates';		
 		
 		const WAREHOUSE_ID = '999';
 		
 		const INVOICED = 'Invoiced';
 		
 		const DELIVERED = 'Delivered';
-				
+		
 		/**
 			* Initialize resource model
 			*
 			* @return void
 		*/
-		 
+		
 		protected function _construct(\Magento\Store\Model\StoreManagerInterface $storeManager, CategoryRepositoryInterface $categoryRepository
 		)
 		{
@@ -92,7 +100,7 @@
 			$indexerFactory = $objectManager->get("\Magento\Indexer\Model\IndexerFactory");
 			$indexerCollection = $indexerCollectionFactory->create();
 			$allIds = $indexerCollection->getAllIds();
-
+			
 			foreach ($allIds as $id) {
 				$indexer = $indexerFactory->create()->load($id);				
 				$indexer->reindexAll(); // this reindexes all

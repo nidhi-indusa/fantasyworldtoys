@@ -1,0 +1,65 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Sales\Block\Order\Email\Items\DefaultItems */
+
+/** @var $_item \Magento\Sales\Model\Order\Item */
+$_item = $block->getItem();
+$_order = $_item->getOrder();
+?>
+<tr>
+    <td class="item-info<?php if ($block->getItemOptions()): ?> has-extra<?php endif; ?>" style="padding: 5px;">
+        <p class="product-name"><?= $block->escapeHtml($_item->getName()) ?></p>
+        <p class="sku"><?= /* @escapeNotVerified */  __('SKU'); ?>: <?= $block->escapeHtml($block->getSku($_item)) ?></p>
+        <?php if ($block->getItemOptions()): ?>
+            <dl class="item-options">
+            <?php foreach ($block->getItemOptions() as $option): ?>
+                <dt><strong><em><?= /* @escapeNotVerified */  $option['label'] ?></em></strong></dt>
+                <dd>
+                    <?= /* @escapeNotVerified */  nl2br($option['value']) ?>
+                </dd>
+            <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock) :?>
+            <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+        <?php endif; ?>
+        <?= $block->escapeHtml($_item->getDescription()) ?>
+    </td>
+    <td class="item-qty" style="padding: 5px;"> <?= /* @escapeNotVerified */  $_item->getQtyOrdered() * 1 ?>  &nbsp;</td>
+    
+    <?php if( $_order->getDeliveryMethod() == "clickandcollect"){?>
+    <td class="item-qty" style="padding: 5px;text-align:center;">
+           <?= /* @escapeNotVerified */  intval($_item->getTransferOrderQuantity()) ?>  &nbsp;
+    </td>
+    <?php }?>
+    
+    <td class="item-price" style="padding: 5px;">
+        <?= /* @escapeNotVerified */  $block->getItemPrice($_item); ?>
+    </td>
+    
+
+ </tr>
+<?php if ($_item->getGiftMessageId() && $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessage($_item->getGiftMessageId())): ?>
+<tr>
+    <td class="item-extra">
+        <table class="message-gift">
+            <tr>
+                <td>
+                    <h3><?= /* @escapeNotVerified */  __('Gift Message') ?></h3>
+                    <strong><?= /* @escapeNotVerified */  __('From:'); ?></strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?>
+                    <br /><strong><?= /* @escapeNotVerified */  __('To:'); ?></strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?>
+                    <br /><strong><?= /* @escapeNotVerified */  __('Message:'); ?></strong>
+                    <br /><?= $block->escapeHtml($_giftMessage->getMessage()) ?>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<?php endif; ?>

@@ -4,97 +4,114 @@
 	$media = $this->getImageMediaPath();
 	
 ?>
-<style>
-	.brand-char {
-    min-width: 300px;
-    float: left;
-    min-height: 130px;
-	}
-</style>
-<h1>Brands</h1>
-
-<h3>Featured Brands</h3>
-<div class="featured-brands">
-	<?php foreach($featured as $_fbrand):?>
+	<div class="all-brands-tab">
 	
-	<span>
-		<?php if($_fbrand->getUrlKey()):?>
-		<a href="<?php echo $this->getUrl('brand').$_fbrand->getUrlKey()?>">
-			<?php else:?>
-			<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_fbrand->getId()));?>">
-				<?php endif;?>
-				<?php if($_fbrand->getLogo()):?>
-				<img class="f-barnd-img" src="<?php echo $media.$_fbrand->getLogo() ?>" title="<?php echo $_fbrand->getName();?>" alt="<?php echo $_fbrand->getName();?>" style="height:100px"/>
-				<?php else:?>
-				<span class="brand-title">
-					<?php echo $_fbrand->getName();?>
-				</span>
-				<?php endif;?>
-			</a>
-		</span>
-		<?php endforeach;?>
-	</div>
-	<br />
-	<h3>ALL Brands</h3>
+		<div class="page-title-main">
+            <strong role="heading" aria-level="2">Brands</strong>
+		</div>
 	
-	
-	<!-- demo -->	
-	
-	
-	<div>	
 		<ul class="nav nav-tabs" role="tablist">
-		
-		
-		
-				
-				<li role="presentation" class="active"><a href="#tab-numbers" aria-controls="home" role="tab" data-toggle="tab">#</a></li>
-				
+			<li role="presentation" class=""><a href="#tab-all-n" aria-controls="home" role="tab" data-toggle="tab">All Brands</a></li>
+			<li role="presentation" class="active"><a href="#tab-numbers" aria-controls="home" role="tab" data-toggle="tab">#</a></li>				
 			<?php foreach (range('A', 'Z') as $char) :?>
 			<?php if(isset($brands[$char])):?>		
 				<li role="presentation"><a href="#tab-<?php echo $char;?>" aria-controls="home" role="tab" data-toggle="tab"><?php echo $char;?></a></li>
 			<?php endif;?>
 			<?php endforeach;?>
-			
 		</ul>
-		<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active"id="tab-numbers">
-		<?php foreach (range('0', '9') as $char) :?>
-				<?php if(isset($brands[$char])):?>
-					
-					<?php foreach($brands[$char] as $_brand):?>		
-								<?php if($_brand->getUrlKey()):?>
-								<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
-								<?php else:?>
-								<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
-								<?php endif;?>							
+		
+		<div class="tab-content">			
+			<div role="tabpanel" class="tab-pane" id="tab-all-n">
+				
+						<?php foreach (range('0', '9') as $char) :?>
+							<?php if(isset($brands[$char])):?>						
+								<?php foreach($brands[$char] as $_brand):?>		
+									<?php if($_brand->getUrlKey()):?>
+									
+									
+					<div class="col-md-3 col-sm-4 col-xs-12">
+									
+										<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+										</div>
+			
+									<?php else:?>
+					<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
+										</div>
+				
+									<?php endif;?>			
+								<?php endforeach;?>						
+							<?php endif;?>
+						<?php endforeach;?>
+						
+						
+						<?php foreach (range('A', 'Z') as $char) :?>
+							<?php if(isset($brands[$char])):?>					
+								<?php foreach($brands[$char] as $_brand):?>		
+									<?php if($_brand->getUrlKey()):?>
 								
+					<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+										</div>
+				
+									<?php else:?>
+					<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
+										</div>
+				
+									<?php endif;?>						
+								<?php endforeach;?>						
+							<?php endif;?>
+						<?php endforeach;?>
 					
-					<?php endforeach;?>
-					
-				<?php endif;?>
-			<?php endforeach;?>
-		</div>
+			</div>	
+		
+			<div role="tabpanel" class="tab-pane active"id="tab-numbers">
+				
+						<?php foreach (range('0', '9') as $char) :?>
+							<?php if(isset($brands[$char])):?>
+								<?php foreach($brands[$char] as $_brand):?>		
+									<?php if($_brand->getUrlKey()):?>
+									
+					<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+										</div>
+				
+									<?php else:?>
+					<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
+										</div>
+				
+									<?php endif;?>
+								<?php endforeach;?>						
+							<?php endif;?>
+						<?php endforeach;?>
+					</div>
+		
+		
 			<?php foreach (range('A', 'Z') as $char) :?>
 				<?php if(isset($brands[$char])):?>
-				<div role="tabpanel" class="tab-pane" id="tab-<?php echo $char;?>">	
-					<?php foreach($brands[$char] as $_brand):?>		
+					<div role="tabpanel" class="tab-pane" id="tab-<?php echo $char;?>">	
+						
+							<?php foreach($brands[$char] as $_brand):?>		
 								<?php if($_brand->getUrlKey()):?>
-								<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+							
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>"><?php echo $_brand->getName();?></a>
+									</div>
+			
 								<?php else:?>
-								<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
-								<?php endif;?>							
 								
-					
-					<?php endforeach;?>
-					</div>	
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>"><?php echo $_brand->getName();?></a>
+									</div>
+
+								<?php endif;?>					
+							<?php endforeach;?>
+							</div>
+						
 				<?php endif;?>
 			<?php endforeach;?>
 				
-		</div>
-		
-		
-		<!-- demo -->
-		
-		
-		
-		
+		</div>	
+	</div>

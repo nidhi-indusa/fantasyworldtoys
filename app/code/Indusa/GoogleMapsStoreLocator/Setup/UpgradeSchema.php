@@ -64,6 +64,28 @@ namespace Indusa\GoogleMapsStoreLocator\Setup;
                                 
                                 
                         	
+			}
+                        
+                        if (version_compare($context->getVersion(), '2.0.0.2') < 0){
+                               
+                                $setup->startSetup();
+
+                                $Table = 'indusa_googlemapsstorelocator';
+                             
+
+                                //indusa_googlemapsstorelocator table
+                                $table = $installer->getConnection()
+                                    ->addColumn(
+                                        $setup->getTable($Table),
+                                        'email_store_supervisor',
+                                        [
+                                            'type' =>  \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                                            'length' => 1500,
+                                            'nullable' => false,
+                                            'comment' =>'Email Store Supervisor'
+                                        ]
+                                    );
+                          	
 			}	
 			$installer->endSetup();			
 		}

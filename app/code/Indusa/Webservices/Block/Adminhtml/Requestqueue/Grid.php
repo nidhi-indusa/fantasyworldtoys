@@ -104,21 +104,21 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 					]
 				);
 				
-				$this->addColumn(
+				/*$this->addColumn(
 					'request_url',
 					[
 						'header' => __('Request Url'),
 						'index' => 'request_url',
 					]
-				);
+				);*/
 				
-				$this->addColumn(
-					'request_xml',
+				/* $this->addColumn(
+				'request_xml',
 					[
 						'header' => __('Request xml'),
 						'index' => 'request_xml',
 					]
-				);
+				); */
 				
 				
 				$this->addColumn(

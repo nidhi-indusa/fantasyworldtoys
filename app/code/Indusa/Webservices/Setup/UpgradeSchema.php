@@ -143,6 +143,20 @@
 
 				$installer->getConnection()->createTable($table);
 			}
+			
+			else if (version_compare($context->getVersion(), '1.0.3') < 0){
+			$table = $installer->getConnection()
+				->addColumn(
+				$setup->getTable($orderTable),
+				'sent_to_ax',
+				[
+				'type'=> \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+				'comment' => 'Sent to AX Flag',
+				'default' => 0,
+				'nullable' => true
+				]   
+				);
+			}
 			$installer->endSetup();			
 		}
 		

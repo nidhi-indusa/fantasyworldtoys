@@ -1,0 +1,75 @@
+<div class="block block-order-details-view">
+	
+	<div class="block-title">
+		<strong><?php /* @escapeNotVerified */ echo __('Delivery Detail Information') ?></strong>
+	</div>
+	
+	<div class="block-content">
+		<?php if ($this->getOrder()->getDeliveryMethod() == "clickandcollect") { ?>
+		  
+			<div class="box box-order-shipping-address">
+				<div id="delivery-from">
+					<strong class="box-title"><span><?php echo __('Delivery From') ?>:</span></strong>
+					<div class="box-content"><?= $this->getOrder()->getDeliveryFrom() ?></div>
+					<br>
+				</div>
+			<?php
+			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+			$StoreFactory = $objectManager->create('Indusa\GoogleMapsStoreLocator\Model\ResourceModel\Storelocator\CollectionFactory');
+			$StoreFactory = $objectManager->create('Indusa\GoogleMapsStoreLocator\Model\ResourceModel\Storelocator\Collection');
+			$storeCollection = $StoreFactory->load();
+			$storecnt = count($storeCollection);
+			if ($storecnt > 0) {
+				foreach ($storeCollection as $p) {
+					if ($p->getData('ax_storeid') == $this->getOrder()->getLocationId()) {
+						?>
+
+						<div id="storename">
+							<strong class="box-title"><span><?php echo __('Store Name') ?>:</span></strong>
+							<div class="box-content"><?php echo $block->escapeHtml($p->getData('store_name')) ?></div>
+							<br>
+						</div>
+
+						<div id="storeaddress">
+							<strong class="box-title"><span><?php echo __('Store Address') ?>:</span></strong>
+							<div class="box-content"><?php echo $block->escapeHtml($p->getData('address')) ?></div>
+							<br>
+						</div>
+
+						<?php
+					}
+				}
+			}
+			?>
+			</div>
+		<?php } ?>
+			
+		
+			
+		<?php if ($this->getOrder()->getDeliveryMethod() == "homedelivery") { ?>
+			<div class="box box-order-shipping-address">
+				<div id="delivery-from">
+					<strong class="box-title"><span><?php echo __('Delivery From') ?>:</span></strong>
+					<div class="box-content"><?= $this->getOrder()->getDeliveryFrom() ?></div>
+					<br>
+				</div>
+
+				<div id="delivery-date">
+					<strong class="box-title"><span><?php echo __('Delivery Date') ?>:</span></strong>
+					<div class="box-content"><?= $this->getOrder()->getDeliveryDate() ?></div>
+					<br>
+				</div>
+
+				<div id="delivery-comment">
+					<strong class="box-title"><span><?php echo __('Delivery Comment') ?>:</span></strong>
+					<div class="box-content"><?= $this->getOrder()->getDeliveryComment() ?></div>
+					<br>
+				</div>
+			</div>
+		<?php } ?>
+		
+		
+		
+	
+	</div>
+</div>

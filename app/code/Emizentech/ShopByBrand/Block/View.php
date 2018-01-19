@@ -110,11 +110,11 @@ class View extends \Magento\Framework\View\Element\Template
     	$brand = $this->getBrand();
     	$collection = $this->_productCollectionFactory->create();
     	$collection->addAttributeToSelect('*');
-//     	var_dump(get_class_methods($collection));
-//     	die;
+		$collection->addAttributeToFilter('visibility', array('eq' =>4));
+
 		$collection->addAttributeToSelect('name');
     	$collection->addStoreFilter()->addAttributeToFilter('manufacturer' , $brand->getAttributeId());
-//     	var_dump(count($collection));
+
     	return $collection;
     }
     

@@ -36,7 +36,7 @@ class Index extends \Magento\Backend\App\Action
         $resultPage->setActiveMenu('Indusa_Webservices::requestqueue');
         $resultPage->addBreadcrumb(__('Indusa'), __('Indusa'));
         $resultPage->addBreadcrumb(__('Manage item'), __('Manage Requestqueue'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Manage Requestqueue'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Request Queue'));
 
         return $resultPage;
     }

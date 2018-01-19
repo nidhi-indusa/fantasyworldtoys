@@ -1,0 +1,21 @@
+.page-layout-admin-login {
+    background-color: #0f8f84 !important;
+}
+
+.page-layout-admin-login .page-wrapper {
+    box-shadow: none !important;
+}
+
+img.logo-img{
+    width: 70%;
+    display: block;
+    margin: 0 auto;
+}
+
+.login-header {
+    margin-bottom: 2rem !important;
+}
+
+.page-layout-admin-login .admin__legend {
+    color: #675dc6 !important;
+}

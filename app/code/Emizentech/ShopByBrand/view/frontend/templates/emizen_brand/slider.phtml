@@ -15,7 +15,7 @@ if($exist = ($block->getFeaturedBrands()))
 {
 	//echo "hi";
 	$mode = 'grid';
-        $productsliderId = "12345678";
+    //$productsliderId = "12345678";
 	$title = __('Popular Brands');
 	 $desc = __('Choose from popular brands we offer at our shop');
 	 //$items = $block->getFeaturedBrands()->getItems();
@@ -51,6 +51,8 @@ if($exist = ($block->getFeaturedBrands()))
                                <?php $iterator = 1; ?>
                                                   
                                                    <?php foreach ($items as $_item): ?>
+												   
+												    <?php if($_item['logo']):?>
                                                            <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="product-item product-slider"">' : '</li><li class="product-item product-slider"">' ?>
                                                             <div class="product-item-info">
                                                                 <div class="product-img-main">
@@ -58,13 +60,13 @@ if($exist = ($block->getFeaturedBrands()))
                                                                $url = $this->getUrl('brand/view/',array('id'=>$_item['id']));
                                                                ?>
                                                                <a href="<?php /* @escapeNotVerified */ echo $url; ?>" class="product-item-photo">
-                                                                  <?php if($_item['logo']):?>
+                                                                 
                                                                            <img class="f-barnd-img" src="<?php echo $media.$_item['logo'] ?>" title="<?php echo $_item['name'];?>" alt="<?php echo $_item['name'];?>"/>
-                                                                   <?php endif;?>
+                                                                  
                                                                </a>
                                                            </div>
                                                            </div>
-                                                                
+                                                              <?php endif;?>   
                                                            <?php echo($iterator == count($items)+1) ? '</li>' : '' ?>
                                                    <?php endforeach ?>
                                                

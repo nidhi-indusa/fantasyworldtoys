@@ -15,27 +15,48 @@
 
     <!-- ko if: (getHomeDelivery())-->
     <div class="delivery-option">
-        <p class="cart-info"><i class="fa fa-info-circle" aria-hidden="true" data-bind="i18n: 'Your entire cart is entitled for Home Delivery only!'" ></i> </p>
-
+        <p class="cart-info"><i class="fa fa-info-circle" aria-hidden="true"></i> <span data-bind="i18n: 'Your entire cart is entitled for Home Delivery only!'"></span> </p>
     </div>        
     <!-- /ko -->
 
     <!-- ko if: (!getHomeDelivery())-->
-    <div class="delivery-option">
-        <div class="d-opt"><input type="radio" name="deliverymethod" value="homedelivery" data-bind="checked: spamFlavor, click:radioclick" /><strong><span data-bind="i18n: 'Home Delivery'" ></span></strong></div>
-        <div  class="d-opt"><input type="radio" name="deliverymethod" value="clickandcollect" data-bind="checked: spamFlavor, click:radioclick " /> <strong><span data-bind="i18n: 'Click and Collect'" ></strong><br>
+	
+	<div class="delivery-option">
+        <div class="d-opt">
+            <input type="radio" id="deliverymethodLabel" name="deliverymethod" value="homedelivery" data-bind="checked: spamFlavor, click:radioclick" />
+            <label for="deliverymethodLabel"><span data-bind="i18n: 'Home Delivery'" ></span></label>
+        </div>
+        <div  class="d-opt">
+            <input type="radio" id="clickandcollectLabel" name="deliverymethod" value="clickandcollect" data-bind="checked: spamFlavor, click:radioclick " /> 
+            <label for="clickandcollectLabel"><span data-bind="i18n: 'Click and Collect'" ></label><br>
+            <span class="unicode-bidi-brackets"  data-bind="i18n: '(To pick your product directly from store you must select a store)'"></span>
+        </div>
+    </div>
+    
+	<!--div class="delivery-option">
+        <div class="d-opt">
+			<input type="radio" name="deliverymethod" value="homedelivery" data-bind="checked: spamFlavor, click:radioclick" />
+			<strong><span data-bind="i18n: 'Home Delivery'" ></span></strong>
+		</div>
+        <div class="d-opt">
+			<input type="radio" name="deliverymethod" value="clickandcollect" data-bind="checked: spamFlavor, click:radioclick " /> 
+			<strong><span data-bind="i18n: 'Click and Collect'" ></strong><br>
             <span data-bind="i18n: '(To pick your product directly from store you must select a store)'"></span>
         </div>
-    </div>   
+		</div-->   
+	
     <!-- /ko -->
 
 
 
 </div>
+		
+
 <div class="opc-wrapper">
     <ol class="opc" id="checkoutSteps">
+		
         <li id="shipping" class="checkout-shipping-address" data-bind="fadeVisible: visible()">
-
+		<h4 data-bind="i18n: 'Required for Home Delivery only'"></h4>
 
             <!--    <div class="step-title" data-bind="i18n: 'Contact Details'" data-role="title"></div>-->
             <div id="checkout-step-shipping"
@@ -186,7 +207,7 @@
 
 
                         <div class="storeswitcher">
-                            <h4 data-bind="i18n: 'Fantasy Google Map Stores'"> </h4>
+                            <h4 data-bind="i18n: 'Fantasy World Stores'"> </h4>
                             <p>
                                 <select class="store-selection-select" data-bind="options: storeItemData,
                                            optionsText: 'store_name',

@@ -33,7 +33,7 @@
 		{
 			$this->date = $date;
 			$this->logger = $loggerInterface;
-			$this->_availableService = array(Service::MANAGE_PRODUCTS,Service::INVENTORY_UPDATES,Service::PRICE_UPDATES,Service::RELATED_PRODUCTS,Service::CREATE_ORDER_AND_CUSTOMER,Service::ORDER_STATUS_UPDATES,Service::SEND_ACKNOWLEDGEMENT_TO_MAGENTO);
+			$this->_availableService = array(Service::MANAGE_PRODUCTS,Service::INVENTORY_UPDATES,Service::PRICE_UPDATES,Service::RELATED_PRODUCTS,Service::CREATE_ORDER_AND_CUSTOMER,Service::ORDER_STATUS_UPDATES,Service::SEND_ACKNOWLEDGEMENT_TO_MAGENTO,Service::PRODUCT_STATUS_UPDATES,Service::RESERVED_INVENTORY_UPDATES);
 			
 			$this->orderRepository = $orderRepository;
 			$this->searchCriteriaBuilder = $searchCriteriaBuilder;		
@@ -103,6 +103,7 @@
 							
 							if($requestData['type']!='Store')
 							{
+								$data['quantity'] = str_replace(',', '', $data['quantity']);
 								$productRepository = $objectManager->create('Magento\Catalog\Api\ProductRepositoryInterface');
 								$stockRegistry = $objectManager->create('Magento\CatalogInventory\Api\StockRegistryInterface');
 								$product = $productRepository->get($Sku);
@@ -184,7 +185,11 @@
 							$model = $objectManager->create('Indusa\Webservices\Model\RequestQueue');
 							$requestsave = $model->saveRequestQueue($apiRequestInfo);
 						}
-					}					
+					}	
+					else if($requestData['serviceName'] == Service::RESERVED_INVENTORY_UPDATES)
+					{	
+						$this->reservedInventoryUpdates($requestData,$postdata,$objectManager);
+					}
 					else if($requestData['serviceName'] == Service::SEND_ACKNOWLEDGEMENT_TO_MAGENTO){
 						
 						$apiResponseInfo = array();		
@@ -268,16 +273,26 @@
 					}
 					else if($requestData['serviceName'] == Service::ORDER_STATUS_UPDATES)
 					{							
-						if($requestData['status'] == Service::INVOICED || $requestData['status'] == Service::DELIVERED){
+						if($requestData['status'] == Service::INVOICED || $requestData['status'] == Service::DELIVERED|| $requestData['status'] == 'Canceled'){
 							$orderExist = $this->checkOrder($requestData['magentoOrderID'],$objectManager);
 							
 							if($orderExist)
 							{
+								if($requestData['status'] == "Canceled")
+								{
+									$order = $objectManager->get('Magento\Sales\Model\Order')->loadByIncrementId($requestData['magentoOrderID']);
+									//$orderID = $order->getId();
+									if($order->canCancel()){
+										$order->cancel();
+										$order->save();
+									}
+								}
+								
 								if($requestData['status'] == "Delivered"){
-									$responseData = $this->createOrderShipment($requestData['magentoOrderID'],$objectManager);		
+									$responseData = $this->createOrderShipment($requestData['magentoOrderID'],$objectManager,$requestId);		
 								}
 								elseif($requestData['status'] == "Invoiced"){
-									$responseData = $this->createOrderInvoice($requestData['magentoOrderID'],$objectManager);									
+									$responseData = $this->createOrderInvoice($requestData['magentoOrderID'],$objectManager,$requestId);									
 								}
 								if($responseData['status'] == "Ok"){
 									$apiRequestInfo['request_id'] = $requestId;
@@ -306,6 +321,56 @@
 							$responseData['message'] = 'Invalid Status'; 
 						}
 					}
+					
+					else if($requestData['serviceName'] == Service::PRODUCT_STATUS_UPDATES)
+					{
+						
+						$products = $objectManager->get('Magento\Catalog\Model\Product')
+						->getCollection()
+						->addAttributeToFilter('sku',$requestData['axProductID'])->getFirstItem();					
+						
+						$Sku= $products['sku'];
+						if($Sku){
+							
+							//changing product status disabled							
+							$productRepository = $objectManager->create('Magento\Catalog\Api\ProductRepositoryInterface');
+							$productModel = $productRepository->get($requestData['axProductID'], true, 0, true);
+							$productModel->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+							$productModel->save();	
+							
+							$apiRequestInfo['request_id'] = $requestId;
+							$apiRequestInfo['request_type'] = $requestData['serviceName'];
+							$apiRequestInfo['request_xml'] =  $postdata;
+							$apiRequestInfo['request_datetime'] =  date('Y-m-d H:i:s');
+							$apiRequestInfo['created_at'] = date('Y-m-d H:i:s');
+							$apiRequestInfo['updated_at'] = date('Y-m-d H:i:s');            
+							$apiRequestInfo['processed'] = 1;            
+							$apiRequestInfo['processed_at'] = date('Y-m-d H:i:s'); 
+							$apiRequestInfo['processed_list'] = $requestData['axProductID'];
+							$apiRequestInfo['acknowledgment'] = 1;   
+							$apiRequestInfo['ack_datetime'] = date('Y-m-d H:i:s');      
+							$model = $objectManager->create('Indusa\Webservices\Model\RequestQueue');
+							$requestsave = $model->saveRequestQueue($apiRequestInfo);
+						}
+						else{
+							$responseData['status'] = 'Error';
+							$responseData['message'] = "Requested product doesn't exist";
+							$apiRequestInfo['request_id'] = $requestId;
+							$apiRequestInfo['request_type'] = $requestData['serviceName'];
+							$apiRequestInfo['request_xml'] =  $postdata;
+							$apiRequestInfo['request_datetime'] =  date('Y-m-d H:i:s');
+							$apiRequestInfo['created_at'] = date('Y-m-d H:i:s');
+							$apiRequestInfo['updated_at'] = date('Y-m-d H:i:s');            
+							$apiRequestInfo['processed'] = 1;            
+							$apiRequestInfo['processed_at'] = date('Y-m-d H:i:s'); 
+							$apiRequestInfo['acknowledgment'] = 1;   
+							$apiRequestInfo['ack_datetime'] = date('Y-m-d H:i:s');  
+							$apiRequestInfo['request_id'] = $requestId;
+							$apiRequestInfo['error_list'] = $requestData['axProductID']." Requessted Sku Doesn't exist" ;
+							$model = $objectManager->create('Indusa\Webservices\Model\RequestQueue');
+							$requestsave = $model->saveRequestQueue($apiRequestInfo);
+						}
+					}	
 					else
 					{
 						$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
@@ -416,7 +481,7 @@
 			return  $requestData ;
 		}
 		
-		public function createOrderShipment($incrementId,$objectManager){
+		public function createOrderShipment($incrementId,$objectManager,$requestId){
 			
 			$responseData = array();
 			// Load the order
@@ -466,6 +531,7 @@
 					
 					$shipment->save();
 					
+					$responseData['requestID'] = $requestId;
 					$responseData['status'] = 'Ok';
 					return $responseData;
 					
@@ -476,12 +542,13 @@
 				}
 			}
 			else{
+				$responseData['requestID'] = $requestId;
 				$responseData['status'] = 'Error';
 				$responseData['message'] = 'Shipment exist'; 
 				return $responseData;
 			}
 		}
-		public function createOrderInvoice($incrementId,$objectManager){
+		public function createOrderInvoice($incrementId,$objectManager,$requestId){
 			
 			$responseData = array();
 			// Load the order
@@ -512,20 +579,25 @@
 					->addObject($invoice->getOrder());
 					
 					$transaction->save();
-					$responseData['status'] = 'Ok';
-					return $responseData;
 					
+										
 					// Magento\Sales\Model\Order\Email\Sender\InvoiceSender
-					/*$this->invoiceSender->send($invoice);
+					$invoiceSender = $objectManager->create('Magento\Sales\Model\Order\Email\Sender\InvoiceSender');
+					$invoiceSender->send($invoice);
 						
 						$order->addStatusHistoryComment(
 						__('Notified customer about invoice #%1.', $invoice->getId())
 						)
 						->setIsCustomerNotified(true)
-					->save();*/
+					->save();
+					
+					$responseData['requestID'] = $requestId;
+					$responseData['status'] = 'Ok';
+					return $responseData;
 				}
 			}
 			else{
+				$responseData['requestID'] = $requestId;
 				$responseData['status'] = 'Error';
 				$responseData['message'] = 'Invoice exist'; 
 				return $responseData;
@@ -554,5 +626,90 @@
 				return false;
 			}
 		}
+		public function reservedInventoryUpdates($productData,$postdata,$objectManager){
+			$finalErrorList = array();	
+			$finalProcessList = array();	
+			
+			if(array_key_exists(0,$productData['products']['product']))
+			{
+				$xmlProducts = $productData['products']['product'];
+			}
+			else
+			{
+				$xmlProducts[] =  $productData['products']['product'];
+			}
+			
+			foreach($xmlProducts as $_product){			
+				
+				$errorList = array();
+				$processList = array();
+				
+				$variantSKU = $_product['sku'];
+				
+				$products = $objectManager->get('Magento\Catalog\Model\Product')
+				->getCollection()
+				->addAttributeToFilter('variant_sku',$variantSKU)->getFirstItem();					
+				
+				$Sku= $products['sku'];
+
+				if($Sku){
+				$finalProcessList[] = $Sku;					
+					
+					$InventoryModel = $objectManager->create('\Indusa\Webservices\Model\InventoryStore');					
+					//Saving inventory data
+					if($_product['inventories'])
+					{
+						if(array_key_exists(0,$_product['inventories']['inventory']))
+						{
+							$storeInventoryInfo = $_product['inventories']['inventory'];
+						}
+						else
+						{
+							$storeInventoryInfo[] =  $_product['inventories']['inventory'];
+						}
+						$Warehouseqty = $InventoryModel->saveInventory($storeInventoryInfo,$Sku);
+					}			
+					
+					$productRepository = $objectManager->create('Magento\Catalog\Api\ProductRepositoryInterface');
+					$stockRegistry = $objectManager->create('Magento\CatalogInventory\Api\StockRegistryInterface');
+					$product = $productRepository->get($Sku);
+					$stockItem = $stockRegistry->getStockItem($product->getId());
+					$stockItem->setData('qty',$Warehouseqty);
+					if($Warehouseqty > 0)
+					{
+						$stockItem->setData('is_in_stock',1);
+					}
+					else{
+						$stockItem->setData('is_in_stock',0);
+					}
+					
+					$stockRegistry->updateStockItemBySku($Sku, $stockItem);		
+					
+					$processList['variant_sku'] = $variantSKU;	
+					$finalProcessList[] = $processList;		
+				}
+				else{				
+					$errorList['variant_sku'] = $variantSKU;	
+					$errorList['message'] ="Requested SKU doesn't exist";
+					$finalErrorList[] = $errorList;							
+				}
+			}			
+			//Adding data in request queue table			
+			$apiRequestInfo['request_id'] = $productData['requestID'];
+			$apiRequestInfo['request_type'] = $productData['serviceName'];
+			$apiRequestInfo['request_xml'] =  $postdata;
+			$apiRequestInfo['request_datetime'] =  date('Y-m-d H:i:s');
+			$apiRequestInfo['created_at'] = date('Y-m-d H:i:s');
+			$apiRequestInfo['updated_at'] = date('Y-m-d H:i:s');            
+			$apiRequestInfo['processed'] = 1;            
+			$apiRequestInfo['processed_at'] = date('Y-m-d H:i:s'); 
+			$apiRequestInfo['processed_list'] = json_encode($finalProcessList);
+			$apiRequestInfo['error_list'] = json_encode($finalErrorList);
+			$apiRequestInfo['acknowledgment'] = 1;   
+			$apiRequestInfo['ack_datetime'] = date('Y-m-d H:i:s');   
+			
+			$model = $objectManager->create('Indusa\Webservices\Model\RequestQueue');
+			$requestsave = $model->saveRequestQueue($apiRequestInfo);				
+		}		
 		
 	}

@@ -3,6 +3,20 @@
     <group id="indusa_webservices_cron_group">
 	
         <job name="indusa_webservices_cronjob_requestprocess" instance="Indusa\Webservices\Cron\ProcessRequest" method="execute">
+            <schedule>*/40 * * * *</schedule>
+        </job>
+		 
+    </group> 
+	<group id="indusa_webservices_cron_group_price">
+	
+        <job name="indusa_webservices_cronjob_priceprocess" instance="Indusa\Webservices\Cron\ProcessPrice" method="execute">
+            <schedule>*/1 * * * *</schedule>
+        </job>
+		 
+    </group>
+	<group id="indusa_webservices_cron_group_related">
+	
+        <job name="indusa_webservices_cronjob_relatedprocess" instance="Indusa\Webservices\Cron\ProcessRelated" method="execute">
             <schedule>*/1 * * * *</schedule>
         </job>
 		 
@@ -10,7 +24,7 @@
 	<group id="indusa_webservices_cron_group_order">
 	
 		<job name="indusa_webservices_cronjob_orderprocess" instance="Indusa\Webservices\Cron\CreateOrderAndCustomer" method="execute">
-			<schedule>* * * * *</schedule>
+			<schedule>*/1 * * * *</schedule>
 		</job>
 		
 	</group>
@@ -18,9 +32,16 @@
 	<group id="indusa_webservices_cron_group_error">
 		
 		<job name="indusa_webservices_cronjob_errorprocess" instance="Indusa\Webservices\Cron\ProcessError" method="execute">
-			<schedule>* * * * *</schedule>
+			<schedule>*/1 * * * *</schedule>
 		</job>
 		
 	</group>
+	<!--group id="indusa_webservices_cron_group_permission">
+	
+		<job name="indusa_webservices_cronjob_permissionprocess" instance="Indusa\Webservices\Cron\Permission" method="execute">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+		
+	</group-->
 	
 </config>

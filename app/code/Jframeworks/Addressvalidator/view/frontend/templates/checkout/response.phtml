@@ -1,0 +1,37 @@
+<?php 
+//multishipping edit address form page
+$results = $block->getJframeworksResult();
+if(is_array($results)){
+	foreach($results as $res){
+		$obj = json_decode($res);
+		if($block->getRequest()->getParam('id')==$obj->address_id){
+			$result = $res;
+		}
+	}
+	
+}
+else{
+	$result = $results;
+}
+?>
+<script>
+var html_ship = '<div id="jframeworks_ship_addr_correction" class="" style="display: none;"><div class="message-error error message" data-ui-id="message-error"><div>There appears to be a problem with the address. Please correct or select one below.</div></div><div id="jframeworks_ship_orig_addr"><div id="jframeworks_ship_addr_radio" class="jframeworks-addr-radio"></div><div style="display: none;" id="jframeworks_ship_orig_placeholder"></div></div></div>';
+
+require(['jquery'],function($){ 
+		$(document).ready(function(){
+			$(html_ship).prependTo('#form-validate .fieldset:first-child');
+		});
+});
+</script>
+<?php
+if($result != ""){
+?>
+<script type="text/x-magento-init">
+{
+	
+"*": {
+        "Jframeworks_Addressvalidator/js/response_handler": <?php echo $result ?>
+    }
+}
+</script>	
+<?php } ?>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+		<tab id="snapCX" translate="label" sortOrder="777777777770">
+			<label>snapCX Plugins</label>
+		</tab>
+        <section id="addressvalidator_section" translate="label" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Global Address Validation</label>
+			<tab>snapCX</tab>
+			<resource>Jframeworks_Addressvalidator::addressvalidator_config</resource>
+			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Global Address Validation Settings</label>
+				<comment><![CDATA[Enter your snapCX User Key here.<br/><br/> If you do not have one, <a target="_blank" href="https://snapcx.io/pricing?solution=avs&amp;utm_source=magento2&amp;utm_medium=plugin&amp;utm_campaign=avs">sign up for a FREE snapCX account here and get subscription with TRIAL.</a><br/><br/> <u>NO credit card required</u><br/><br/>
+				For troubleshooting your account, please visit <a target="_blank" href="https://snapcx.io/addressValidationAPI">here</a>. You will need your User key to test out.]]></comment>
+				<field id="enable_in_frontend" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="addressvalidator_user_key" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>User Key</label>
+					<comment><![CDATA[<a target="_blank" href="https://snapcx.io/pricing?solution=avs&amp;utm_source=magento2&amp;utm_medium=plugin&amp;utm_campaign=avs">Get your User Key (open a FREE TRIAL account)</a>]]></comment>
+				</field>
+				<field id="enable_global_in_frontend" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Global Address Validation</label>
+					<comment><![CDATA[For addresses outside USA and If your subscription supports it.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+        </section>
+    </system>
+</config>

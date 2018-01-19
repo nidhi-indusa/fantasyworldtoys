@@ -9,10 +9,10 @@
                     <item name="sortOrder" xsi:type="number">110</item>
                     <item name="dataType" xsi:type="string">string</item>
                     <item name="formElement" xsi:type="string">input</item>
-                    <item name="label" xsi:type="string" translate="true">Ax Category code</item>
+                    <item name="label" xsi:type="string" translate="true">Ax Category Code</item>
                     <item name="notice" xsi:type="string" translate="true"></item>
                     <item name="additionalClasses" xsi:type="string"></item>
-					<item name="required" xsi:type="boolean">true</item>
+					<item name="required" xsi:type="string">true</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>

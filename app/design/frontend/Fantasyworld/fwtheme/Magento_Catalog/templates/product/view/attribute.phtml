@@ -31,21 +31,25 @@
 		$_attributeValue = $_helper->productAttribute($_product, $_product->$_call(), $_code);
 	}
 ?>
-
 <?php if ($_attributeValue): ?>
 <div class="product attribute <?php /* @escapeNotVerified */ echo $_className?>">
     <?php if ($_attributeLabel != 'none'): ?><strong class="type"><?php /* @escapeNotVerified */ echo $_attributeLabel?></strong><?php endif; ?>
     <div class="value" <?php /* @escapeNotVerified */ echo $_attributeAddAttribute;?>><?php /* @escapeNotVerified */ echo $_attributeValue; ?></div>
-	
-	<?php 
-		$video_avail =$_product->getResource()->getAttribute('video')->getFrontend()->getValue($_product);	
-		if ($video_avail != ''){
-		?>	
-		<p><a class="yt-anchor" href="#ytVideo"> <?php /* @escapeNotVerified */ echo __('Watch Video');?> <i class="fa fa-youtube-play"></i></a></p>
-	<?php } ?>
-	
 </div>
 
-<?php endif; ?>
+	
 
+
+
+<?php endif; ?>
+<?php 
+		$video_avail =$_product->getResource()->getAttribute('video')->getFrontend()->getValue($_product);	
+		
+		//echo "video_avail::".$video_avail;
+                if ($video_avail != ''){
+		?>
+		<div class="yt-video-wrapper">
+		<p><a class="yt-anchor" href="#ytVideo"> <?php /* @escapeNotVerified */ echo __('Watch Video');?> <i class="fa fa-youtube-play"></i></a></p>
+		</div>
+	<?php } ?>	
 

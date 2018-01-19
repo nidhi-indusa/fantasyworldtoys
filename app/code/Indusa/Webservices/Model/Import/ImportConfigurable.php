@@ -75,9 +75,9 @@
 				
 				$logTracing = $importerModel->getLogTrace();
 				$this->logger->info($logTracing);
-
-				if($processed  === true){   
 				
+				if($processed  === true){   
+					
 					$scopeConfig = $this->objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');      
 					$configPath = 'ack_webservice/ack_credential/username';
 					$username =  $scopeConfig->getValue($configPath,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
@@ -85,14 +85,14 @@
 					$password =  $scopeConfig->getValue($configPath,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 					
 					$ackResponse = "<eCommerceAPI>";
-						$ackResponse .= "<username>" .$username. "</username>";
-						$ackResponse .= "<password>" .$password. "</password>";
-						$ackResponse .= "<serviceName>" .Service::SEND_ACKNOWLEDGEMENT_TO_MAGENTO. "</serviceName>";
-						$ackResponse .= "<requestID>" .$request_id. "</requestID>";
-						$ackResponse .= "<status>Success</status>";
-						$ackResponse .= "<requestType>" .Service::MANAGE_PRODUCTS. "</requestType>";
-						$ackResponse .= "<processedList>";
-				
+					$ackResponse .= "<username>" .$username. "</username>";
+					$ackResponse .= "<password>" .$password. "</password>";
+					$ackResponse .= "<serviceName>" .Service::SEND_ACKNOWLEDGEMENT_TO_AX. "</serviceName>";
+					$ackResponse .= "<requestID>" .$request_id. "</requestID>";
+					$ackResponse .= "<status>Success</status>";
+					$ackResponse .= "<requestType>" .Service::MANAGE_PRODUCTS. "</requestType>";
+					$ackResponse .= "<processedList>";
+					
 					if(array_key_exists(0,$productData['products']['product']))
 					{
 						$xmlProudcts = $productData['products']['product'];
@@ -121,11 +121,9 @@
 					$successData = array("acknowledgeXML" => $ackResponse,"requestId" =>$request_id);
 					$processmodel = $this->objectManager->create('\Indusa\Webservices\Model\Acknowledgment\SendAcknowledgment');
 					
-					//$this->logger->info(json_encode($ackResponse));
 					$processStatus = $processmodel->sendAcknowledgmentToAX($successData, $processId);
 					
-					return true;	
-					
+					return true;						
 				}			
 				} catch (Exception $e) {
 				return false;
@@ -155,7 +153,17 @@
 			}
 			
 			foreach($xmlProudcts as $_product)
-			{
+			{				
+				if(!array_key_exists("BRAND",$_product)) $_product['BRAND'] = "";
+				if(!array_key_exists("Gender",$_product)) $_product['Gender'] = "";
+				if(!array_key_exists("LICENSE",$_product)) $_product['LICENSE'] = "";
+				if(!array_key_exists("description",$_product)) $_product['description'] = "";
+				if(!array_key_exists("specifications",$_product)) $_product['specifications'] = "";
+				if(!array_key_exists("additionalInfo",$_product)) $_product['additionalInfo'] = "";
+				if(!array_key_exists("AGE",$_product)) $_product['AGE'] = "";
+				
+				$weightInGram = $_product['weight'];
+				$weightInlbs = $weightInGram * 0.002205;
 				$varianAttArr = array();	
 				$variantProducts = array();	
 				$configurable_variations = array();			
@@ -167,6 +175,7 @@
 				$categories = $CategoryModel->getCategory($catIds);
 				foreach($variantProducts as $_variantProducts)  
 				{
+					
 					$_simpleproducts = array(); 	
 					if($_variantProducts['variantAttributes'])
 					{
@@ -199,21 +208,22 @@
 					'variant_sku' => $_variantProducts['variantSKU'],
 					'attribute_set_code' => 'Default',
 					'product_type' => 'simple',
-					'categories' => $categories,    
+					'status' => 1,
+					'categories' => $categories, 
+					'description' => $_product['description'],
 					'product_websites' => 'base',
 					'name' => isset($variantName) ? $variantName : $_product['name'],
 					'specification' => $_product['specifications'],
 					'additional_info' => $_product['additionalInfo'],
-					'weight' => $_product['weight'],              
+					'weight' => $weightInlbs,					
 					'reserved_qty' => $_variantProducts['variantReservedQty'],					
 					'manufacture_id' => $attributeArr['style'],
 					'manufacture_code' => $attributeArr['config'],
 					'license' => $_product['LICENSE'],
 					'gender' => $_product['Gender'],
-					'brand' => $_product['BRAND']
+					'manufacturer' => $_product['BRAND'],
+					'url_key' => $SKU
 					);
-					
-					
 					
 					$product = $this->_productFactory->create();				
 					$existingProductID = $product->getIdBySku($SKU);
@@ -222,9 +232,15 @@
 					// -- check if product exists then inventory and price won't be updated			
 					if(!$existingProductID){
 						
-						//Price updates if product does not exists
-						$_simpleproducts['price'] = $_product['price'];
-						$_simpleproducts['special_price'] = $_product['specialPrice'];
+						//Price updates if product does not exists						
+						$_simpleproducts['price'] = str_replace(',', '', $_product['price']);
+						//$_simpleproducts['special_price'] = str_replace(',', '', $_product['specialPrice']);
+						if($_product['specialPrice'] == 0.00){
+						$_simpleproducts['special_price'] = "";
+					}
+						else{
+						$_simpleproducts['special_price'] = str_replace(',', '', $_product['specialPrice']);
+						}
 						
 						if($_variantProducts['inventories'])
 						{
@@ -287,14 +303,12 @@
 						$_simpleproducts['website_only'] = $_product['online']; 
 						$_simpleproducts['is_homedelivery'] = $_product['onlyHD'];
 						$_simpleproducts['age_group'] = $_product['AGE'];					
-						$_simpleproducts['video'] = isset($_product['video_url'])? $_product['video_url'] :'';
+						$_simpleproducts['video'] = isset($_product['videoURL'])? $_product['videoURL'] :'';
 						$_simpleproducts['visibility'] = 'Catalog, Search';
 						
-					}
-					
+					}					
 					//creating simple products
-					$configProduct[] = array_merge($_simpleproducts,$attributeArr); 
-					//$this->logger->info($count++);
+					$configProduct[] = array_merge($_simpleproducts,$attributeArr); 					
 				}
 				
 				if(isset($configurable_variations) && is_array($configurable_variations))
@@ -303,8 +317,16 @@
 					
 					// -- check if product exists then price should be same as before
 					if(!$existingConfigurableProduct){
-						$price  = $_product['price'];
-						$specialPrice  = $_product['specialPrice'];
+						
+						$price  = str_replace(',', '', $_product['price']);
+						//$specialPrice  = str_replace(',', '', $_product['specialPrice']);
+						if($_product['specialPrice'] == 0.00){
+							$specialPrice = "";
+					}
+						else{
+						$specialPrice = str_replace(',', '', $_product['specialPrice']);
+						}
+						//$specialPrice  = $_product['specialPrice'];
 						
 						$configProduct[] = array(
 						'sku' => $_product['axProductID'],				
@@ -312,13 +334,14 @@
 						'product_type' => 'configurable',
 						'product_websites' => 'base',
 						'name' => $_product['name'],
+						'status' => 1,
 						'specification' => $_product['specifications'],
 						'additional_info' => $_product['additionalInfo'],
 						'price' => 	$price,
 						'special_price' => 	$specialPrice,
-						'categories' =>$categories,
+						'categories' =>$categories,						
 						'description' => $_product['description'],
-						'weight' => $_product['weight'],
+						'weight' => $weightInlbs,
 						'is_newproduct' => $_product['new'],				
 						'is_featured' =>  $_product['featured'], 
 						'is_seller' =>  $_product['hotSeller'] , 
@@ -327,12 +350,14 @@
 						'age_group' =>   $_product['AGE'],
 						'license' =>   $_product['LICENSE'],
 						'gender' =>    $_product['Gender'],
-						'brand' =>    $_product['BRAND'],    
-						'video' =>  isset($_product['video_url'])? $_product['video_url'] :'',
+						'manufacturer' =>    $_product['BRAND'],    
+						'video' =>  isset($_product['videoURL'])? $_product['videoURL'] :'',
+						'url_key' => $_product['axProductID'],
 						'manage_stock' => 0,   
 						'use_config_manage_stock' => 0, 
 						'use_config_min_qty' => 0,    				
 						'configurable_variations' => $configurable_variations
+						
 						);
 						
 					}
@@ -361,12 +386,13 @@
 						'product_type' => 'configurable',
 						'product_websites' => 'base',
 						'name' => $_product['name'],
+						'status' => 1,
 						'specification' => $_product['specifications'],
 						'additional_info' => $_product['additionalInfo'],
 						'price' => 	$price,
-						'special_price' => 	$specialPrice,
+						'special_price' => 	$specialPrice,						
 						'description' => $_product['description'],
-						'weight' => $_product['weight'],
+						'weight' => $weightInlbs,
 						'is_newproduct' => $_product['new'],				
 						'is_featured' =>  $_product['featured'], 
 						'is_seller' =>  $_product['hotSeller'] , 
@@ -375,8 +401,9 @@
 						'age_group' =>   $_product['AGE'],
 						'license' =>   $_product['LICENSE'],
 						'gender' =>    $_product['Gender'],
-						'brand' =>    $_product['BRAND'],    
-						'video' =>  isset($_product['video_url'])? $_product['video_url'] :'',
+						'manufacturer' =>    $_product['BRAND'],    
+						'video' =>  isset($_product['videoURL'])? $_product['videoURL'] :'',
+						'url_key' => $_product['axProductID'],
 						'manage_stock' => 0,   
 						'use_config_manage_stock' => 0, 
 						'use_config_min_qty' => 0,    				
@@ -388,4 +415,4 @@
 			}
 			return $configProduct; 
 		}
-		}								
+	}								

@@ -26,16 +26,17 @@
                         <label>Title</label>
                         <config_path>payment/chcybersource/title</config_path>
                     </field>
-                    <field id="dm_fail_sender" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                  <field id="dm_fail_sender" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>DM fail email sender</label>
                         <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
                         <config_path>payment/chcybersource/dm_fail_sender</config_path>
                     </field>
-                    <field id="dm_fail_template" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                      <field id="dm_fail_template" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>DM fail email template</label>
-                        <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
-                        <config_path>payment/chcybersource/dm_fail_template</config_path>
+<!--                        <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                        <config_path>payment/chcybersource/dm_fail_template</config_path>-->
                     </field>
+                    
                     <field id="secureacceptance_type" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Secure Acceptance Type</label>
                         <comment>Use SOP in order to enable Multi-shipping feature.</comment>

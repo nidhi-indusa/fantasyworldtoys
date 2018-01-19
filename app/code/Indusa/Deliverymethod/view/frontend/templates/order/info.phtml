@@ -1,0 +1,128 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<?php $_order = $block->getOrder() ?>
+<div class="block block-order-details-view">
+	
+	<div class="block-title">
+	    <strong><?php /* @escapeNotVerified */ echo __('Delivery Detail Information') ?></strong>
+		<?php if ($this->getOrder()->getDeliveryMethod() == "clickandcollect") { ?>
+		<br>
+	</div>
+	
+	<div class="block-content">
+	
+
+            <div id="delivery-from">
+               <strong class="box-title"><span><?php echo __('Delivery From') ?>:</span></strong>
+               <div class="box-content"><?= $this->getOrder()->getDeliveryFrom() ?></div>
+			   <br>
+            </div>
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $StoreFactory = $objectManager->create('Indusa\GoogleMapsStoreLocator\Model\ResourceModel\Storelocator\CollectionFactory');
+    $StoreFactory = $objectManager->create('Indusa\GoogleMapsStoreLocator\Model\ResourceModel\Storelocator\Collection');
+    $storeCollection = $StoreFactory->load();
+    $storecnt = count($storeCollection);
+    if ($storecnt > 0) {
+        foreach ($storeCollection as $p) {
+            if ($p->getData('ax_storeid') == $this->getOrder()->getLocationId()) {
+                ?>
+
+                        <div id="storename">
+                            <strong class="box-title"><span><?php echo __('Store Name') ?>:</span></strong>
+                            <div class="box-content"><?php echo $block->escapeHtml($p->getData('store_name')) ?></div>
+							<br>
+                        </div>
+
+                        <div id="storeaddress">
+                            <strong class="box-title"><span><?php echo __('Store Address') ?>:</span></strong>
+                            <div class="box-content"><?php echo $block->escapeHtml($p->getData('address')) ?></div>
+							<br>
+                        </div>
+
+
+
+<!--                        <div id="storeaddress">
+                            <strong><?php echo __('Store Description') ?>:</strong>
+                            <br/>
+                            <span class="price"><?php echo $block->escapeHtml($p->getData('store_description')) ?></span>
+                        </div>-->
+
+
+                <?php
+            }
+        }
+    }
+    ?>
+        <?php } ?>
+
+
+<?php if ($this->getOrder()->getDeliveryMethod() == "homedelivery") { ?>
+
+            <div id="delivery-from">
+                <strong class="box-title"><span><?php echo __('Delivery From') ?>:</span></strong>
+                <div class="box-content"><?= $this->getOrder()->getDeliveryFrom() ?></div>
+            </div>
+
+            <div id="delivery-date">
+                <strong class="box-title"><span><?php echo __('Delivery Date') ?>:</span></strong>
+                <div class="box-content"><?= $this->getOrder()->getDeliveryDate() ?></div>
+            </div>
+
+            <div id="delivery-comment">
+                <strong class="box-title"><span><?php echo __('Delivery Comment') ?>:</span></strong>
+                <div class="box-content"><?= $this->getOrder()->getDeliveryComment() ?></div>
+            </div>
+<?php } ?>
+    </div>
+
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Order Information') ?></strong>
+    </div>
+    <div class="block-content">
+<?php if (!$_order->getIsVirtual()): ?>
+            <div class="box box-order-shipping-address">
+                <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></span></strong>
+                <div class="box-content">
+                    <address><?php /* @escapeNotVerified */ echo $block->getFormattedAddress($_order->getShippingAddress()); ?></address>
+                </div>
+            </div>
+
+            <div class="box box-order-shipping-method">
+                <strong class="box-title">
+                    <span><?php /* @escapeNotVerified */ echo __('Shipping Method') ?></span>
+                </strong>
+                <div class="box-content">
+    <?php if ($_order->getShippingDescription()): ?>
+                        <?php echo $block->escapeHtml($_order->getShippingDescription()) ?>
+                    <?php else: ?>
+                        <?php /* @escapeNotVerified */ echo __('No shipping information available'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+<?php endif; ?>
+
+        <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Billing Address') ?></span>
+            </strong>
+            <div class="box-content">
+                <address><?php /* @escapeNotVerified */ echo $block->getFormattedAddress($_order->getBillingAddress()); ?></address>
+            </div>
+        </div>
+        <div class="box box-order-billing-method">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Payment Method') ?></span>
+            </strong>
+            <div class="box-content">
+<?php echo $block->getPaymentInfoHtml() ?>
+            </div>
+        </div>
+    </div>
+</div>

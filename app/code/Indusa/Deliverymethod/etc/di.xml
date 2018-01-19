@@ -13,6 +13,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     
+      <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="add-city-field"  type="Indusa\Deliverymethod\Model\Checkout\LayoutProcessorPlugin" sortOrder="1"/>
+    </type>
+    
     <type name="Magento\Checkout\Model\DefaultConfigProvider">
         <plugin name="checkout-summary-product-attribute" type="Indusa\Deliverymethod\Plugin\Checkout\Model\DefaultConfigProvider" sortOrder="2" />
     </type>
@@ -28,6 +32,8 @@
     <type name="Magento\Sales\Block\Adminhtml\Order\Create">
         <plugin name="indusa_order_create_deliverymethod" type="Indusa\Deliverymethod\Model\Plugin\Admin\Order\Create\DataPlugin"  sortOrder="5" />
     </type>
+    
+    
     
     <preference for="Magento\Checkout\Block\Onepage\Success" type="Indusa\Deliverymethod\Block\Success"/>
    
@@ -49,6 +55,5 @@
                 <item name="delivery_from" xsi:type="string">sales_order.delivery_from</item>
             </argument>
         </arguments>
-    </virtualType>
-    
+    </virtualType>    
 </config>

@@ -10,19 +10,18 @@
                 
                  
                 <field id="maxorders" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Max No.of homedelivery orders per day :</label>
+                    <label>Max no.of Home Delivery orders per day :</label>
                 </field>
                 
                 
                  <field id="show_hide_canBeDelivered" translate="label" type="hidden" sortOrder="2" showInDefault="0" showInWebsite="0" showInStore="0" canRestore="1">
 <!--                  <label>Can be Delivery Message :</label>-->
-                 </field>
+                 </field>                
                 
-                
-                <field id="format" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <!--field id="format" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Date Format:</label>
-                    <comment>yy-mm-dd</comment>
-                </field>
+                    <comment>Required Date Format</comment>
+                </field-->
                 <field id="disabled" translate="label" type="multiselect" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Disabled Delivery Date</label>
                     <source_model>Indusa\Deliverymethod\Model\Config\Source\Disabled</source_model>

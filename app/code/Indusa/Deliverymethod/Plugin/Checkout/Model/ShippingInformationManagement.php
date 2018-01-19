@@ -20,22 +20,21 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
 
     const CONFIG_SCOPE = 'default';
     const CONFIG_SCOPE_ID = 0;
-    
+
     protected $quoteRepository;
     protected $jsonHelper;
     protected $_request;
     protected $_messageManager;
     protected $deliverydateconfigprovider;
-  
-     /* @var \Magento\Framework\App\Config\Storage\WriterInterface */
+
+    /* @var \Magento\Framework\App\Config\Storage\WriterInterface */
     protected $_configWriter;
+
     /**
      * @param \Magento\Framework\App\RequestInterface $request
      */
     public function __construct(
-    \Magento\Quote\Model\QuoteRepository $quoteRepository, \Magento\Framework\App\RequestInterface $request, \Magento\Framework\Json\Helper\Data $jsonHelper, \Magento\Framework\Message\ManagerInterface $messageManager, \Indusa\Deliverymethod\Model\DeliveryDateConfigProvider $DeliveryDateConfigProvider,
-             \Magento\Framework\App\Config\Storage\WriterInterface $configWriter
-            
+    \Magento\Quote\Model\QuoteRepository $quoteRepository, \Magento\Framework\App\RequestInterface $request, \Magento\Framework\Json\Helper\Data $jsonHelper, \Magento\Framework\Message\ManagerInterface $messageManager, \Indusa\Deliverymethod\Model\DeliveryDateConfigProvider $DeliveryDateConfigProvider, \Magento\Framework\App\Config\Storage\WriterInterface $configWriter
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->_request = $request;
@@ -49,7 +48,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
      * beforeSaveAddressInformation
      * @throws LocalizedException
      */
-    
+
     /**
      * @param \Magento\Checkout\Model\ShippingInformationManagement $subject
      * @param $cartId
@@ -69,15 +68,15 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
 
         $deliveryDate = $extAttributes->getDeliveryDate();
         $deliveryComment = $extAttributes->getDeliveryComment();
-        
-           
-        
-      
-        if ($extAttributes->getAxStoreId() == 'unknown' && $extAttributes->getNewdeliverymethod() == 'homedelivery' ) {
+
+
+
+
+        if ($extAttributes->getAxStoreId() == 'unknown' || $extAttributes->getNewdeliverymethod() == 'homedelivery') {
             $AxStoreId = '999';
             $LocationId = '999';
         }
-        
+
 
         if (isset($TransferOrderQuantity) && $TransferOrderQuantity != 'unknown') {
             $decodedData = $this->jsonHelper->jsonDecode($TransferOrderQuantity);
@@ -89,16 +88,16 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
         $quote->setLocationId($LocationId);
         $quote->setDeliveryFrom($DeliveryFrom);
         $quote->setDeliveryMethod($DeliveryMethod);
-        
+
         //Convert mm-dd-yy to yy-dd-mm start
-        if($deliveryDate  != ''){
-            $date = date_create_from_format('m-d-Y', $deliveryDate);
+        if ($deliveryDate != '') {
+            $date = date_create_from_format('d-m-Y', $deliveryDate);
             $deliveryDate = date_format($date, 'Y-m-d');
-        //Convert mm-dd-yy to yy-dd-mm start
-        }    
+            //Convert mm-dd-yy to yy-dd-mm start
+        }
         $quote->setDeliveryDate($deliveryDate);
-        
-        
+
+
         $quote->setDeliveryComment($deliveryComment);
 
         $quoteid = $quote->getEntityId();
@@ -114,10 +113,10 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
             $itemq->save();
         }
         $shippingAddress = $quote->getShippingAddress();
-        
-        
-      
-        
+
+
+
+
         if ($quote->getDeliveryMethod() == 'clickandcollect') {
 
             $shippingAddress->setGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
@@ -129,66 +128,105 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
 
             $quote->setShippingAddress($shippingAddress);
         } else if ($quote->getDeliveryMethod() == 'homedelivery') {
+		$deliveryDate_old = '';
             //If(HOMEDELIVERY)
             //IF(DELIVERYDATE !=NULL)
 
+
             if ($deliveryDate != '') {
+
+                ///new code addded on 29 dec 2017 start
+                $date_currentdate = date('Y-m-d');
+                /// DATETIME CURRENTTIME = GET CURRENT SERVER TIME HH:MM:SSS
+                date_default_timezone_set('Asia/Kuwait');
+
+                if ($deliveryDate == date('Y-m-d')) {
+
+                    $date_currentdate_time = time(); //strtotime($deliveryDate);
+                } else {
+
+                    $date_currentdate_time = strtotime($deliveryDate);
+                }
+                $threePm = mktime(12); //
+                if ($date_currentdate_time <= $threePm) {
+
+                    $deliveryDate = date('Y-m-d'); //today();
+                } else {
+                    if ($deliveryDate == date('Y-m-d')) {
+
+                        $deliveryDate_old = $deliveryDate;
+                        $deliveryDate = date('Y-m-d', strtotime($deliveryDate . ' +1 day'));
+                    }else{
+                        $deliveryDate_old = $deliveryDate;
+                    }
+                }
+                ///new code addded on 29 dec 2017 end
+
+
+
                 $canBeDelivered = 0;
                 $canBeDelivered = $this->getCheckDeliveryDateStatus($deliveryDate);
-                
+
                 if ($canBeDelivered) {
                     //SHOW MESSAGE TO USER THAT “Your order will be shipped on date “DELIVERYDATE”
                     //proceed further considering the delivery date chosen
-                   
+
                     $shippingAddress->setGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
                     $shippingAddress->setBaseGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
                     $quote->setShippingAddress($shippingAddress);
                 } else {
                     //If Error Stay on same screen
-                    
-                    $custom_message = $msg = "Your order cannot be shipped on date " . $deliveryDate . " chosen, please choose another date !";
+                    //$custom_message = $msg = "Your order cannot be shipped on date " . $deliveryDate . " chosen, please choose another date !";
+                    //$custom_message = $msg = "Sorry, your order cannot be shipped on date chosen. Please do choose another date !";
+                    if ($deliveryDate_old == date('Y-m-d')) {
+                        $msg = __('Your order cannot be shipped on date ') . date("d-m-Y", strtotime($deliveryDate_old)) . __('. Please choose another date!');
+                    }else{
+                         $msg = __('Your order cannot be shipped on date ') . date("d-m-Y", strtotime($deliveryDate)) . __('. Please choose another date!');
+                    }
+
+                    $custom_message = $msg;
+
                     $quote->setCustomMessage($custom_message);
                     $shippingAddress->setGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
                     $shippingAddress->setBaseGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
                     $quote->setShippingAddress($shippingAddress);
                     //throw new LocalizedException(__($msg));
                     throw new StateException(__($msg));
-                    $this->_messageManager->addError(__($msg));
-                   
-                    
+                    // $this->_messageManager->addError(__('Your order cannot be shipped on date '). $deliveryDate);
                 }
             } else {
                 //DATE CURRENTDATE = GET CURRENT DATE FROM SERVER
-                
+
                 $date_currentdate = date('Y-m-d');
                 /// DATETIME CURRENTTIME = GET CURRENT SERVER TIME HH:MM:SSS
                 //$date_currentdate_time = time();
-                date_default_timezone_set('Asia/Riyadh');
+                date_default_timezone_set('Asia/Kuwait');
                 $date_currentdate_time = time();
-                
-                
-                $threePm = mktime(15); //
+
+                $threePm = mktime(12); //
+
                 if ($date_currentdate_time <= $threePm) {
                     $checkdate = date('Y-m-d'); //today();
                 } else {
                     $checkdate = date('Y-m-d', strtotime(date('Y-m-d') . ' +1 day'));
                 }
+
                 //Recursive logic to get best Deliverydate
                 $newdate = $this->CheckBestDeliveryDate($checkdate);
                 $quote->setDeliveryDate($newdate);
-                
+
                 $canBeDelivered = $this->getCheckDeliveryDateStatus($newdate);
                 $shippingAddress->setGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
                 $shippingAddress->setBaseGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
                 $quote->setShippingAddress($shippingAddress);
-                
+
                 $this->_messageManager->addSuccessMessage(__('This is a success message'));
-                
+
                 //SHOW MESSAGE TO USER THAT “Your order will be shipped on date “deliveryDate”
                 //proceed further considering the deliveryDate
             }
         } else {
-            
+
             $shippingAddress->setGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
             $shippingAddress->setBaseGrandTotal($shippingAddress->getGrandTotal() - $shippingAddress->getShippingAmount());
             $quote->setShippingAddress($shippingAddress);
@@ -224,7 +262,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
     }
 
     public function CheckBestDeliveryDate($date) {
-        
+
         $status = false;
         $i = 0;
         while ($status === false) {
@@ -242,7 +280,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
             if ($countOfOrders < $maxorders) {
                 $canBeDelivered = 1;
                 $status = true;
-                 $this->_configWriter->save('indusa_deliverydatemethod/general/show_hide_canBeDelivered', 1, 'default', 0);
+                $this->_configWriter->save('indusa_deliverydatemethod/general/show_hide_canBeDelivered', 1, 'default', 0);
             } else {
                 $i++;
                 $date = date('Y-m-d', strtotime($date . ' +' . $i . ' day'));

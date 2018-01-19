@@ -13,6 +13,6 @@
         <!-- <css src="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" src_type="url" /> -->
     </head>
 	<body>
-	<move element="category-sidebar" destination="sidebar.main" before="-"/>
+	<move element="category-sidebar" destination="sidebar.main" after="main.mana.layered_nav"/>
 	</body>
 </page>

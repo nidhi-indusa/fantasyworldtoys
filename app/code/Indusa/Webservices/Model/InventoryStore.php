@@ -33,13 +33,13 @@ class InventoryStore extends \Magento\Framework\Model\AbstractModel
 		//Inventory Updates at real time
 		if($serviceName == 'inventoryUpdates'){
 			$inventoryStoreFactory  = $objectManager->create('Indusa\Webservices\Model\InventoryStoreFactory');			
-			$resultFactory = $inventoryStoreFactory->create()->getCollection()->addFieldToFilter('ax_store_id', $storeInventory['storeId'])->addFieldToFilter('product_sku', $productSku)->getFirstItem();
+			$resultFactory = $inventoryStoreFactory->create()->getCollection()->addFieldToFilter('ax_store_id', $storeInventory['storeId'])->addFieldToFilter('product_sku', $productSku)->setOrder('id', 'DESC')->getFirstItem();
 			$storeRecID = $resultFactory->getId();		
 	
 				if($storeInventory['type'] != 'Warehouse')
 				{
 					if(isset($storeRecID)){
-						$data = array('id'=> $storeRecID, 'ax_store_id' =>$storeInventory['storeId'],'product_sku'=>$productSku,'quantity'=>$storeInventory['quantity']); 
+						$data = array('id'=> $storeRecID, 'ax_store_id' =>$storeInventory['storeId'],'product_sku'=>$productSku,'quantity'=>str_replace(',', '', $storeInventory['quantity'])); 
 						
 						$model->setData($data);
 						$model->save();
@@ -47,7 +47,7 @@ class InventoryStore extends \Magento\Framework\Model\AbstractModel
 				}
 				else
 				{
-				   $wareHouseQty =  $storeInventory['quantity'];
+				   $wareHouseQty =  str_replace(',', '', $storeInventory['quantity']);
 				}
 		}
 		//Inventory data created while importing products
@@ -57,13 +57,13 @@ class InventoryStore extends \Magento\Framework\Model\AbstractModel
 			{
 				if($_storeData['type'] != 'Warehouse')
 				{
-					$data = array('ax_store_id' =>$_storeData['storeID'],'product_sku'=>$productSku,'quantity'=>$_storeData['qty']);
+					$data = array('ax_store_id' =>$_storeData['storeID'],'product_sku'=>$productSku,'quantity'=>str_replace(',', '', $_storeData['qty']));
 					$model->setData($data);
 					$model->save();
 				}
 				else
 				{
-				   $wareHouseQty =  $_storeData['qty'];
+				   $wareHouseQty =  str_replace(',', '', $_storeData['qty']);
 				}	
 			}
 		}		

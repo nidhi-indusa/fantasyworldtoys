@@ -15,4 +15,13 @@
             </argument>
         </arguments>
     </type>
+	<virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="sync" xsi:type="string">
+                     sales_order.sync
+                </item>
+            </argument>
+        </arguments>
+	</virtualType>
 </config>

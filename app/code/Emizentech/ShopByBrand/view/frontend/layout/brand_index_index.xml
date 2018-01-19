@@ -10,6 +10,7 @@
         <attribute name="class" value="emizen_brand_index"/>
         <referenceContainer name="content">
             <block class="Emizentech\ShopByBrand\Block\Index" name="brand.list.content"  template="Emizentech_ShopByBrand::emizen_brand/list.phtml" cacheable="false">
+			
              </block>
         </referenceContainer>
     </body>

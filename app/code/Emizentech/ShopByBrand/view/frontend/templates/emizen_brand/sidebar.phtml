@@ -2,9 +2,9 @@
 $brands = $this->getBrands();
 ?>
 
-<div class="block filter" data-bind="scope: 'compareProducts'" data-role="compare-products-sidebar">
+<div class="block filter filter-custom" data-bind="scope: 'compareProducts'" data-role="compare-products-sidebar">
     <div class="block-title">
-        <h4 id="block-compare-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('Shop By Brand');?></h4>
+        <h4 id="block-compare-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('Shop By Brand');?> <i class="fa fa-plus"></i></h4>
     </div>
     <ul class="items">
     	<?php  
@@ -15,13 +15,13 @@ $brands = $this->getBrands();
 				<?php foreach($brands[$char] as $_brand):?>
 					<li>
 					<?php if($_brand->getUrlKey()):?>
-					<i class="fa fa-square-o" aria-hidden="true"></i>
+					<i class="fa fa-angle-right" aria-hidden="true"></i>
 						<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>">
 						
 						<?php echo __($_brand->getName());?></a>
 					<?php else:?>
 						<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>">
-						<i class="fa fa-square-o" aria-hidden="true"></i>
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
 						<?php echo __($_brand->getName());?>
                                                
                                                 </a>
@@ -40,11 +40,11 @@ $brands = $this->getBrands();
 					<li>
 					<?php if($_brand->getUrlKey()):?>
 						<a href="<?php echo $this->getUrl('brand').$_brand->getUrlKey()?>" class="selected">
-						<i class="fa fa-square-o" aria-hidden="true"></i> 
+						<i class="fa fa-angle-right" aria-hidden="true"></i> 
 						<?php  echo __($_brand->getName());?></a>
 					<?php else:?>
 						<a href="<?php echo $this->getUrl('brand/view/',array('id'=>$_brand->getId()));?>">
-						<i class="fa fa-square-o" aria-hidden="true"></i> 
+						<i class="fa fa-angle-right" aria-hidden="true"></i> 
 						<?php echo __($_brand->getName());?>
                                                  <?php 
                                                 //echo  "<pre>";
@@ -59,4 +59,6 @@ $brands = $this->getBrands();
 		<?php endif;?>
 	<?php endforeach;?>
 	</ul>
+	<a href ="<?php echo $this->getUrl('brand')?>" class="view-all-brands"> View All <i class="fa fa-caret-square-o-right" aria-hidden="true"></i></a>
+	
 </div>

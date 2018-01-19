@@ -21,7 +21,7 @@
 <div class="checkout-success-outer">
 
 <?php if ($block->getOrder()->getDeliveryMethod() == 'homedelivery') :?>
-                <h2> <strong><?php /* @escapeNotVerified */ echo __('Congratulations!');?> <?php /* @escapeNotVerified */ echo __('Your order fulfilled by ') ?> <?php echo date('m-d-Y', strtotime($block->getOrder()->getDeliveryDate()));?></strong></h2>
+                <h2> <strong><?php /* @escapeNotVerified */ echo __('Congratulations!');?> <?php /* @escapeNotVerified */ echo __('Your order will be fulfilled by ') ?> <?php echo date('d-m-Y', strtotime($block->getOrder()->getDeliveryDate()));?></strong></h2>
        <?php  else :?>    
                 <h2> <strong><?php /* @escapeNotVerified */ echo __('Congratulations!');?></strong></h2>
 <?php endif;?>
