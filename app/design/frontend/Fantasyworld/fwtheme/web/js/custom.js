@@ -274,5 +274,12 @@ jQuery(window).load(function () {
 
     //home slider
     jQuery(".custom-slider").css("visibility", "visible");
+	
+	
+	//mobile(greater than 768) js
+    if (jQuery(window).width() > 768) {
+		//swing animating discount icon
+		jQuery("nav.navigation .menu ul li:nth-child(8) a.level-top").addClass("swing-me");
+	}
     
 });//window load ends

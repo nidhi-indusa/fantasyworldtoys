@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Block\Product\ListProduct" type="Mageside\SaleCategory\Block\Catalog\Product\ListProduct"/>
+    <preference for="Magento\CatalogInventory\Helper\Stock" type="Mageside\SaleCategory\Helper\Stock"/>
+	
+	 <type name="Magento\Catalog\Model\Layer">
+		<plugin name="custom_product_model_layer" type="Mageside\SaleCategory\Plugin\Layer" />
+    </type>
+
+    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="custom_product_toolbar" type="Mageside\SaleCategory\Plugin\Toolbar" />
+    </type>
+
+    <virtualType name="categoryFilterList" type="Magento\Catalog\Model\Layer\FilterList">
+        <arguments>
+            <argument name="filters" xsi:type="array">
+                <item name="attribute" xsi:type="string">Magento\Catalog\Model\Layer\Filter\Attribute</item>
+                <item name="price" xsi:type="string">Magento\Catalog\Model\Layer\Filter\Price</item>
+                <item name="decimal" xsi:type="string">Magento\Catalog\Model\Layer\Filter\Decimal</item>
+                <item name="category" xsi:type="string">Magento\Catalog\Model\Layer\Filter\Category</item>
+            </argument>
+        </arguments>
+    </virtualType>
+	
+</config>

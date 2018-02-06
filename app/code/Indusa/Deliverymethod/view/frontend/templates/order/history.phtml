@@ -40,11 +40,14 @@
                         <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>" class="col total"><?php /* @escapeNotVerified */ echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
                         <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $_order->getStatusLabel() ?></td>
                         <td data-th="<?php echo $block->escapeHtml(__('Delivery Date')) ?>" class="col status">
-                            <?php if($_order['delivery_date'] && $_order['delivery_from'] == "Warehouse" ){ ?>
-                            <?php /* @escapeNotVerified */ echo date('d-m-Y', strtotime($_order->getDeliveryDate())) ?>
-                            <?php }else{ $_order['delivery_date'] = '-'; ?>
-                            <?php /* @escapeNotVerified */ echo $_order['delivery_date']; ?>
-                            <?php } ?>
+                            <?php if($_order['delivery_date'] && $_order['delivery_from'] == "Warehouse" ){
+							
+							$newDateString = date_format(date_create_from_format('Y-m-d', $_order->getDeliveryDate()), 'd-m-Y');
+							
+                             /* @escapeNotVerified */ echo $newDateString;
+                            }else{ $_order['delivery_date'] = '-';
+                             /* @escapeNotVerified */ echo $_order['delivery_date'];
+                            } ?>
                         </td>
                         <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $_order->getDeliveryFrom() ?></td>
                         <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">

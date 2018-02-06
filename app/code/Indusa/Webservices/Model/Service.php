@@ -37,6 +37,8 @@
 		
 		const DELIVERED = 'Delivered';
 		
+		const MANAGE_DISCOUNTS = 'manageDiscounts';
+		
 		/**
 			* Initialize resource model
 			*

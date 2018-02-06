@@ -29,6 +29,20 @@ jQuery(document).ready(function () {
     jQuery(".gift-finder-btn").click(function () {
         jQuery(".mana-filter-block.gift-finder-dropdown").toggle();
     });
+	jQuery(document).keyup(function(e) {
+		jQuery(".mana-filter-block.gift-finder-dropdown").hide();
+	});
+	var mouse_is_inside_gf = false;
+    jQuery('.gift-finder-wrapper').hover(function(){ 
+        mouse_is_inside_gf=true; 
+    }, function(){ 
+        mouse_is_inside_gf=false; 
+    });
+    jQuery("body").mouseup(function(){ 
+        if(! mouse_is_inside_gf){
+			jQuery('.gift-finder-dropdown').hide();
+		}
+    });
 
     //responsive menu clone dropdown
     var $clonedMenu = jQuery('.panel.header > .header.links').html();
@@ -128,17 +142,15 @@ jQuery(document).ready(function () {
 		jQuery(".page-header .search").click(function (event) {
 			event.preventDefault();
 			jQuery("#search,#autoClose").toggle();
+			jQuery("#search").val("");
 			jQuery("#search").focus();
 			jQuery(this).find("label.label").addClass("active");
-			
-			//jQuery(this).toggleClass("open");
-			//jQuery(".block-search").find("button.action").removeAttr("disabled");
 		});
 		jQuery("#search").click(function (event) {
 			event.stopPropagation();
 		});
-		jQuery("#search").blur(function () {
-			jQuery("#search").val('');
+		jQuery("#search").focusout(function() {					
+			//jQuery("#search_autocomplete").show();	
 		});
 
     }//768 ends
@@ -232,10 +244,18 @@ jQuery(document).ready(function () {
 		if (jQuery('li.opc-progress-bar-item').hasClass('_complete'))
 		{
 			if (jQuery("#clickandcollectLabel").is(':checked')) {
-				jQuery("label.label[for='cashondelivery'] span").text("Pay at Store");
+				if ( jQuery('html').attr('lang') == 'ar-SA' ) {
+					jQuery("label.label[for='cashondelivery'] span").text("الدفع في المتجر");
+				} else {
+					jQuery("label.label[for='cashondelivery'] span").text("Pay at Store");
+				}				
 			}
 			else{
-				jQuery("label.label[for='cashondelivery'] span").text("Cash on Delivery");
+				if ( jQuery('html').attr('lang') == 'ar-SA' ) {
+					jQuery("label.label[for='cashondelivery'] span").text("الدفع عن الاستلام");
+				} else {
+					jQuery("label.label[for='cashondelivery'] span").text("Cash on Delivery");
+				}
 			}
 		}
 	};	

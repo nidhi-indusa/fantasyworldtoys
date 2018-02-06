@@ -36,6 +36,14 @@
 		</job>
 		
 	</group>
+	
+	<group id="indusa_webservices_cron_group_discount">
+		
+		<job name="indusa_webservices_cronjob_discountprocess" instance="Indusa\Webservices\Cron\ProcessDiscounts" method="execute">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+		
+	</group>
 	<!--group id="indusa_webservices_cron_group_permission">
 	
 		<job name="indusa_webservices_cronjob_permissionprocess" instance="Indusa\Webservices\Cron\Permission" method="execute">

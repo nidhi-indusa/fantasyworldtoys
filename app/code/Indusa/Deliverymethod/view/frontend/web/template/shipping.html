@@ -20,8 +20,8 @@
     <!-- /ko -->
 
     <!-- ko if: (!getHomeDelivery())-->
-	
-	<div class="delivery-option">
+
+    <div class="delivery-option">
         <div class="d-opt">
             <input type="radio" id="deliverymethodLabel" name="deliverymethod" value="homedelivery" data-bind="checked: spamFlavor, click:radioclick" />
             <label for="deliverymethodLabel"><span data-bind="i18n: 'Home Delivery'" ></span></label>
@@ -32,33 +32,14 @@
             <span class="unicode-bidi-brackets"  data-bind="i18n: '(To pick your product directly from store you must select a store)'"></span>
         </div>
     </div>
-    
-	<!--div class="delivery-option">
-        <div class="d-opt">
-			<input type="radio" name="deliverymethod" value="homedelivery" data-bind="checked: spamFlavor, click:radioclick" />
-			<strong><span data-bind="i18n: 'Home Delivery'" ></span></strong>
-		</div>
-        <div class="d-opt">
-			<input type="radio" name="deliverymethod" value="clickandcollect" data-bind="checked: spamFlavor, click:radioclick " /> 
-			<strong><span data-bind="i18n: 'Click and Collect'" ></strong><br>
-            <span data-bind="i18n: '(To pick your product directly from store you must select a store)'"></span>
-        </div>
-		</div-->   
-	
     <!-- /ko -->
-
-
-
 </div>
-		
 
 <div class="opc-wrapper">
     <ol class="opc" id="checkoutSteps">
-		
-        <li id="shipping" class="checkout-shipping-address" data-bind="fadeVisible: visible()">
-		<h4 data-bind="i18n: 'Required for Home Delivery only'"></h4>
 
-            <!--    <div class="step-title" data-bind="i18n: 'Contact Details'" data-role="title"></div>-->
+        <li id="shipping" class="checkout-shipping-address" data-bind="fadeVisible: visible()">
+            <h4 data-bind="i18n: 'Required for Home Delivery only'"></h4>
             <div id="checkout-step-shipping"
                  class="step-content"
                  data-role="content">
@@ -79,10 +60,6 @@
 
                 <!-- Address form pop up -->
                 <!-- ko if: (!isFormInline) -->
-
-
-
-
                 <button type="button"
                         data-bind="click: showFormPopUp, visible: !isNewAddressAdded()"
                         class="action action-show-popup">
@@ -205,74 +182,89 @@
                         </div>
                         <!-- /ko -->
 
-
                         <div class="storeswitcher">
                             <h4 data-bind="i18n: 'Fantasy World Stores'"> </h4>
-                            <p>
-                                <select class="store-selection-select" data-bind="options: storeItemData,
-                                           optionsText: 'store_name',
-                                           value: selectedStore,
-                                           optionsCaption: 'Choose Store'"></select>
-                            </p>
 
-                            <input class="input-text" type="hidden"  data-bind="value: selectedStore() ? selectedStore().ax_storeid : 'unknown' "  name="ax_store_id" id="ax_store_id" readonly="true" />
-                            <input class="input-text" type="hidden"  data-bind="value: selectedStore() ? selectedStore().ax_storeid : 'unknown' "  name="location_id" id="location_id" readonly="true" />
-                            <input class="input-text" type="hidden"  data-bind="value: selectedStore() ? selectedStore().delivery_from : 'Warehouse' "  name="delivery_from" id="delivery_from" readonly="true" />
-                            <input class="input-text" type="hidden"  data-bind="value: selectedStore() ? selectedStore().transfer_order_quantity : 'unknown' "  name="transfer_order_quantity" id="transfer_order_quantity" readonly="true" />
-                            <input class="input-text" type="hidden" data-bind="value:selectedStore() ? selectedStore().newdeliverymethod : 'homedelivery'"   id="newdeliverymethod"  name="newdeliverymethod" readonly="true" />     
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="col col-method" data-bind="i18n: 'Select'"></th>
+                                            <th class="col col-method" data-bind="i18n: 'Store Name'"></th>
+                                            <th class="col col-method" data-bind="i18n: 'Available Time Slot for Pickup'"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: storeItemData,click: setDimension1">
+                                        <tr>
+                                            <td>
 
+                                                <label data-bind="attr:{for:$index}">
+                                                    <input type="radio" name="optionsGroup" data-bind="attr: {id: $index,value: address + '|' + google_url + '|' + message_store_qty+ '|' + productcustom_message  + '|' + ordertime_message + '|' + ax_storeid + '|' + delivery_from+ '|' + transfer_order_quantity+ '|' + newdeliverymethod}" />
 
-
-                            <!-- ko if: selectedStore -->
-                            <div data-bind="visible: selectedStore" class="store-section"> <!-- Appears when you select something -->
-                                <!-- <p> Selected  Store :: -->
-                                <!-- <span data-bind="text: selectedStore() ? selectedStore().store_name : 'unknown'"></span>.</p> -->
-
-                                <h5 data-bind="i18n: 'Store Address'"> </h5>  
-                                <p> <span data-bind="text: selectedStore() ? selectedStore().address : 'unknown'"></span>.</p>
+                                                </label>
 
 
 
+                                            </td>
+                                            <td><span data-bind="text: store_name"></span>
+                                            </td>    
+                                            <td><span data-bind="text: ordertime_message"></span>                                                
+                                            </td>    
+                                        </tr>
+
+                                    </tbody>
+
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div id="store-section-content"  style="display:none;">
+                                                    <div class="store-section">
+                                                        <h5 data-bind="i18n: 'Store Address'"> </h5>  
+                                                        <div id="textParagraph0"></div> <!-- address -->													 
+                                                    </div>
+                                                    <div id="mycustom-block-wrapper-true" >
+                                                        <h4 data-bind="i18n: 'You have choosen products'"><i class="fa fa-cart-arrow-down" aria-hidden="true" ></i> </h4>
+                                                        <div id="textParagraph3"></div> <!-- productcustom_message -->
+                                                    </div>
+                                                    <div id="textParagraph1" style="display:none;"></div> <!-- google_url -->
+                                                    <a data-bind="click:gURL"  class="view-store" data-toggle="modal" data-target="#view-map" ><span data-bind="i18n: 'View Store'"><i class="fa fa-map-marker" aria-hidden="true"></i></span></a></br>
+                                                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="view-map">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel" data-bind="i18n: 'Store Location'"></h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <iframe id="gIFRAME" data-bind="" style="width:100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input class="input-text" type="hidden" value=""   name="ax_store_id" id="ax_store_id" />
+                                                    <input class="input-text" type="hidden" value=""   name="location_id" id="location_id" />
+                                                    <input class="input-text" type="hidden" value=""   name="delivery_from" id="delivery_from" />
+                                                    <input class="input-text" type="hidden" value=""    name="transfer_order_quantity" id="transfer_order_quantity"  />
+                                                    <input class="input-text" type="hidden"  value=""   name="newdeliverymethod"  id="newdeliverymethod"  />    
+                                                    <div id="textParagraph4" class="order-time-msg"></div> <!-- ordertime_message -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>  
 
 
-                            </div>
-
-
-                            <div id="mycustom-block-wrapper-false" data-bind="visible: selectedStore().message_store_qty == 'false' ">
-
-                                <h4 data-bind="i18n: 'You have choosen products'"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> </h4>
-                                <div  data-bind="html: selectedStore() ? selectedStore().productcustom_message  : 'unknown'"></div>
-                            </div>
-
-
-                            <div id="mycustom-block-wrapper-true" data-bind="visible: selectedStore().message_store_qty == 'true' ">
-
-                                <h4 data-bind="i18n: 'You have choosen products'"><i class="fa fa-cart-arrow-down" aria-hidden="true" ></i> </h4>
-                                <div  data-bind="html: selectedStore() ? selectedStore().productcustom_message  : 'unknown'"></div>
+                                </table>
                             </div>
 
 
                             <br/>
 
-                            <a class="view-store" data-toggle="modal" data-target="#view-map" ><span data-bind="i18n: 'View Store'"><i class="fa fa-map-marker" aria-hidden="true"></i></span></a></br>
 
-                            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="view-map">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel" data-bind="i18n: 'Store Location'"></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <iframe data-bind="attr: { src: selectedStore().google_url }" style="width:100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
 
                             <!-- /ko -->
                         </div>
+
 
                         <!-- message message-error error -->
                         <div class="message_error message message-error error">
@@ -290,16 +282,9 @@
                             <div class="control">
                                 <textarea name="delivery_comment" id="delivery_comment"></textarea>
                             </div>
+
+
                         </div>
-
-
-
-
-
-
-
-
-
 
 
                         <div class="actions-toolbar" id="shipping-method-buttons-container">

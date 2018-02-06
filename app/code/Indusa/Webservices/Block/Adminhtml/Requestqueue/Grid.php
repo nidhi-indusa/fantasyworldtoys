@@ -54,6 +54,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(false);
         $this->setVarNameFilter('post_filter');
+		//$this->date_format('d-m-Y');
     }
 
     /**
@@ -134,6 +135,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 					[
 						'header' => __('Processsed at'),
 						'index' => 'processed_at',
+						'date_format' => 'mm/dd/yyyy',
 					]
 				);
 				
@@ -150,11 +152,13 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 					[
 						'header' => __('Ack date'),
 						'index' => 'ack_datetime',
+						//'format'=>'d-m-Y',
+						'date_format' => 'mm/dd/yyyy',
 					]
 				);
 				
 				$this->addColumn(
-					'processed_list',
+				'processed_list',
 					[
 						'header' => __('Process list'),
 						'index' => 'processed_list',
@@ -174,8 +178,10 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 				$this->addColumn(
 					'creation_time',
 					[
-						'header' => __('Created at'),
+						'header' => __('Created at1'),
 						'index' => 'created_at',
+						'type' => 'datetime',
+						//'date_format' => 'j-m-Y H:i:s',
 					]
 				);
 				
@@ -184,6 +190,12 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 					[
 						'header' => __('Updated at'),
 						'index' => 'updated_at',
+						//'type' => 'datetime',
+						//'date_format' => 'mm/dd/yyyy H:i:s',
+						/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+						 $resolver = $objectManager->get('Magento\Framework\Locale\Resolver');
+  							  $locale = $resolver->getLocale(); */
+
 					]
 				);
 				

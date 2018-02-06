@@ -101,7 +101,7 @@
 					
 					//call AX web service to sync the orders
 					
-					$orderData = array("orderXML" => $xmlOrderRequestData,"requestId" => $requestId);
+					/* $orderData = array("orderXML" => $xmlOrderRequestData,"requestId" => $requestId);
 					$headers = array("Content-type: application/json","password:$password","username:$username");
 					
 					$ch = curl_init($orderUrl); 
@@ -133,7 +133,7 @@
 								}
 							}
 						}
-					}
+					} */
 				}
 			}
 		}
@@ -142,9 +142,10 @@
 			$orderArray[] = $orderData->getIncrementId();
 			$xmlOrderRequestData .= "<order>";				
 			$shippingAddress = $orderData->getShippingAddress();				
-			$xmlOrderRequestData .= "<custName>".$orderData->getCustomerFirstName(). " " .$orderData->getCustomerLastName()."</custName>";
+			$xmlOrderRequestData .= "<custName>".$shippingAddress->getFirstName(). " " .$shippingAddress->getLastName()."</custName>";
 			$xmlOrderRequestData .= "<custEmail>".$orderData->getCustomerEmail()."</custEmail>";				
 			$xmlOrderRequestData .= "<custPrimaryMobile>".$shippingAddress->getTelePhone()."</custPrimaryMobile>";
+			$xmlOrderRequestData .= "<guestCustomer>".$orderData->getCustomerIsGuest()."</guestCustomer>";
 			$xmlOrderRequestData .= "<magentoCustomerId>".$orderData->getCustomerId()."</magentoCustomerId>";
 			$xmlOrderRequestData .= "<custAddressCity>".$shippingAddress->getCity()."</custAddressCity>";
 			$Street = $shippingAddress->getStreet();
@@ -154,13 +155,14 @@
 			$xmlOrderRequestData .= "<custAddressState>".$shippingAddress->getRegion()."</custAddressState>";
 			$xmlOrderRequestData .= "<custContactType>Phone</custContactType>";
 			$xmlOrderRequestData .= "<custContactLocator>".$shippingAddress->getTelePhone()."</custContactLocator>";				
-			$xmlOrderRequestData .= "<custAddressLocationName>".$orderData->getCustomerFirstName(). " " .$orderData->getCustomerLastName()."</custAddressLocationName>";
+			$xmlOrderRequestData .= "<custAddressLocationName>".$shippingAddress->getFirstName(). " " .$shippingAddress->getLastName()."</custAddressLocationName>";
 			$xmlOrderRequestData .= "<magentoOrderId>".$orderData->getIncrementId()."</magentoOrderId>";				
 			$xmlOrderRequestData .= "<orderDeliveryFrom>".$orderData->getDeliveryFrom()."</orderDeliveryFrom>";
 			$xmlOrderRequestData .= "<orderLocationID>".$orderData->getAxStoreId()."</orderLocationID>";
 			$xmlOrderRequestData .= "<deliveryDate>".$orderData->getDeliveryDate()."</deliveryDate>";
 			$xmlOrderRequestData .= "<orderCreatedAt>".$orderData->getCreatedAt()."</orderCreatedAt>";
 			$xmlOrderRequestData .= "<orderCurrencyCode>".$orderData->getOrderCurrencyCode()."</orderCurrencyCode>";
+			$xmlOrderRequestData .= "<DeliveryNote>".$orderData->getDeliveryComment()."</DeliveryNote>";
 			/* $payment = $orderData->getPayment();
 			$method = $payment->getMethodInstance(); */
 			$xmlOrderRequestData .= "<orderPaymentMode>".$method->getTitle()."</orderPaymentMode>";

@@ -82,7 +82,12 @@ define(
             }
 
 
-
+            var jsonObject = JSON.stringify(window.checkoutConfig.storeItemData);
+            var CustomeTESTObject = JSON.parse(jsonObject);
+            var customoptionsList = [];
+            for (var x in CustomeTESTObject) {
+                customoptionsList.push(CustomeTESTObject[x]);
+            }
 
             return Component.extend({
                 defaults: {
@@ -111,9 +116,51 @@ define(
                 error_message: ko.observable(false),
                 delivery_error_message: ko.observable(''),
                 goalId: ko.observable(),
+                customoptions: customoptionsList,
+                /*Code added to for Delivery Time changes related to Click & Collect start */
+                setDimension1: function (data, event) {
+                    self.storenames = ko.observable();
+                    self.storenames = event.target.defaultValue;
+                    var storeNames = new Array();
+                    self.storeNames = self.storenames.toString().split("|");
+
+                    for (var x = 0; x < self.storeNames.length; x++) {
+                        $('#textParagraph' + x).html(self.storeNames[x]);
+
+                        if (x == 5) {
+                            $('#ax_store_id').val(self.storeNames[5]);
+                            $('#location_id').val(self.storeNames[5]);
+                        }
+                        if (x == 6) {
+                            $('#delivery_from').val(self.storeNames[6]);
+                        }
+
+                        if (x == 7) {
+                            $('#transfer_order_quantity').val(self.storeNames[7]);
+                        }
+
+                        if (x == 8) {
+                            $('#newdeliverymethod').val(self.storeNames[8]);
+                        }
+                    }
+                    var testurl = self.storeNames[1];
+                    var googlename = ko.observable(""); //initialize with a value
+                    googlename(self.storeNames[1]); //set it to a new value
+                    $("#store-section-content").show();
+                    $("button[data-role='opc-continue']").show();
+                    $("button[data-role='opc-continue2']").hide();
+                    return true;
+                },
+                gURL: function () {
+                    jQuery('#gIFRAME').attr('src', jQuery('#textParagraph1').html());
+                    return true;
+                },
+                selectedDimension1: ko.observable('101'),
+                /*Code added to for Delivery Time changes related to Click & Collect end*/
                 radioclick: function (data, event) {
                     if (event.target.defaultValue == "homedelivery") {
                         //alert("clicked homedelivery...");
+                        $("#store-section-content").hide();
                         $(".message_error").css("display", "none");
 
                         $("button[data-role='opc-continue']").show();
@@ -124,10 +171,10 @@ define(
                         $(".table-checkout-shipping-method input").removeAttr("checked");
                         //$("#s_method_freeshipping_freeshipping").attr('checked', 'checked');
                         $("#s_method_flatrate").attr('checked', 'checked');
-                        
-                        
-                       
-                        
+
+
+
+
                         $("input[name=delivery_from]").val("Warehouse");
                         $("input[name=newdeliverymethod]").val("homedelivery");
                         $("input[name=location_id]").val("0");
@@ -172,14 +219,14 @@ define(
                     var JSONObject = JSON.parse(jsonObject);
                     var is_homedelivery = false;
                     jQuery(window).load(function () {
-                    if($('*').hasClass('checkout-index-index')){
-                        if($('select[name="city"]').has('option').length == 0)
-                        { 
-                           
-                              $('select[name="city"]').append('<option value=""  >Please Select City.</option>');
+                        if ($('*').hasClass('checkout-index-index')) {
+                            if ($('select[name="city"]').has('option').length == 0)
+                            {
 
-                        } 
-                    }
+                                $('select[name="city"]').append('<option value=""  >Please Select City.</option>');
+
+                            }
+                        }
                     });
 
                     //Issue facing when bodyonload shipping method not selected start
@@ -205,7 +252,7 @@ define(
 
                     return is_homedelivery;
                 },
-	        initialize: function () {
+                initialize: function () {
                     this._super();
                     var disabled = window.checkoutConfig.shipping.deliverydatemethod.disabled;
                     var noday = window.checkoutConfig.shipping.deliverydatemethod.noday;
@@ -216,9 +263,9 @@ define(
 
                     var show_hide_canBeDelivered = window.checkoutConfig.shipping.deliverydatemethod.show_hide_canBeDelivered;
 
-                   
+
                     format = 'dd-mm-yy';
-                  
+
                     var disabledDay = disabled.split(",").map(function (item) {
                         return parseInt(item, 10);
                     });
@@ -234,6 +281,7 @@ define(
 
                                 var options = {
                                     minDate: 0,
+                                    maxDate: '+1M',
                                     dateFormat: format,
                                     maxOrders: maxOrders,
                                     /* fix buggy IE focus functionality */
@@ -290,6 +338,7 @@ define(
 
                                 var options = {
                                     minDate: 0,
+                                    maxDate: '+1M',
                                     dateFormat: format,
                                     //hourMin: hourMin,
                                     // hourMax: hourMax,
@@ -554,16 +603,7 @@ define(
                             emailValidationResult = customer.isLoggedIn();
 
                     var format = window.checkoutConfig.shipping.deliverydatemethod.format;
-                  
 
-                   /* if (format != 'dd-mm-yy') {
-                        this.errorValidationMessage('Delivery Method format is invalid.');
-                        return false;
-                    }*/
-
-                    //If(HOMEDELIVERY)
-                    //IF(DELIVERYDATE !=NULL)
-                    
                     if ($("input[name=deliverymethod]").val() == 'homedelivery') {
                         if ($("input[name=delivery_date]").val() != '') {
                             var Delivereddateval = $("input[name=delivery_date]").val();

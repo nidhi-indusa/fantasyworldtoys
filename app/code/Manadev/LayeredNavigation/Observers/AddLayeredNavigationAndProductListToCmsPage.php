@@ -27,7 +27,16 @@ class AddLayeredNavigationAndProductListToCmsPage implements ObserverInterface
         if (!$page->getData('mana_add_layered_navigation_and_products')) {
             return;
         }
-
-        $this->layout->getUpdate()->addHandle('cms_page_layered_navigation_with_product_list');
+        
+        
+        //New code added for special cms page start 
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $cmsPage = $objectManager->get('\Magento\Cms\Model\Page');
+        //$cmsPage->getId(); //Get Current CMS Page ID
+        if($cmsPage->getIdentifier() == 'special')
+            $this->layout->getUpdate()->addHandle('cms_page_layered_navigation_without_product_list');
+        else
+            $this->layout->getUpdate()->addHandle('cms_page_layered_navigation_with_product_list');
+        //New code added for special cms page end
     }
 }

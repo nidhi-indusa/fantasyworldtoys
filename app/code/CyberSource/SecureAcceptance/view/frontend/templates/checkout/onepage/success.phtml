@@ -1,105 +1,105 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
-// @codingStandardsIgnoreFile
+	/**
+		* Copyright © 2016 Magento. All rights reserved.
+		* See COPYING.txt for license details.
+	*/
+	// @codingStandardsIgnoreFile
 ?>
 <?php /** @var $block \Magento\Checkout\Block\Onepage\Success */ ?>
 
 <?php
-// Adding transaction in debug.log	
-\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug("Cyber Success.phtml Called");
-$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
-$customerSession = $objectManager->create('Magento\Customer\Model\Session');
-
-$orderDatamodel = $objectManager->get('Magento\Sales\Model\Order')->getCollection()->addFieldToFilter("customer_id", $customerSession->getCustomer()->getId())->getLastItem();
-$orderIncrementId = $orderDatamodel->getIncrementId();
-$order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($orderIncrementId);
-$amount = round($order->getGrandTotal(), 3);
+	// Adding transaction in debug.log	
+	\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug("Cyber Success.phtml Called");
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	
+	$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+	
+	$orderDatamodel = $objectManager->get('Magento\Sales\Model\Order')->getCollection()->addFieldToFilter("customer_id", $customerSession->getCustomer()->getId())->getLastItem();
+	$orderIncrementId = $orderDatamodel->getIncrementId();
+	$order = $objectManager->create('\Magento\Sales\Model\Order')->loadByIncrementId($orderIncrementId);
+	$amount = round($order->getGrandTotal(), 3);
 ?>
 <div class="checkout-success">
     <div class="checkout-success-outer">
-<?php if ($block->getOrderId()): ?>
-    <?php /* if ($block->getCanViewOrder()) :?>
-      <p><?php echo __('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
-      <?php  else :?>
-      <p><?php echo __('Your order # is: <span>%1</span>.', $block->escapeHtml($block->getOrderId())) ?></p>
-      <?php endif; */ ?>
-
-
-            <?php if ($order->getDeliveryMethod() == 'homedelivery') : ?>
-                <h2> <strong><?php echo __('Your order has been received.') ?> <?php echo __('Thank you for your purchase! ') ?><?php /* @escapeNotVerified */ echo __('Your order will be fulfilled by ') ?> <?php echo date('d-m-Y', strtotime($order->getDeliveryDate())); ?></strong></h2>
-    <?php else : ?>    
-                <h2 class="sub-title"><?php echo __(' Your order has been received.') ?> <?php echo __('Thank you for your purchase!') ?></h2>
-            <?php endif; ?>  
-            <p><?php echo __('Your order # is: <span>%1</span>.', $orderIncrementId) ?></p>   
-
-
-            <p><?php /* @escapeNotVerified */ echo __('We\'ll email you an order confirmation with details and tracking info.') ?></p><br/>
-
-    <?php
-
-    function CardTypCodeName($code) {
-        $types = [
-            '001' => 'Visa',
-            '002' => 'MasterCard',
-            '003' => 'American Express',
-            '004' => 'Discover',
-        ];
-        return (!empty($types[$code])) ? $types[$code] : $code;
-    }
-
-    \Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug(print_r(['Get Variables' => $_GET], true));
-    $payment = $order->getPayment();
-
-    if ($payment->getMethod() == "chcybersource") {
-
-
-        $additionalInformation = $payment->getAdditionalInformation();
-        if (!empty($additionalInformation)) {
-
-            $data = $additionalInformation;
-            $transport['getIsCyber'] = 1;
-            $transport['TransID'] = $payment->getCcExpMonth() . "-" . $payment->getCcExpYear();
-            $transport['cc_number'] = 'xxxxxxxxxxxx' . $additionalInformation['last4'];
-            $transport['card_type'] = CardTypCodeName($additionalInformation['cardType']);
-            $message = '<strong>Cyber Payment Details:</strong><br/>';
-            $message .= 'Card Type: ' . $transport['card_type'] . "<br/>";
-            $message .= 'CC Number: ' . $transport['cc_number'] . "<br/>";
-            $message .= 'Card Expiry: ' . $transport['TransID'] . "<br/>";
-            $message .= 'Amount: KWD ' . $amount . "<br/><br/>";
-
-
-
-            echo $message;
-        }
-    }
-    ?>
-
-
-
-
-
-
+		<?php if ($orderIncrementId): ?>
+		<?php /* if ($block->getCanViewOrder()) :?>
+			<p><?php echo __('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
+			<?php  else :?>
+			<p><?php echo __('Your order # is: <span>%1</span>.', $block->escapeHtml($block->getOrderId())) ?></p>
+		<?php endif; */ ?>
+		<?php echo $orderIncrementId;?>
+		
+		<?php if ($order->getDeliveryMethod() == 'homedelivery') : ?>
+		<h2> <strong><?php echo __('Your order hass been received.') ?> <?php echo __('Thank you for your purchase! ') ?><?php /* @escapeNotVerified */ echo __('Your order wills be fulfilled by ') ?> <?php echo date('d-m-Y', strtotime($order->getDeliveryDate())); ?></strong></h2>
+		<?php else : ?>    
+		<h2 class="sub-title"><?php echo __(' Your order has been received.') ?> <?php echo __('Thank you for your purchase!') ?></h2>
+		<?php endif; ?>  
+		<p><?php echo __('Your order #asda is: <span>%1</span>.', $orderIncrementId) ?></p>   
+		
+		
+		<p><?php /* @escapeNotVerified */ echo __('We\'ll email yossu an order confirmation with details and tracking info.') ?></p><br/>
+		
+		<?php
+			
+			function CardTypCodeName($code) {
+				$types = [
+				'001' => 'Visa',
+				'002' => 'MasterCard',
+				'003' => 'American Express',
+				'004' => 'Discover',
+				];
+				return (!empty($types[$code])) ? $types[$code] : $code;
+			}
+			
+			\Magento\Framework\App\ObjectManager::getInstance()->get('Psr\Log\LoggerInterface')->debug(print_r(['Get Variables' => $_GET], true));
+			$payment = $order->getPayment();
+			
+			if ($payment->getMethod() == "chcybersource") {
+				
+				
+				$additionalInformation = $payment->getAdditionalInformation();
+				if (!empty($additionalInformation)) {
+					
+					$data = $additionalInformation;
+					$transport['getIsCyber'] = 1;
+					$transport['TransID'] = $payment->getCcExpMonth() . "-" . $payment->getCcExpYear();
+					$transport['cc_number'] = 'xxxxxxxxxxxx' . $additionalInformation['last4'];
+					$transport['card_type'] = CardTypCodeName($additionalInformation['cardType']);
+					$message = '<strong>Cyber Payment Details:</strong><br/>';
+					$message .= 'Card Type: ' . $transport['card_type'] . "<br/>";
+					$message .= 'CC Number: ' . $transport['cc_number'] . "<br/>";
+					$message .= 'Card Expiry: ' . $transport['TransID'] . "<br/>";
+					$message .= 'Amount: KWD ' . $amount . "<br/><br/>";
+					
+					
+					
+					echo $message;
+				}
+			}
+		?>
+		
+		
+		
+		
+		
+		
         <?php endif; ?>
-
+		
         <?php echo $block->getAdditionalInfoHtml() ?>
-
+		
         <div class="actions-toolbar">
             <div class="primary">
                 <a class="action primary continue" href="<?php /* @escapeNotVerified */ echo $block->getUrl() ?>"><span><?php /* @escapeNotVerified */ echo __('Continue Shopping') ?></span></a>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
     require([
-        'Magento_Customer/js/customer-data'
+	'Magento_Customer/js/customer-data'
     ], function (customerData) {
         var sections = ['cart'];
         customerData.invalidate(sections);
         customerData.reload(sections, true);
-    });
+	});
 </script>

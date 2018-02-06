@@ -208,7 +208,7 @@
 				$successData = array("acknowledgeXML" => $ackXMLResponse,"requestId" =>$request_id);
 				$processmodel = $objectManager->create('\Indusa\Webservices\Model\Acknowledgment\SendAcknowledgment');			
 				
-				//$this->logger->info("Price Updates ack XML log for Req id ".$request_id.": ".$ackXMLResponse);
+				$this->logger->info("Price Updates ack XML log for Req id ".$request_id.": ".$ackXMLResponse);
 				$headers = 
 				array("Content-type: application/json","password:$password","username:$username");
 				$ch = curl_init(); 

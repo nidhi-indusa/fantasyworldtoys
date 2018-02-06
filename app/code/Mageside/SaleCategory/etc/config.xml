@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mageside_salecategory>
+            <general>
+                <enabled>1</enabled>
+                <show_out_of_stock>0</show_out_of_stock>
+                <show_with_images>1</show_with_images>
+                <module_name>Sale Category</module_name>
+                <module_page_link>https://mageside.com/sale-category-2.html</module_page_link>
+            </general>
+        </mageside_salecategory>
+    </default>
+</config>

@@ -12,5 +12,7 @@
             <block class="Emizentech\ShopByBrand\Block\View" name="brand.view"  template="Emizentech_ShopByBrand::emizen_brand/view.phtml" cacheable="false">
              </block>
         </referenceContainer>
+		
+		<move element="main.mana.layered_nav" destination="sidebar.main" before="category-sidebar"/>
     </body>
 </page>

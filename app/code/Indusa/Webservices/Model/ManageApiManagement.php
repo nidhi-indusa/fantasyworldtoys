@@ -33,7 +33,7 @@
 		{
 			$this->date = $date;
 			$this->logger = $loggerInterface;
-			$this->_availableService = array(Service::MANAGE_PRODUCTS,Service::INVENTORY_UPDATES,Service::PRICE_UPDATES,Service::RELATED_PRODUCTS,Service::CREATE_ORDER_AND_CUSTOMER,Service::ORDER_STATUS_UPDATES,Service::SEND_ACKNOWLEDGEMENT_TO_MAGENTO,Service::PRODUCT_STATUS_UPDATES,Service::RESERVED_INVENTORY_UPDATES);
+			$this->_availableService = array(Service::MANAGE_PRODUCTS,Service::INVENTORY_UPDATES,Service::PRICE_UPDATES,Service::RELATED_PRODUCTS,Service::CREATE_ORDER_AND_CUSTOMER,Service::ORDER_STATUS_UPDATES,Service::SEND_ACKNOWLEDGEMENT_TO_MAGENTO,Service::PRODUCT_STATUS_UPDATES,Service::RESERVED_INVENTORY_UPDATES,Service::MANAGE_DISCOUNTS);
 			
 			$this->orderRepository = $orderRepository;
 			$this->searchCriteriaBuilder = $searchCriteriaBuilder;		
@@ -371,6 +371,26 @@
 							$requestsave = $model->saveRequestQueue($apiRequestInfo);
 						}
 					}	
+					
+					//************Manage Discounts*********************************
+                    elseif($requestData['serviceName']== Service::MANAGE_DISCOUNTS){
+                        $apiRequestInfo['request_id'] = $requestId;
+                        $apiRequestInfo['request_type'] = $requestData['serviceName'];
+                        $apiRequestInfo['request_xml'] =  $postdata;
+                        $apiRequestInfo['request_datetime'] =  date('Y-m-d H:i:s');
+                        $apiRequestInfo['created_at'] = date('Y-m-d H:i:s');
+                        $apiRequestInfo['updated_at'] = date('Y-m-d H:i:s');
+                        $apiRequestInfo['processed'] = 0;
+                        $model = $objectManager->create('Indusa\Webservices\Model\RequestQueue');
+                        $requestsave = $model->saveRequestQueue($apiRequestInfo);
+						
+                        if(!$requestsave) {
+                            $responseData['status'] = 'Error';
+                            $responseData['message'] = 'Sync Failed';
+						}
+						
+					}
+					
 					else
 					{
 						$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');

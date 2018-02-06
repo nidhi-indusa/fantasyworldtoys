@@ -45,7 +45,7 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
         ]); ?>
     </span>
 	
-	<span class="discount-text"><i class="fa fa-smile-o"></i> <?php echo __('On discounted rate');?></span>
+	<span class="discount-text"><i class="fa fa-smile-o"></i> <?php echo __('On Discounted Price');?></span>
 
 <?php else: ?>
     <?php /* @escapeNotVerified */ echo $block->renderAmount($finalPriceModel->getAmount(), [

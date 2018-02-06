@@ -56,7 +56,8 @@
 
 				<div id="delivery-date">
 					<strong class="box-title"><span><?php echo __('Delivery Date') ?>:</span></strong>
-					<div class="box-content"><?= $this->getOrder()->getDeliveryDate() ?></div>
+					<div class="box-content">
+						<?=$newDateString = date_format(date_create_from_format('Y-m-d',$this->getOrder()->getDeliveryDate()), 'd-m-Y');  /* @escapeNotVerified */ //echo $newDateString;?></div>
 					<br>
 				</div>
 

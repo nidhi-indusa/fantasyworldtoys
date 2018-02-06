@@ -69,16 +69,23 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
         $deliveryDate = $extAttributes->getDeliveryDate();
         $deliveryComment = $extAttributes->getDeliveryComment();
 
-
-
-
-        if ($extAttributes->getAxStoreId() == 'unknown' || $extAttributes->getNewdeliverymethod() == 'homedelivery') {
+        /*echo  "here before save..";
+        echo  "<pre>";
+        print_r($extAttributes);
+        die();*/
+        
+        
+        //if ($extAttributes->getNewdeliverymethod() == 'homedelivery') {
+        //if (isset($AxStoreId) && $AxStoreId != '') {     
+        if ($extAttributes->getNewdeliverymethod() != 'clickandcollect') {
             $AxStoreId = '999';
             $LocationId = '999';
+            $DeliveryFrom = 'Warehouse';
+            $DeliveryMethod = 'homedelivery';
         }
 
 
-        if (isset($TransferOrderQuantity) && $TransferOrderQuantity != 'unknown') {
+        if (isset($TransferOrderQuantity) && $TransferOrderQuantity != '') {
             $decodedData = $this->jsonHelper->jsonDecode($TransferOrderQuantity);
         }
 
@@ -96,6 +103,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
             //Convert mm-dd-yy to yy-dd-mm start
         }
         $quote->setDeliveryDate($deliveryDate);
+
 
 
         $quote->setDeliveryComment($deliveryComment);
@@ -128,7 +136,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
 
             $quote->setShippingAddress($shippingAddress);
         } else if ($quote->getDeliveryMethod() == 'homedelivery') {
-		$deliveryDate_old = '';
+            $deliveryDate_old = '';
             //If(HOMEDELIVERY)
             //IF(DELIVERYDATE !=NULL)
 
@@ -156,7 +164,7 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
 
                         $deliveryDate_old = $deliveryDate;
                         $deliveryDate = date('Y-m-d', strtotime($deliveryDate . ' +1 day'));
-                    }else{
+                    } else {
                         $deliveryDate_old = $deliveryDate;
                     }
                 }
@@ -180,8 +188,8 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
                     //$custom_message = $msg = "Sorry, your order cannot be shipped on date chosen. Please do choose another date !";
                     if ($deliveryDate_old == date('Y-m-d')) {
                         $msg = __('Your order cannot be shipped on date ') . date("d-m-Y", strtotime($deliveryDate_old)) . __('. Please choose another date!');
-                    }else{
-                         $msg = __('Your order cannot be shipped on date ') . date("d-m-Y", strtotime($deliveryDate)) . __('. Please choose another date!');
+                    } else {
+                        $msg = __('Your order cannot be shipped on date ') . date("d-m-Y", strtotime($deliveryDate)) . __('. Please choose another date!');
                     }
 
                     $custom_message = $msg;
